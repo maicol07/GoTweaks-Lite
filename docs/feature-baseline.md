@@ -25,6 +25,9 @@ widget's Legion tab and choose **Block auto-start**. Check that Windows reports
 `Automatic` and `Running`. Confirm the OEM widget and controller navigation
 still work. After blocking, launching Legion Space may start the service on
 demand, so check the startup mode as well as the current process state.
+Repeat from `Automatic / Stopped` without starting the service first. If a
+start or stop is still pending after the widget returns, verify that Refresh
+reports the eventual state and that Windows retains the requested startup mode.
 
 ```powershell
 Get-Service DAService | Select-Object Name, StartType, Status

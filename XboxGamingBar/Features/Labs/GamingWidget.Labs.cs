@@ -90,12 +90,15 @@ namespace XboxGamingBar
                         daServiceAction = 1;
                         break;
                     case 1:
-                        DAServiceStatusText.Text = "Auto-start enabled. Blocking stops the running service.";
+                        DAServiceStatusText.Text = "Auto-start enabled. Blocking stops the service if it is running.";
                         ToggleDAServiceButton.Content = "Block auto-start";
                         daServiceAction = 0;
                         break;
                     case 2:
                         DAServiceStatusText.Text = "DAService is not installed.";
+                        break;
+                    case 4:
+                        DAServiceStatusText.Text = "Service is starting or stopping. Refresh to check again.";
                         break;
                     default:
                         DAServiceStatusText.Text = "The current service configuration cannot be changed here.";

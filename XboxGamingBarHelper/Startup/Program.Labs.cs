@@ -70,8 +70,14 @@ namespace XboxGamingBarHelper
                                 SetDAServiceStartMode("demand");
                                 try
                                 {
-                                    service.Stop();
+                                    if (service.Status == ServiceControllerStatus.Running)
+                                        service.Stop();
                                     service.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(3));
+                                }
+                                catch (System.ServiceProcess.TimeoutException) when (IsDAServiceTransitioning(
+                                    service, ServiceControllerStatus.StopPending, ServiceControllerStatus.Stopped))
+                                {
+                                    // SCM accepted the stop. Keep manual startup while it completes.
                                 }
                                 catch (Exception ex) when (ex is InvalidOperationException || ex is System.ServiceProcess.TimeoutException)
                                 {
@@ -87,6 +93,11 @@ namespace XboxGamingBarHelper
                                     if (service.Status == ServiceControllerStatus.Stopped)
                                         service.Start();
                                     service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(3));
+                                }
+                                catch (System.ServiceProcess.TimeoutException) when (IsDAServiceTransitioning(
+                                    service, ServiceControllerStatus.StartPending, ServiceControllerStatus.Running))
+                                {
+                                    // SCM accepted the start. Keep automatic startup while it completes.
                                 }
                                 catch (Exception ex) when (ex is InvalidOperationException || ex is System.ServiceProcess.TimeoutException)
                                 {
@@ -119,17 +130,29 @@ namespace XboxGamingBarHelper
         private static int GetDAServiceStatus(ServiceController service)
         {
             var mode = service.StartType;
+            var state = service.Status;
+            if (state == ServiceControllerStatus.StartPending || state == ServiceControllerStatus.StopPending)
+                return 4;
+
             if (mode == ServiceStartMode.Manual && Services.SystemRestoreService.CanRestoreDAService() &&
-                (service.Status == ServiceControllerStatus.Stopped || service.Status == ServiceControllerStatus.Running))
+                (state == ServiceControllerStatus.Stopped || state == ServiceControllerStatus.Running))
                 return 0;
 
-            // shortcut: only change the standard automatic/running configuration, extend the restore record for other modes.
-            if (mode != ServiceStartMode.Automatic || service.Status != ServiceControllerStatus.Running ||
+            // shortcut: only block standard automatic startup, extend the restore record for other modes.
+            if (mode != ServiceStartMode.Automatic ||
+                (state != ServiceControllerStatus.Running && state != ServiceControllerStatus.Stopped) ||
                 (Registry.GetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DAService", "DelayedAutoStart", 0) is int delayed && delayed != 0) ||
-                service.DependentServices.Any(dependent => dependent.Status != ServiceControllerStatus.Stopped))
+                (state == ServiceControllerStatus.Running &&
+                 service.DependentServices.Any(dependent => dependent.Status != ServiceControllerStatus.Stopped)))
                 return 3;
 
             return 1;
+        }
+
+        private static bool IsDAServiceTransitioning(ServiceController service, ServiceControllerStatus pending, ServiceControllerStatus target)
+        {
+            service.Refresh();
+            return service.Status == pending || service.Status == target;
         }
 
         private static void SetDAServiceStartMode(string mode)
