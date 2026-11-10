@@ -17,6 +17,30 @@ and corresponding source for the binaries selected for redistribution before
 adding them back to the package. Driver versions and signatures still need
 verification.
 
+### VIIPER and USB/IP
+
+The historical Lite DLL from `1e8a040` was built from
+[VIIPER `7805d80`](https://github.com/corando98/VIIPER/commit/7805d80b32cf6a27319276599e7fd76dd96d2a6c)
+on `viiper-controller`. Its x64 export table contains all 13 entry points
+used by the historical C# binding and exported by `clib/main.go`.
+The DLL also builds from that source with Go 1.26.2 and w64devkit 2.11.0
+using `go build -trimpath -buildmode=c-shared -o libviiper.dll ./clib`.
+The rebuilt DLL passed two local loopback startup, device-type enumeration,
+bus create/remove and shutdown cycles without a driver. Enumeration
+included Xbox 360, DualShock 4, DualSense, Switch Pro and Steam Controller.
+Actual Windows device attachment, reports and gyro still need a device test.
+
+The removed installer pinned
+[usbip-win2 0.9.7.8](https://github.com/vadimgrn/usbip-win2/releases/tag/v.0.9.7.8).
+The maintainer warns that this release can cause memory corruption and a
+BSOD. Exclude it from restoration. Evaluate
+[usbip-win2 0.9.8.1](https://github.com/vadimgrn/usbip-win2/releases/tag/v.0.9.8.1)
+against the pinned VIIPER revision. Its x64 installer's Authenticode signature
+validated on the development PC. Verify the driver catalog, certificate-store
+changes and attach/detach behavior separately. Keep the emulator on
+loopback as in the historical implementation. Verify a non-controller input
+method and rollback before enabling optional physical-device suppression.
+
 ## Legion Space service check
 
 On a Legion with `DAService` running in standard automatic mode, open the
