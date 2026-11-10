@@ -68,18 +68,32 @@ namespace XboxGamingBar
                 if (action.HasValue)
                     request["Content"] = action.Value;
 
-                var response = await App.SendMessageAsync(request);
-                if (response == null || !response.TryGetValue("Content", out var content) ||
-                    !int.TryParse(content?.ToString(), out int status))
+                var wait = Stopwatch.StartNew();
+                int status;
+                while (true)
                 {
-                    DAServiceStatusText.Text = "Service status unavailable. Refresh to try again.";
-                    return;
-                }
+                    var response = await App.SendMessageAsync(request);
+                    if (response == null || !response.TryGetValue("Content", out var content) ||
+                        !int.TryParse(content?.ToString(), out status))
+                    {
+                        DAServiceStatusText.Text = "Service status unavailable. Refresh to try again.";
+                        return;
+                    }
 
-                if (response.TryGetValue("Error", out var error))
-                {
-                    DAServiceStatusText.Text = error.ToString();
-                    return;
+                    if (response.TryGetValue("Error", out var error))
+                    {
+                        DAServiceStatusText.Text = error.ToString();
+                        return;
+                    }
+
+                    if (status != 4 || wait.Elapsed >= TimeSpan.FromSeconds(15))
+                        break;
+
+                    DAServiceStatusText.Text = "Waiting for the service to finish starting or stopping...";
+                    request[nameof(Command)] = (int)Command.Get;
+                    request[nameof(Function)] = (int)Function.Labs_DAServiceStatus;
+                    request.Remove("Content");
+                    await Task.Delay(1000);
                 }
 
                 switch (status)
