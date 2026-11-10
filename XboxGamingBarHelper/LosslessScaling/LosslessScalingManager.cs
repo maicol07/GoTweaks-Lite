@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Windows.System;
 using Windows.UI.Input.Preview.Injection;
 using XboxGamingBarHelper.Core;
@@ -418,7 +417,7 @@ namespace XboxGamingBarHelper.LosslessScaling
             {
                 if (File.Exists(SETTINGS_PATH))
                 {
-                    var doc = XDocument.Load(SETTINGS_PATH);
+                    var doc = new LosslessScalingProfileFile(SETTINGS_PATH).Read();
 
                     // Read Hotkey element (the main key, e.g., "S", "F")
                     string hotkeyValue = doc.Root?.Element("Hotkey")?.Value;

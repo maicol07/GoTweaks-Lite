@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared.csproj" />
+    <Compile Include="..\..\XboxGamingBarHelper\LosslessScaling\LosslessScalingProfileFile.cs" Link="LosslessScalingProfileFile.cs" />
   </ItemGroup>
 
   <!--
