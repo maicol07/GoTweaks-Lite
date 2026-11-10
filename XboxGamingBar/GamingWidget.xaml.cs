@@ -1544,7 +1544,7 @@ namespace XboxGamingBar
             SendOSDConfigToHelper();
             _ = SendDisplayOSDConfigToHelper();
 
-            // Initialize Labs section (DAService status polling)
+            // Initialize Legion remap and gesture settings.
             InitializeLabsSection();
         }
 

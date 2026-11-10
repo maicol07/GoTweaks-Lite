@@ -287,7 +287,10 @@ namespace XboxGamingBarHelper
                 // Handle property requests via the properties system
                 if (pipeMsg.Function != Shared.Enums.Function.None)
                 {
-                    HandlePipePropertyRequest(pipeMsg);
+                    if (pipeMsg.Function == Function.Labs_DAServiceStatus || pipeMsg.Function == Function.Labs_DAServiceControl)
+                        await Task.Run(() => HandlePipePropertyRequest(pipeMsg));
+                    else
+                        HandlePipePropertyRequest(pipeMsg);
                 }
             }
             catch (Exception ex)
@@ -1142,6 +1145,11 @@ namespace XboxGamingBarHelper
                 if (functionValue == (int)Function.Labs_LegionButtonRemap)
                 {
                     response = HandleLabsLegionButtonRemap(request);
+                }
+                else if (functionValue == (int)Function.Labs_DAServiceStatus ||
+                         functionValue == (int)Function.Labs_DAServiceControl)
+                {
+                    response = HandleDAServiceRequest(request);
                 }
                 // Labs: Scroll Wheel Remap
                 else if (functionValue == (int)Function.Labs_LegionScrollRemap)

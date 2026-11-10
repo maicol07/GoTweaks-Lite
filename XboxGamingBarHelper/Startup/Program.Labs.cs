@@ -37,6 +37,120 @@ namespace XboxGamingBarHelper
 {
     internal partial class Program
     {
+        private static readonly object DAServiceLock = new object();
+
+        private static global::Windows.Foundation.Collections.ValueSet HandleDAServiceRequest(PipeMessage request)
+        {
+            var response = new global::Windows.Foundation.Collections.ValueSet
+            {
+                [nameof(Function)] = (int)Function.Labs_DAServiceStatus,
+                ["Content"] = 3
+            };
+
+            lock (DAServiceLock)
+            {
+                try
+                {
+                    using (var service = new ServiceController("DAService"))
+                    {
+                        int status = GetDAServiceStatus(service);
+                        if (request.Function == Function.Labs_DAServiceControl)
+                        {
+                            if (request.Command != Command.Set ||
+                                !int.TryParse(request.Content?.ToString(), out int action) ||
+                                (action != 0 && action != 1) || status != 1 - action)
+                            {
+                                response["Error"] = "Service state changed or the request was invalid. Refresh and try again.";
+                                return response;
+                            }
+
+                            if (action == 0)
+                            {
+                                Services.SystemRestoreService.SaveOriginalDAServiceState();
+                                SetDAServiceStartMode("demand");
+                                try
+                                {
+                                    service.Stop();
+                                    service.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(3));
+                                }
+                                catch (Exception ex) when (ex is InvalidOperationException || ex is System.ServiceProcess.TimeoutException)
+                                {
+                                    SetDAServiceStartMode("auto");
+                                    throw;
+                                }
+                            }
+                            else
+                            {
+                                SetDAServiceStartMode("auto");
+                                try
+                                {
+                                    if (service.Status == ServiceControllerStatus.Stopped)
+                                        service.Start();
+                                    service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(3));
+                                }
+                                catch (Exception ex) when (ex is InvalidOperationException || ex is System.ServiceProcess.TimeoutException)
+                                {
+                                    SetDAServiceStartMode("demand");
+                                    throw;
+                                }
+                            }
+
+                            service.Refresh();
+                            status = GetDAServiceStatus(service);
+                        }
+                        response["Content"] = status;
+                    }
+                }
+                catch (InvalidOperationException ex) when (ex.InnerException is Win32Exception win32 && win32.NativeErrorCode == 1060)
+                {
+                    response["Content"] = 2;
+                }
+                catch (Exception ex) when (ex is InvalidOperationException || ex is Win32Exception ||
+                                           ex is System.ServiceProcess.TimeoutException || ex is System.TimeoutException ||
+                                           ex is IOException || ex is UnauthorizedAccessException)
+                {
+                    Logger.Error(ex, "Legion Space service operation failed");
+                    response["Error"] = "Service operation failed. Refresh to check the current state.";
+                }
+            }
+            return response;
+        }
+
+        private static int GetDAServiceStatus(ServiceController service)
+        {
+            var mode = service.StartType;
+            if (mode == ServiceStartMode.Manual && Services.SystemRestoreService.CanRestoreDAService() &&
+                (service.Status == ServiceControllerStatus.Stopped || service.Status == ServiceControllerStatus.Running))
+                return 0;
+
+            // shortcut: only change the standard automatic/running configuration, extend the restore record for other modes.
+            if (mode != ServiceStartMode.Automatic || service.Status != ServiceControllerStatus.Running ||
+                (Registry.GetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DAService", "DelayedAutoStart", 0) is int delayed && delayed != 0) ||
+                service.DependentServices.Any(dependent => dependent.Status != ServiceControllerStatus.Stopped))
+                return 3;
+
+            return 1;
+        }
+
+        private static void SetDAServiceStartMode(string mode)
+        {
+            using (var process = Process.Start(new ProcessStartInfo
+            {
+                FileName = Path.Combine(Environment.SystemDirectory, "sc.exe"),
+                Arguments = $"config DAService start= {mode}",
+                UseShellExecute = false,
+                CreateNoWindow = true
+            }))
+            {
+                if (!process.WaitForExit(2000))
+                {
+                    process.Kill();
+                    throw new System.TimeoutException("Timed out configuring DAService.");
+                }
+                if (process.ExitCode != 0)
+                    throw new Win32Exception(process.ExitCode);
+            }
+        }
 
         /// <summary>
         /// Parses global widget settings from a serialized ValueSet XML string.

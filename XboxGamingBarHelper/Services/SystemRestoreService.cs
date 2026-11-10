@@ -129,7 +129,7 @@ namespace XboxGamingBarHelper.Services
         /// <summary>
         /// Saves the restore data to disk.
         /// </summary>
-        private static void Save()
+        private static void Save(bool throwOnError = false)
         {
             try
             {
@@ -144,7 +144,7 @@ namespace XboxGamingBarHelper.Services
                 File.WriteAllText(RestoreFilePath, json);
                 Logger.Debug("Saved system restore data");
             }
-            catch (Exception ex)
+            catch (Exception ex) when (!throwOnError)
             {
                 Logger.Error($"Failed to save system restore data: {ex.Message}");
             }
@@ -197,21 +197,35 @@ namespace XboxGamingBarHelper.Services
         /// <summary>
         /// Saves the original DAService state before first modification.
         /// </summary>
-        public static void SaveOriginalDAServiceState(bool wasEnabled)
+        public static void SaveOriginalDAServiceState()
         {
             Initialize();
 
-            if (_restoreData.DAServiceSaved)
-            {
-                Logger.Debug("DAService original state already saved, skipping");
+            if (CanRestoreDAService())
                 return;
+
+            var originalEnabled = _restoreData.OriginalDAServiceEnabled;
+            var originalSaved = _restoreData.DAServiceSaved;
+            _restoreData.OriginalDAServiceEnabled = true;
+            _restoreData.DAServiceSaved = true;
+            try
+            {
+                Save(throwOnError: true);
+            }
+            catch
+            {
+                _restoreData.OriginalDAServiceEnabled = originalEnabled;
+                _restoreData.DAServiceSaved = originalSaved;
+                throw;
             }
 
-            _restoreData.OriginalDAServiceEnabled = wasEnabled;
-            _restoreData.DAServiceSaved = true;
-            Save();
+            Logger.Info("Saved original DAService automatic startup state");
+        }
 
-            Logger.Info($"Saved original DAService state: Enabled={wasEnabled}");
+        public static bool CanRestoreDAService()
+        {
+            Initialize();
+            return _restoreData.DAServiceSaved && _restoreData.OriginalDAServiceEnabled == true;
         }
 
         /// <summary>

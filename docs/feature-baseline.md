@@ -16,3 +16,16 @@ has `Native/GamepadMotion/LICENSE`. Check the exact native sources, licenses
 and corresponding source for the binaries selected for redistribution before
 adding them back to the package. Driver versions and signatures still need
 verification.
+
+## Legion Space service check
+
+On a Legion with `DAService` running in standard automatic mode, open the
+widget's Legion tab and choose **Block auto-start**. Check that Windows reports
+`Manual` and `Stopped`. Choose **Restore auto-start** and check for
+`Automatic` and `Running`. Confirm the OEM widget and controller navigation
+still work. After blocking, launching Legion Space may start the service on
+demand, so check the startup mode as well as the current process state.
+
+```powershell
+Get-Service DAService | Select-Object Name, StartType, Status
+```

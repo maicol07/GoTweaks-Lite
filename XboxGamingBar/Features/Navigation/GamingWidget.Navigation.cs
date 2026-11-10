@@ -220,6 +220,7 @@ namespace XboxGamingBar
                         legionFanCurveVisible?.SetVisible(isFanCurveExpanded);
                         // Force remap UI refresh when Legion tab becomes active.
                         RefreshLegionEnhancedRemapUi();
+                        _ = UpdateDAServiceAsync(null);
                         break;
                     case "GPD":
                         GPDScrollViewer.Visibility = Visibility.Visible;

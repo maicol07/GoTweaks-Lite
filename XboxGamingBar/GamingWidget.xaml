@@ -3721,6 +3721,16 @@
                         <!-- Controller Settings Section (Touchpad & Vibration + Lighting) -->
                         <TextBlock Text="Controller Settings" Style="{StaticResource SectionHeaderStyle}"/>
 
+                        <Border Style="{StaticResource CardStyle}">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="Legion Space service" Style="{StaticResource CardTitleStyle}"/>
+                                <TextBlock x:Name="DAServiceStatusText" Text="Checking service status"
+                                           Style="{StaticResource CardCaptionStyle}" TextWrapping="Wrap"/>
+                                <Button x:Name="ToggleDAServiceButton" Content="Refresh"
+                                        Style="{StaticResource ModernButtonStyle}" Click="ToggleDAServiceButton_Click"/>
+                            </StackPanel>
+                        </Border>
+
                         <!-- Controller Mode Card: Legion Space style X-Input / D-Input switch. Only shown
                              once the helper reports a controller that supports it (see
                              UpdateLegionControllerModeUI). Switch off = X-Input, on = D-Input. -->

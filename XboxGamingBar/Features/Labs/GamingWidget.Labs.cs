@@ -43,6 +43,76 @@ namespace XboxGamingBar
 {
     public sealed partial class GamingWidget
     {
+        private int? daServiceAction;
+
+        private async void ToggleDAServiceButton_Click(object sender, RoutedEventArgs e)
+        {
+            await UpdateDAServiceAsync(daServiceAction);
+        }
+
+        private async Task UpdateDAServiceAsync(int? action)
+        {
+            if (!ToggleDAServiceButton.IsEnabled)
+                return;
+
+            ToggleDAServiceButton.IsEnabled = false;
+            daServiceAction = null;
+            ToggleDAServiceButton.Content = "Refresh";
+            try
+            {
+                var request = new Windows.Foundation.Collections.ValueSet
+                {
+                    [nameof(Command)] = (int)(action.HasValue ? Command.Set : Command.Get),
+                    [nameof(Function)] = (int)(action.HasValue ? Function.Labs_DAServiceControl : Function.Labs_DAServiceStatus)
+                };
+                if (action.HasValue)
+                    request["Content"] = action.Value;
+
+                var response = await App.SendMessageAsync(request);
+                if (response == null || !response.TryGetValue("Content", out var content) ||
+                    !int.TryParse(content?.ToString(), out int status))
+                {
+                    DAServiceStatusText.Text = "Service status unavailable. Refresh to try again.";
+                    return;
+                }
+
+                if (response.TryGetValue("Error", out var error))
+                {
+                    DAServiceStatusText.Text = error.ToString();
+                    return;
+                }
+
+                switch (status)
+                {
+                    case 0:
+                        DAServiceStatusText.Text = "Auto-start blocked. Legion Space can still start the service on demand.";
+                        ToggleDAServiceButton.Content = "Restore auto-start";
+                        daServiceAction = 1;
+                        break;
+                    case 1:
+                        DAServiceStatusText.Text = "Auto-start enabled. Blocking stops the running service.";
+                        ToggleDAServiceButton.Content = "Block auto-start";
+                        daServiceAction = 0;
+                        break;
+                    case 2:
+                        DAServiceStatusText.Text = "DAService is not installed.";
+                        break;
+                    default:
+                        DAServiceStatusText.Text = "The current service configuration cannot be changed here.";
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Failed to communicate with the Legion Space service helper");
+                DAServiceStatusText.Text = "Could not reach the helper. Refresh to try again.";
+            }
+            finally
+            {
+                ToggleDAServiceButton.IsEnabled = true;
+            }
+        }
+
         private void InitializeLabsSection()
         {
             // Wire up Legion button remap event handlers (done in code to avoid XAML init issues)
