@@ -24,10 +24,10 @@ namespace Shared.Constants
         /// carry a friendly per-RELEASE number without breaking either. Mixing the two directly
         /// in the UI ("Your version: 0.3.2524.0, new version: 1.1") is what this constant fixes.
         /// </summary>
-        public const string FriendlyVersion = "1.9.2";
+        public const string FriendlyVersion = "1.10.0";
 
         /// <summary>GitHub "owner/repo" to query for releases. Empty = updates disabled.</summary>
-        public const string Repo = "Rulob/GoTweaks-Lite";
+        public const string Repo = "maicol07/GoTweaks-Lite";
 
         /// <summary>True when a release repo is configured (update checks/installs allowed).</summary>
         public static bool UpdatesEnabled => !string.IsNullOrWhiteSpace(Repo);
