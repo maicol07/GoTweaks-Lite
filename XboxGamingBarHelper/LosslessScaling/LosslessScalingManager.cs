@@ -15,11 +15,8 @@ using XboxGamingBarHelper.Windows;
 
 namespace XboxGamingBarHelper.LosslessScaling
 {
-    internal class LosslessScalingManager : Manager
+    internal partial class LosslessScalingManager : Manager
     {
-        // Lossless Scaling is no longer configured from the widget: this manager only detects
-        // it, launches it if needed and sends its scaling hotkey for the Quick Settings tile.
-
         // P/Invoke for window management (minimize LS after launching it)
         [DllImport("user32.dll")]
         private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Xml.Linq;
 
 namespace XboxGamingBarHelper.LosslessScaling
@@ -24,11 +25,25 @@ namespace XboxGamingBarHelper.LosslessScaling
                 return XDocument.Load(stream, LoadOptions.PreserveWhitespace);
         }
 
+        public string Revision
+        {
+            get
+            {
+                using (var hash = SHA256.Create())
+                    return Convert.ToBase64String(hash.ComputeHash(original));
+            }
+        }
+
+        public IEnumerable<XElement> ReadProfiles() => GetProfiles(Read());
+
+        private static IEnumerable<XElement> GetProfiles(XDocument document) =>
+            document.Element("Settings")?.Element("GameProfiles")?.Elements("Profile")
+            ?? throw new InvalidDataException("Unsupported Lossless Scaling profile format.");
+
         public void Save(int profileIndex, IReadOnlyDictionary<string, string> changes)
         {
             var document = Read();
-            var profile = document.Element("Settings")?.Element("GameProfiles")?
-                .Elements("Profile").ElementAtOrDefault(profileIndex);
+            var profile = GetProfiles(document).ElementAtOrDefault(profileIndex);
             if (profile == null)
                 throw new InvalidDataException("The Lossless Scaling profile no longer exists.");
 

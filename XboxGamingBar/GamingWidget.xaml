@@ -787,6 +787,24 @@
                         <!-- Dynamic Tiles Container - tiles generated in code-behind -->
                         <StackPanel x:Name="QuickSettingsTilesContainer"/>
 
+                        <Border Style="{StaticResource CardStyle}">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="Lossless Scaling" Style="{StaticResource CardTitleStyle}"/>
+                                <TextBlock x:Name="LosslessProfilesStatus" Text="Load profiles to edit scaling settings."
+                                           Style="{StaticResource CardCaptionStyle}" TextWrapping="Wrap"/>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Button Content="Open app" Click="OpenLosslessApp_Click"/>
+                                    <Button Content="Toggle scaling" Click="ToggleLosslessScaling_Click"/>
+                                </StackPanel>
+                                <Button x:Name="LoadLosslessProfilesButton" Content="Load profiles" Click="LoadLosslessProfiles_Click"/>
+                                <ComboBox x:Name="LosslessProfileSelector" Header="Profile" HorizontalAlignment="Stretch"
+                                          Visibility="Collapsed" SelectionChanged="LosslessProfileSelector_SelectionChanged"/>
+                                <StackPanel x:Name="LosslessProfileFields" Spacing="8"/>
+                                <Button x:Name="SaveLosslessProfileButton" Content="Save profile" Visibility="Collapsed"
+                                        Click="SaveLosslessProfile_Click"/>
+                            </StackPanel>
+                        </Border>
+
                         <!-- Customize Button -->
                         <Button x:Name="QuickSettingsCustomizeButton"
                                 Content="Customize"

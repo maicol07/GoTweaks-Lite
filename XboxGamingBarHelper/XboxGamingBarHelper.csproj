@@ -435,6 +435,7 @@
     <Compile Include="ADLXDepends\SWIGTYPE_p_p_adlx__IADLXDisplayResolutionList.cs" />
     <Compile Include="AMD\AMDManager.cs" />
     <Compile Include="LosslessScaling\LosslessScalingManager.cs" />
+    <Compile Include="LosslessScaling\LosslessScalingManager.Profiles.cs" />
     <Compile Include="LosslessScaling\LosslessScalingProfileFile.cs" />
     <Compile Include="LosslessScaling\Properties\LosslessScalingProperties.cs" />
     <Compile Include="Core\HelperProperties.cs" />

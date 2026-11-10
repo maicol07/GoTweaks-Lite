@@ -655,5 +655,6 @@
         AutoTDPFpptBoost,               // int watts added to the AutoTDP value for FPPT (0-15)
         ViiperSuppressPhysical,
         ViiperRuntimeStatus,
+        LosslessScalingProfiles,
     }
 }

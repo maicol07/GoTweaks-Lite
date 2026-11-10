@@ -31,6 +31,23 @@ public sealed class LosslessScalingProfileFileTests : IDisposable
     }
 
     [Fact]
+    public void ReadUsesFileOrderAndRevisionChangesWhenProfilesAreReordered()
+    {
+        File.WriteAllText(SettingsPath, Settings);
+        var snapshot = new LosslessScalingProfileFile(SettingsPath);
+        Assert.Equal(new[] { "Localized default", "Example" }, snapshot.ReadProfiles().Select(profile => (string?)profile.Element("Title")));
+
+        var reordered = snapshot.Read();
+        var profiles = reordered.Root!.Element("GameProfiles")!;
+        var first = profiles.Elements("Profile").First();
+        first.Remove();
+        profiles.Add(first);
+        reordered.Save(SettingsPath);
+
+        Assert.NotEqual(snapshot.Revision, new LosslessScalingProfileFile(SettingsPath).Revision);
+    }
+
+    [Fact]
     public void SaveRejectsChangesMadeAfterReading()
     {
         File.WriteAllText(SettingsPath, Settings);

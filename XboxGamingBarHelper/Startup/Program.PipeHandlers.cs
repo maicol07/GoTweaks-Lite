@@ -1151,6 +1151,10 @@ namespace XboxGamingBarHelper
                 {
                     response = HandleDAServiceRequest(request);
                 }
+                else if (request.Function == Function.LosslessScalingProfiles)
+                {
+                    response = losslessScalingManager.HandleProfiles(request);
+                }
                 else if (functionValue == (int)Function.CalibrateGyroBias && request.Command == Command.Set)
                 {
                     response = HandleCalibrateGyroBias(request);
