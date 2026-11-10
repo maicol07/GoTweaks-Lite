@@ -583,6 +583,14 @@ namespace XboxGamingBarHelper.ControllerEmulation.Viiper
                 return false;
             }
 
+            // Clear stale imports before reusing this listener's bus IDs.
+            if (!UsbipCli.DetachAll())
+            {
+                Logger.Warn("VIIPER could not verify cleanup of previous USB/IP imports.");
+                service.Dispose();
+                return false;
+            }
+
             if (!service.CreateBus(DefaultBusId))
             {
                 Logger.Warn($"VIIPER failed to create bus {DefaultBusId}; shutting down service.");

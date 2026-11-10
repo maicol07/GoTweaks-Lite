@@ -15,6 +15,7 @@ $harness = Join-Path $temporary.FullName 'ViiperSmoke.exe'
 try {
     Add-Type -OutputAssembly $harness -OutputType ConsoleApplication -TypeDefinition @'
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -27,6 +28,16 @@ public static class ViiperSmoke
         Environment.SetEnvironmentVariable("PATH", directory + ";" + Environment.GetEnvironmentVariable("PATH"));
         var assembly = Assembly.LoadFrom(Path.Combine(directory, "XboxGamingBarHelper.exe"));
         var type = assembly.GetType("XboxGamingBarHelper.ControllerEmulation.Viiper.ViiperService", true);
+        var cli = assembly.GetType("XboxGamingBarHelper.ControllerEmulation.Viiper.UsbipCli", true);
+        var readPorts = cli.GetMethod("ReadViiperPorts", BindingFlags.Static | BindingFlags.NonPublic);
+        var ports = (IEnumerable<KeyValuePair<string, string>>)readPorts.Invoke(null, new object[] {
+            "Port 01: device in use\r\n -> usbip://localhost:3241/1-1\r\n" +
+            "Port 02: device in use\r\n -> usbip://127.0.0.1:3241/1-1\r\n" +
+            "Port 03: device in use\r\n -> usbip://localhost:3240/1-1\r\n" +
+            "Port 04: device in use\r\n -> usbip://192.168.1.2:3241/1-1\r\n"
+        });
+        if (!ports.Select(port => port.Key + "/" + port.Value).SequenceEqual(new[] { "01/1-1", "02/1-1" }))
+            throw new InvalidOperationException("USB/IP parsing must match both loopback aliases and ignore unrelated imports.");
 
         for (int cycle = 1; cycle <= 2; cycle++)
         {

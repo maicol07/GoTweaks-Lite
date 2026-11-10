@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -34,6 +35,9 @@ namespace XboxGamingBarHelper.ControllerEmulation.Viiper
         // Must match ViiperService.Initialize's listen address.
         private const string Host = "127.0.0.1";
         private const int Port = 3241;
+        private static readonly Regex ViiperImport = new Regex(
+            $@"^\s*->\s*usbip://(?:{Regex.Escape(Host)}|localhost):{Port}/(\d+-\d+)\s*$",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 
         private static readonly string[] ExePaths =
         {
@@ -70,63 +74,51 @@ namespace XboxGamingBarHelper.ControllerEmulation.Viiper
             }
 
             string busId = $"{bus}-{device}";
-            if (ListAttachedBusIds(exe).Contains(busId))
+            string output = Run(exe, $"-t {Port} port");
+            if (output == null)
+                return false;
+            if (ReadViiperPorts(output).Any(import => import.Value == busId))
                 return true;
 
             Run(exe, $"-t {Port} attach -r {Host} -b {busId}");
-            return ListAttachedBusIds(exe).Contains(busId);
+            return ReadViiperPorts(Run(exe, $"-t {Port} port")).Any(import => import.Value == busId);
         }
 
         /// <summary>Detaches every UDE port imported from libviiper's loopback server. Best-effort.</summary>
-        public static void DetachAll()
+        public static bool DetachAll()
         {
             string exe = ResolveExe();
-            if (exe == null) return;
+            if (exe == null) return false;
 
             string output = Run(exe, $"-t {Port} port");
-            if (string.IsNullOrEmpty(output)) return;
+            if (output == null) return false;
 
-            // Walk "Port NN:" blocks, collect the numbers of blocks referencing our loopback
-            // server so we never detach an unrelated usbip import the user set up themselves.
-            var ports = new List<string>();
-            string currentPort = null;
-            bool currentIsOurs = false;
-            foreach (var raw in output.Split('\n'))
+            bool detached = true;
+            foreach (var import in ReadViiperPorts(output))
             {
-                var pm = Regex.Match(raw, @"Port\s+(\d+)\s*:");
-                if (pm.Success)
-                {
-                    if (currentPort != null && currentIsOurs) ports.Add(currentPort);
-                    currentPort = pm.Groups[1].Value;
-                    currentIsOurs = false;
-                }
-                if (raw.IndexOf($"{Host}:{Port}/", StringComparison.OrdinalIgnoreCase) >= 0)
-                    currentIsOurs = true;
+                if (Run(exe, $"detach -p {import.Key}") != null)
+                    Logger.Info($"Detached VIIPER USB/IP port {import.Key}.");
+                else
+                    detached = false;
             }
-            if (currentPort != null && currentIsOurs) ports.Add(currentPort);
-
-            foreach (var p in ports)
-            {
-                string o = Run(exe, $"detach -p {p}");
-                Logger.Info($"usbip detach -p {p} -> {(o ?? string.Empty).Trim()}");
-            }
+            return detached;
         }
 
-        private static HashSet<string> ListAttachedBusIds(string exe)
+        internal static IEnumerable<KeyValuePair<string, string>> ReadViiperPorts(string output)
         {
-            var set = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            string output = Run(exe, $"-t {Port} port");
-            if (string.IsNullOrEmpty(output)) return set;
-            // usbip-win2 port output references the remote busid, e.g.
-            //   "1-1 -> usbip://127.0.0.1:3241/1-1"
-            // Only trust busids on lines that mention our loopback server, so an unrelated
-            // usbip import is never mistaken for one of ours (which would skip a real attach).
+            if (string.IsNullOrEmpty(output)) yield break;
+
+            string port = null;
             foreach (var line in output.Split('\n'))
             {
-                var m = Regex.Match(line, Regex.Escape($"{Host}:{Port}/") + @"(\d+-\d+)\b");
-                if (m.Success) set.Add(m.Groups[1].Value);
+                var header = Regex.Match(line, @"^\s*Port\s+(\d+)\s*:");
+                if (header.Success)
+                    port = header.Groups[1].Value;
+
+                var import = ViiperImport.Match(line);
+                if (port != null && import.Success)
+                    yield return new KeyValuePair<string, string>(port, import.Groups[1].Value);
             }
-            return set;
         }
 
         private static string Run(string exe, string args)
@@ -144,7 +136,7 @@ namespace XboxGamingBarHelper.ControllerEmulation.Viiper
                 };
                 using (var proc = Process.Start(psi))
                 {
-                    if (proc == null) return string.Empty;
+                    if (proc == null) return null;
 
                     // Read both streams concurrently, not sequentially - reading stdout to
                     // completion before even starting to drain stderr is the classic .NET
@@ -186,8 +178,8 @@ namespace XboxGamingBarHelper.ControllerEmulation.Viiper
             }
             catch (Exception ex)
             {
-                Logger.Debug($"usbip exec failed ({args}): {ex.Message}");
-                return string.Empty;
+                Logger.Warn(ex, $"usbip exec failed ({args})");
+                return null;
             }
         }
     }
