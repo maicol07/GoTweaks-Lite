@@ -12,7 +12,7 @@ dotnet run --project Tests/Shared.Tests
 
 | Component | Project requirement |
 | --- | --- |
-| Visual Studio 2022 MSBuild | UWP XAML, .NET Native and Desktop Bridge packaging targets |
+| Visual Studio MSBuild | UWP XAML, .NET Native and Desktop Bridge packaging targets |
 | Windows SDK | 10.0.26100.0 for the widget and package projects. Shared also resolves this SDK's `UnionMetadata\10.0.26100.0\Windows.winmd`. |
 | .NET Framework | 4.8 developer tools and targeting pack for the helper |
 | .NET SDK | 10.0 for tests targeting `net10.0-windows10.0.26100.0` |
@@ -24,7 +24,12 @@ passed all 55 Shared tests. The package build stopped at MSB4019 for
 `Microsoft.DesktopBridge.props`. A standalone helper build stopped at
 MSB3644 for the .NET Framework 4.8 reference assemblies.
 
-Add the WinUI application development build tools workload and .NET Framework
+VS 2026 Build Tools 18.11.12328.437 built the Release x64 baseline bundle
+`0.3.2732.0`. When building the packaging project directly, explicitly enable
+`packages.config` restore and pass the solution directory so the helper
+finds its NuGet dependencies in the checkout's `packages` directory.
+
+For VS 2022, add the WinUI application development build tools workload and .NET Framework
 4.8 targeting pack to the existing Build Tools instance. This requires an
 elevated PowerShell. The component IDs come from the
 [Visual Studio 2022 Build Tools catalog](https://learn.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools?view=vs-2022).
@@ -46,8 +51,10 @@ $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.e
 $msbuild = & $vswhere -latest -products '*' -find 'MSBuild\Current\Bin\amd64\MSBuild.exe' |
     Select-Object -First 1
 & $msbuild XboxGamingBarPackage/XboxGamingBarPackage.wapproj /restore /t:Build `
+    /p:RestorePackagesConfig=true "/p:SolutionDir=$PWD/" `
     /p:Configuration=Release /p:Platform=x64 /p:AppxBundlePlatforms=x64 `
     /p:UapAppxPackageBuildMode=SideloadOnly /p:AppxBundle=Always `
+    /p:AppxAutoIncrementPackageRevision=false `
     /p:AppxPackageSigningEnabled=false /p:AppxSymbolPackageEnabled=false
 ```
 
@@ -60,3 +67,9 @@ the checkout. The GUI installer uses `ps2exe`. Verify the build output and
 signature before deployment. The current release script selects the newest
 bundle under `AppPackages` even when MSBuild returns an error, so an old
 bundle can mask a build failure.
+
+For the VS 2026 baseline, SignTool signed the freshly built bundle with
+SHA-256. `Build-Release.ps1 -SkipBuild` with `ps2exe` 1.0.18 assembled
+the signed bundle, public certificate and GUI installer in `dist`.
+The bundle signer matched the exported certificate. Trust and installation
+must be verified on the target.
