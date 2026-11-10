@@ -46,12 +46,24 @@
 param(
     [string]$Thumbprint,
     [string]$Configuration = 'Release',
+    [string]$BundlePath,
+    [string]$OutputDirectory = (Join-Path $PSScriptRoot 'dist'),
     [switch]$SkipBuild,
     [switch]$Zip
 )
 
 $ErrorActionPreference = 'Stop'
 $repo = $PSScriptRoot
+$drivers = @{
+    'USBip-0.9.8.1-x64.exe' = @{
+        Url = 'https://github.com/vadimgrn/usbip-win2/releases/download/v.0.9.8.1/USBip-0.9.8.1-x64.exe'
+        Hash = '38CAD6D4432B52D5BB9409D9AD03B72FDFFC4ADA4CD3A48FBECA1A2752A8518A'
+    }
+    'HidHide_1.5.230_x64.exe' = @{
+        Url = 'https://github.com/nefarius/HidHide/releases/download/v1.5.230.0/HidHide_1.5.230_x64.exe'
+        Hash = 'F4BBBCB82E6258641B887C74BC81C4C5F66E4AA811808DFC304347687B7605F6'
+    }
+}
 
 function Write-Step($m) { Write-Host "==> $m" -ForegroundColor Cyan }
 function Fail($m) { Write-Host "ERROR: $m" -ForegroundColor Red; exit 1 }
@@ -69,6 +81,7 @@ Write-Host "Signing thumbprint: $Thumbprint"
 
 # --- Build the signed bundle ----------------------------------------
 if (-not $SkipBuild) {
+    if ($BundlePath) { Fail '-BundlePath requires -SkipBuild.' }
     # vswhere.exe always installs under the x86 Program Files; probe both, tolerate absence.
     $msbuild = $null
     $vswhere = @("${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe",
@@ -99,47 +112,65 @@ if (-not $SkipBuild) {
 
 # --- Locate the freshest bundle + cer -------------------------------
 $appPkgs = "$repo\XboxGamingBarPackage\AppPackages"
-if (-not (Test-Path $appPkgs)) { Fail "AppPackages folder not found - did the build run?" }
-
-$bundle = Get-ChildItem $appPkgs -Recurse -Filter *.msixbundle |
-          Sort-Object LastWriteTime | Select-Object -Last 1
+$bundle = if ($BundlePath) { Get-Item -LiteralPath $BundlePath } else {
+    if (-not (Test-Path $appPkgs)) { Fail "AppPackages folder not found - did the build run?" }
+    Get-ChildItem $appPkgs -Recurse -Filter *.msixbundle | Sort-Object LastWriteTime | Select-Object -Last 1
+}
 if (-not $bundle) { Fail "No .msixbundle produced under AppPackages." }
-$cer = Get-ChildItem $bundle.DirectoryName -Filter *.cer | Select-Object -First 1
+$cer = Get-Item -LiteralPath ([IO.Path]::ChangeExtension($bundle.FullName, '.cer')) -ErrorAction SilentlyContinue
+if (-not $cer) { $cer = Get-ChildItem $bundle.DirectoryName -Filter *.cer | Select-Object -First 1 }
 if (-not $cer) { Fail "No .cer next to the bundle ($($bundle.DirectoryName))." }
+$signature = Get-AuthenticodeSignature -LiteralPath $bundle.FullName
+if ($signature.SignerCertificate.Thumbprint -ne (Get-PfxCertificate -FilePath $cer.FullName).Thumbprint -or
+    $signature.SignerCertificate.Thumbprint -ne $Thumbprint) { Fail 'The bundle, certificate and requested signer do not match.' }
 
 # Derive a friendly version string from the bundle name (..._<ver>_x64.msixbundle).
-$version = if ($bundle.Name -match '_(\d+\.\d+\.\d+\.\d+)_') { $Matches[1] } else { 'latest' }
+if ($bundle.Name -notmatch '_(\d+\.\d+\.\d+\.\d+)(?:_|\.msixbundle$)') { Fail "Cannot determine bundle version from $($bundle.Name)." }
+$version = $Matches[1]
 Write-Host "Bundle:  $($bundle.Name)  (version $version)"
 
 # --- Assemble dist/ -------------------------------------------------
-$dist = "$repo\dist"
-if (Test-Path $dist) { Remove-Item $dist -Recurse -Force }
-New-Item -ItemType Directory -Path $dist | Out-Null
+$dist = (New-Item -ItemType Directory -Path $OutputDirectory -Force).FullName
 
 $bundleOut = "GoTweaks_$version.msixbundle"
 $cerOut    = "GoTweaks_$version.cer"
-Copy-Item $bundle.FullName (Join-Path $dist $bundleOut)
-Copy-Item $cer.FullName    (Join-Path $dist $cerOut)
+if ($bundle.FullName -ne (Join-Path $dist $bundleOut)) { Copy-Item $bundle.FullName (Join-Path $dist $bundleOut) }
+if ($cer.FullName -ne (Join-Path $dist $cerOut)) { Copy-Item $cer.FullName (Join-Path $dist $cerOut) }
+$driverCache = (New-Item -ItemType Directory -Path "$repo\dist\setup-dependencies" -Force).FullName
+$driverNotices = Join-Path $dist 'Driver-Licenses.txt'
+Copy-Item -LiteralPath "$repo\Installer\Driver-Licenses.txt" -Destination $driverNotices
 
 # --- Compile the GUI installer (the only installer shipped - hard requirement) ---
 Write-Step "Compiling GoTweaks-Setup.exe (GUI installer)"
-if (-not (Get-Module -ListAvailable -Name ps2exe)) {
+if (-not (Get-Module -Name ps2exe) -and -not (Get-Module -ListAvailable -Name ps2exe)) {
     Fail "ps2exe module not installed - GoTweaks-Setup.exe is the only installer shipped, so this is required. Run: Install-Module ps2exe -Scope CurrentUser"
 }
 try {
-    Import-Module ps2exe -ErrorAction Stop
+    if (-not (Get-Module -Name ps2exe)) { Import-Module ps2exe -ErrorAction Stop }
     # Embed the bundle + cert so GoTweaks-Setup.exe is a fully self-contained single-file
     # install - they're extracted to %TEMP%\GoTweaksSetup\ at startup (see
     # Installer/GoTweaksSetupGUI.ps1). Target paths must match that script's $embeddedDir.
     $embedFiles = @{
         '%TEMP%\GoTweaksSetup\GoTweaks.msixbundle' = (Join-Path $dist $bundleOut)
         '%TEMP%\GoTweaksSetup\GoTweaks.cer'         = (Join-Path $dist $cerOut)
+        '%TEMP%\GoTweaksSetup\Driver-Licenses.txt' = $driverNotices
+    }
+    foreach ($driver in $drivers.GetEnumerator()) {
+        $payload = Join-Path $driverCache $driver.Key
+        if (!(Test-Path -LiteralPath $payload) -or (Get-FileHash -LiteralPath $payload).Hash -ne $driver.Value.Hash) {
+            Invoke-WebRequest -Uri $driver.Value.Url -OutFile $payload -UseBasicParsing
+        }
+        if ((Get-FileHash -LiteralPath $payload).Hash -ne $driver.Value.Hash -or
+            (Get-AuthenticodeSignature -LiteralPath $payload).Status -ne 'Valid') {
+            Fail "Verification failed for $($driver.Key)."
+        }
+        $embedFiles["%TEMP%\GoTweaksSetup\$($driver.Key)"] = $payload
     }
     Invoke-ps2exe -inputFile "$repo\Installer\GoTweaksSetupGUI.ps1" -outputFile (Join-Path $dist "GoTweaks-Setup.exe") `
-        -iconFile "$repo\XboxGamingBarHelper\GoTweaks.ico" -noConsole -requireAdmin -STA -noConfigFile `
+        -iconFile "$repo\XboxGamingBarHelper\GoTweaks.ico" -x64 -noConsole -requireAdmin -STA -noConfigFile `
         -title "GoTweaks Lite Setup" -product "GoTweaks Lite" -company "GoTweaks Lite" `
         -version $version -description "GoTweaks Lite installer" -embedFiles $embedFiles | Out-Null
-    Write-Host "   GoTweaks-Setup.exe compiled (embeds the bundle + cert)." -ForegroundColor Green
+    Write-Host "   GoTweaks-Setup.exe compiled (embeds the bundle, certificate and driver installers)." -ForegroundColor Green
 } catch {
     Fail "Failed to compile GoTweaks-Setup.exe: $($_.Exception.Message)"
 }
@@ -150,9 +181,10 @@ Get-ChildItem $dist | Select-Object Name, @{n='Size';e={'{0:N0} KB' -f ($_.Lengt
 # --- Optional zip (archival only - not needed for a normal release upload) ----
 if ($Zip) {
     $zipPath = Join-Path $dist "GoTweaks_$version.zip"
-    Compress-Archive -Path (Join-Path $dist '*') -DestinationPath $zipPath -Force
+    $assets = @($bundleOut, $cerOut, 'GoTweaks-Setup.exe', 'Driver-Licenses.txt') | ForEach-Object { Join-Path $dist $_ }
+    Compress-Archive -LiteralPath $assets -DestinationPath $zipPath -Force
     Write-Host "Zip: $zipPath" -ForegroundColor Green
 }
 
 Write-Host ""
-Write-Host "Release assembled. Upload the 3 files in dist/ as separate GitHub Release assets." -ForegroundColor Green
+Write-Host "Release assembled in $dist." -ForegroundColor Green
