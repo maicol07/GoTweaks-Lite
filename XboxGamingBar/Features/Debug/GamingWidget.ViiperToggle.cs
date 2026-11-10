@@ -13,7 +13,7 @@ namespace XboxGamingBar
                 bool supported = controllerEmulationAvailable.Value;
                 bool available = supported && usbipInstalled.Value;
                 ControllerEmulationEnabledToggle.IsEnabled = available || controllerEmulationEnabled.Value;
-                ViiperSuppressPhysicalToggle.IsEnabled = available && !controllerEmulationEnabled.Value;
+                ViiperSuppressPhysicalToggle.IsEnabled = available;
                 ControllerEmulationStatusText.Text = !supported ? "Controller emulation is unavailable on this device."
                     : !available ? "usbip-win2 0.9.8.1 is required."
                     : viiperRuntimeStatus.Value;

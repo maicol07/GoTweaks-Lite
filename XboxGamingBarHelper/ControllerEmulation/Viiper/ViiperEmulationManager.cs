@@ -280,7 +280,7 @@ namespace XboxGamingBarHelper.ControllerEmulation.Viiper
                         legacyManager?.SuppressionManager?.IsAvailable != true)
                     {
                         settingsManager.ViiperRuntimeStatus.SetValue(
-                            "HidHide is required to hide the physical controller. Turn off VIIPER before changing this option.");
+                            "HidHide is required to hide the physical controller. Install HidHide or change the hide option, then toggle VIIPER off and on.");
                         Logger.Warn("VIIPER activation blocked because HidHide is unavailable.");
                         return;
                     }

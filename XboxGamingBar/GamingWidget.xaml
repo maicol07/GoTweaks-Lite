@@ -3733,15 +3733,36 @@
 
                         <Border x:Name="ControllerEmulationCard" Style="{StaticResource CardStyle}">
                             <StackPanel>
-                                <TextBlock Text="Controller Emulation" Style="{StaticResource CardTitleStyle}"/>
-                                <TextBlock x:Name="ControllerEmulationStatusText" Text="Waiting for helper"
-                                           Style="{StaticResource CardCaptionStyle}" TextWrapping="Wrap"/>
-                                <ToggleSwitch x:Name="ControllerEmulationEnabledToggle" Header="Enable VIIPER"
-                                              Style="{StaticResource ModernToggleStyle}" IsEnabled="False"/>
-                                <ToggleSwitch x:Name="ViiperSuppressPhysicalToggle" Header="Hide native controller HID on next activation"
-                                              Style="{StaticResource ModernToggleStyle}"/>
-                                <TextBlock Text="Requires HidHide. The physical XInput interface can remain visible."
-                                           Style="{StaticResource CardCaptionStyle}" TextWrapping="Wrap"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel VerticalAlignment="Center" Margin="0,0,12,0">
+                                        <TextBlock Text="Enable VIIPER" Style="{StaticResource CardTitleStyle}"/>
+                                        <TextBlock x:Name="ControllerEmulationStatusText" Text="Waiting for helper"
+                                                   Style="{StaticResource CardCaptionStyle}" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                    <ToggleSwitch x:Name="ControllerEmulationEnabledToggle" Grid.Column="1"
+                                                  AutomationProperties.Name="Enable VIIPER"
+                                                  Style="{StaticResource ModernToggleStyle}" IsEnabled="False"/>
+                                </Grid>
+                                <StackPanel Margin="0,12,0,0"
+                                            Visibility="{x:Bind ControllerEmulationEnabledToggle.IsOn, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel VerticalAlignment="Center" Margin="0,0,12,0">
+                                            <TextBlock Text="Hide native controller HID on next activation" TextWrapping="Wrap"/>
+                                            <TextBlock Text="Requires HidHide. The physical XInput interface can remain visible."
+                                                       Style="{StaticResource CardCaptionStyle}" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                        <ToggleSwitch x:Name="ViiperSuppressPhysicalToggle" Grid.Column="1"
+                                                      AutomationProperties.Name="Hide native controller HID on next activation"
+                                                      Style="{StaticResource ModernToggleStyle}"/>
+                                    </Grid>
                                 <StackPanel x:Name="ControllerEmulationContent" Visibility="Collapsed" Margin="0,12,0,0">
                                 <StackPanel x:Name="GyroActivationContent" Visibility="Collapsed">
                                     <Grid>
@@ -4887,6 +4908,7 @@
                                         </StackPanel>
                                     </StackPanel>
                                 </Border>
+                            </StackPanel>
                             </StackPanel>
                             </StackPanel>
                         </Border>
