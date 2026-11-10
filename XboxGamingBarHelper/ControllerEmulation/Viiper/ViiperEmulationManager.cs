@@ -276,6 +276,15 @@ namespace XboxGamingBarHelper.ControllerEmulation.Viiper
                 if (backendOn && emulationEnabled)
                 {
                     if (guideOnlyMode) StopGuideOnly();
+                    if (!isRunning && settingsManager.ViiperSuppressPhysical.Value &&
+                        legacyManager?.SuppressionManager?.IsAvailable != true)
+                    {
+                        settingsManager.ViiperRuntimeStatus.SetValue(
+                            "HidHide is required to hide the physical controller. Turn off VIIPER before changing this option.");
+                        Logger.Warn("VIIPER activation blocked because HidHide is unavailable.");
+                        return;
+                    }
+
                     settingsManager.ViiperRuntimeStatus.SetValue("Starting virtual controller...");
                     settingsManager.ViiperRuntimeStatus.SetValue(StartLocked()
                         ? $"Active: {activeDeviceType}"
@@ -941,10 +950,6 @@ namespace XboxGamingBarHelper.ControllerEmulation.Viiper
             activeSecondaryDeviceId = 0;
             isRunning = false;
             Logger.Info("VIIPER emulation manager stopped");
-
-            // Emulation just went away — tell Labs to re-spin the dedicated Guide-only
-            // ViGEm pad if a Guide action is still mapped.
-            Program.NotifyGuideRouteChanged();
         }
 
         protected override void Dispose(bool disposing)

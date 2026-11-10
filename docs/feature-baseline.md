@@ -56,6 +56,16 @@ Check the virtual device and its input in `joy.cpl`. Disable VIIPER and
 check that the virtual device disappears while the physical pad still works.
 Test native gyro on a supported target separately.
 
+On a target without HidHide, turn VIIPER off, select physical suppression
+and try enabling VIIPER. Expect a HidHide prerequisite message and no virtual
+device. Turn VIIPER off again, clear suppression and confirm that the virtual
+controller can attach normally.
+
+The official [HidHide 1.5.230 x64 installer](https://github.com/nefarius/HidHide/releases/tag/v1.5.230.0)
+passed Authenticode validation. SignTool verified its extracted INF and SYS
+against the Microsoft kernel-policy catalog. The current VIIPER hide mode
+targets native HID and can leave the physical XInput interface visible.
+
 ## Legion Space service check
 
 On a Legion with `DAService` running in standard automatic mode, open the

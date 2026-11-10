@@ -3738,9 +3738,9 @@
                                            Style="{StaticResource CardCaptionStyle}" TextWrapping="Wrap"/>
                                 <ToggleSwitch x:Name="ControllerEmulationEnabledToggle" Header="Enable VIIPER"
                                               Style="{StaticResource ModernToggleStyle}" IsEnabled="False"/>
-                                <ToggleSwitch x:Name="ViiperSuppressPhysicalToggle" Header="Hide physical controller on next activation"
+                                <ToggleSwitch x:Name="ViiperSuppressPhysicalToggle" Header="Hide native controller HID on next activation"
                                               Style="{StaticResource ModernToggleStyle}"/>
-                                <TextBlock Text="Requires HidHide. Keep a touchscreen, keyboard or mouse available."
+                                <TextBlock Text="Requires HidHide. The physical XInput interface can remain visible."
                                            Style="{StaticResource CardCaptionStyle}" TextWrapping="Wrap"/>
                                 <StackPanel x:Name="ControllerEmulationContent" Visibility="Collapsed" Margin="0,12,0,0">
                                 <StackPanel x:Name="GyroActivationContent" Visibility="Collapsed">
