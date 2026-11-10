@@ -1166,6 +1166,18 @@
                             </Grid>
                         </Border>
 
+                        <Border Style="{StaticResource CardStyle}">
+                            <ComboBox x:Name="PerformanceOverlayPresetComboBox" Header="Overlay preset (RTSS)"
+                                      Style="{StaticResource ModernComboBoxStyle}" HorizontalAlignment="Stretch"
+                                      SelectedIndex="0" SelectionChanged="OSDPreset_Changed">
+                                <ComboBoxItem Content="Custom" Tag="Custom"/>
+                                <ComboBoxItem Content="Basic" Tag="Basic"/>
+                                <ComboBoxItem Content="Detailed" Tag="Detailed"/>
+                                <ComboBoxItem Content="Full" Tag="Full"/>
+                                <ComboBoxItem Content="Original" Tag="Original"/>
+                            </ComboBox>
+                        </Border>
+
                         <!-- FPS Limit Card -->
                         <Border Style="{StaticResource CardStyle}">
                             <StackPanel>
@@ -2424,6 +2436,17 @@
                                     <TextBlock Text="Layout"
                                                FontSize="13" FontWeight="SemiBold" Foreground="#B9C0CC"
                                                Margin="0,0,0,8"/>
+                                    <ComboBox x:Name="OSDPresetComboBox" Header="Preset"
+                                              Style="{StaticResource ModernComboBoxStyle}" HorizontalAlignment="Stretch"
+                                              Margin="0,0,0,8" SelectedIndex="0" SelectionChanged="OSDPreset_Changed">
+                                        <ComboBoxItem Content="Custom" Tag="Custom"/>
+                                        <ComboBoxItem Content="Basic" Tag="Basic"/>
+                                        <ComboBoxItem Content="Detailed" Tag="Detailed"/>
+                                        <ComboBoxItem Content="Full" Tag="Full"/>
+                                        <ComboBoxItem Content="Original" Tag="Original"/>
+                                    </ComboBox>
+                                    <TextBlock Text="Columns, item selection and order are used by Custom."
+                                               Style="{StaticResource CardCaptionStyle}" TextWrapping="Wrap" Margin="0,0,0,8"/>
 
                                     <!-- Style: Modern (calmer type, soft colors, fixed-width numbers) or Classic -->
                                     <Grid Margin="0,0,0,8">

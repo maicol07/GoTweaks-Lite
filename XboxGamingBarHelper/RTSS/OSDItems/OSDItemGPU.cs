@@ -28,12 +28,19 @@ namespace XboxGamingBarHelper.RTSS.OSDItems
 
         protected override string GetModernOSDString(int osdLevel)
         {
-            // "GPU 61%" - usage only (see OSDItemCPU).
             string value = MValueColor();
             string text = MLabel("GPU", "C6B6FF");
 
             float usage = gpuUsageSensor.Value;
             text += usage < 0 ? $"<C={value}>--" : MNum(usage, 2, value) + MUnit("%");
+
+            float wattage = gpuWattageSensor.Value;
+            if (wattage >= 0)
+                text += $"<C={value}>  " + MNum(wattage, 1, value, oneDecimal: true) + MUnit("W");
+
+            float temperature = gpuTemperatureSensor.Value;
+            if (temperature > 0)
+                text += $"<C={value}>  " + MNum(temperature, 2, MHighIsBad(temperature, 80, 90)) + MUnit("°C");
 
             if (showClock && gpuClockSensor.Value > 0)
             {

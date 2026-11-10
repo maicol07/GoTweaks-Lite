@@ -28,13 +28,19 @@ namespace XboxGamingBarHelper.RTSS.OSDItems
 
         protected override string GetModernOSDString(int osdLevel)
         {
-            // "CPU 45%" - usage only. Wattage and temperature are no longer shown (the SoC
-            // temperature has its own item); the clock still appears if that item is enabled.
             string value = MValueColor();
             string text = MLabel("CPU", "7ED5FF");
 
             float usage = cpuUsageSensor.Value;
             text += usage < 0 ? $"<C={value}>--" : MNum(usage, 2, value) + MUnit("%");
+
+            float wattage = cpuWattageSensor.Value;
+            if (wattage >= 0)
+                text += $"<C={value}>  " + MNum(wattage, 1, value, oneDecimal: true) + MUnit("W");
+
+            float temperature = cpuTemperatureSensor.Value;
+            if (temperature > 0)
+                text += $"<C={value}>  " + MNum(temperature, 2, MHighIsBad(temperature, 80, 90)) + MUnit("°C");
 
             if (showClock && cpuClockSensor.Value > 0)
             {

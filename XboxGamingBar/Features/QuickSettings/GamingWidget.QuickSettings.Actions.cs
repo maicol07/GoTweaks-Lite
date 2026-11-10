@@ -616,10 +616,12 @@ namespace XboxGamingBar
             {
                 if (osd != null)
                 {
-                    int currentLevel = (int)osd.Value;
-                    int nextLevel = currentLevel > 0 ? 0 : 1;
-                    osd.SetValue(nextLevel);
-                    Logger.Info($"RTSS Performance Overlay toggled from {currentLevel} to {nextLevel}");
+                    string[] presets = { "Basic", "Detailed", "Full", "Original", "Custom" };
+                    int nextIndex = osd.Value > 0 ? Array.IndexOf(presets, osdPreset) + 1 : 0;
+                    bool isOn = nextIndex < presets.Length;
+                    if (isOn) SetOSDPreset(presets[nextIndex]);
+                    PerformanceOverlayToggle.IsOn = isOn;
+                    UpdateQuickSettingsTileStates();
                 }
             }
         }

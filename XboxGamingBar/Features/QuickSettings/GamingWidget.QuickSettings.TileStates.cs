@@ -499,7 +499,7 @@ namespace XboxGamingBar
                     {
                         int level = (int)(osd?.Value ?? 0);
                         bool isOn = level > 0;
-                        overlayTile.StateText.Text = isOn ? "On" : "Off";
+                        overlayTile.StateText.Text = isOn ? osdPreset : "Off";
                         overlayTile.StateText.Foreground = isOn ? accentForeground : offForeground;
                         SetTileAccentBar(overlayTile, isOn);
                         overlayTile.TileButton.Background = isOn ? tileOnBrush : tileOffBrush;

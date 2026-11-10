@@ -57,6 +57,15 @@ namespace XboxGamingBar
 
         // Modern style (calmer type, softer colors, fixed-width numbers) vs the classic look.
         private bool osdModernStyle = true;
+        private string osdPreset = "Custom";
+
+        private static readonly Dictionary<string, (string Items, int Columns)> osdPresets =
+            new Dictionary<string, (string, int)>
+            {
+                ["Basic"] = ("FPS,Battery,Time", 3),
+                ["Detailed"] = ("Time,FPS,Battery,CPU,GPU,SoCTemp,TDPLimits,Fan,FrameBudget,FrametimeGraph", 1),
+                ["Original"] = ("FPS,CPU,GPU,Memory,VRAM,SoCTemp,TDPLimits,Battery,Time", 3),
+            };
 
         private string osdCustomTags = "";
 
@@ -330,6 +339,38 @@ namespace XboxGamingBar
 
         private bool isLoadingOSDStyle = false;
 
+        private void OSDPreset_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            if (!osdConfigLoaded || isLoadingOSDConfig || !(sender is ComboBox combo) ||
+                !(combo.SelectedItem is ComboBoxItem item)) return;
+
+            SetOSDPreset((string)item.Tag);
+        }
+
+        private void SyncOSDPresetSelectors()
+        {
+            foreach (var combo in new[] { OSDPresetComboBox, PerformanceOverlayPresetComboBox })
+            {
+                if (combo == null) continue;
+                foreach (ComboBoxItem item in combo.Items)
+                {
+                    if ((string)item.Tag != osdPreset) continue;
+                    combo.SelectedItem = item;
+                    break;
+                }
+            }
+        }
+
+        private void SetOSDPreset(string preset)
+        {
+            if (preset == osdPreset) return;
+            osdPreset = preset;
+            SyncOSDPresetSelectors();
+            SaveOSDConfigToStorage();
+            SendOSDConfigToHelper();
+            UpdateQuickSettingsTileStates();
+        }
+
         private void OSDModernStyleToggle_Toggled(object sender, RoutedEventArgs e)
         {
             // The switch is declared On in the XAML, so it raises Toggled while the widget is still
@@ -441,6 +482,7 @@ namespace XboxGamingBar
                 settings.Values["OSD_CustomTags"] = osdCustomTags;
                 settings.Values["OSD_Columns"] = osdColumns;
                 settings.Values["OSD_Order"] = string.Join(",", osdItemOrder);
+                settings.Values["OSD_Preset"] = osdPreset;
 
                 foreach (var colorItem in osdItemLabelColors)
                 {
@@ -562,6 +604,17 @@ namespace XboxGamingBar
                     amdOverlayLevel = amdLevel;
                 }
 
+                if (settings.Values.TryGetValue("OSD_Preset", out object presetValue) && presetValue is string preset)
+                {
+                    foreach (ComboBoxItem item in OSDPresetComboBox.Items)
+                    {
+                        if ((string)item.Tag != preset) continue;
+                        osdPreset = preset;
+                        break;
+                    }
+                }
+                SyncOSDPresetSelectors();
+
                 // Update layout UI
                 UpdateOSDLayoutUI();
                 LoadOSDOptions();
@@ -596,24 +649,28 @@ namespace XboxGamingBar
                 configParts.Add($"FrametimeGraphPinned:{(frametimeGraphPinned ? "1" : "0")}");
                 configParts.Add($"Style:{(osdModernStyle ? "Modern" : "Classic")}");
 
-                // Add item configuration
-                var enabledItems = new List<string>();
-                foreach (var item in osdItemConfig)
+                string enabledItems = string.Join(",", osdItemConfig.Where(item => item.Value).Select(item => item.Key));
+                string order = string.Join(",", osdItemOrder);
+                int columns = osdColumns;
+                if (osdPresets.TryGetValue(osdPreset, out var preset))
                 {
-                    if (item.Value)
-                    {
-                        enabledItems.Add(item.Key);
-                    }
+                    enabledItems = order = preset.Items;
+                    columns = preset.Columns;
                 }
-                configParts.Add($"Items:{string.Join(",", enabledItems)}");
+                else if (osdPreset == "Full")
+                {
+                    enabledItems = order = string.Join(",", osdItemDisplayNames.Keys);
+                    columns = 1;
+                }
+                configParts.Add($"Items:{enabledItems}");
 
                 if (!string.IsNullOrWhiteSpace(osdCustomTags))
                 {
                     configParts.Add($"Custom:{osdCustomTags}");
                 }
 
-                configParts.Add($"Columns:{osdColumns}");
-                configParts.Add($"Order:{string.Join(",", osdItemOrder)}");
+                configParts.Add($"Columns:{columns}");
+                configParts.Add($"Order:{order}");
 
                 foreach (var colorItem in osdItemLabelColors)
                 {
