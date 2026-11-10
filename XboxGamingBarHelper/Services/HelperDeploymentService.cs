@@ -108,6 +108,10 @@ namespace XboxGamingBarHelper.Services
             "NLog.config",
             "NLog.dll",
             "Shared.dll",
+            "libviiper.dll",
+            "GamepadMotion.dll",
+            "Nefarius.Drivers.HidHide.dll",
+            "Nefarius.Utilities.DeviceManagement.dll",
             // Managed DLLs
             "LibreHardwareMonitorLib.dll",
             "HidSharp.dll",

@@ -39,6 +39,11 @@ namespace XboxGamingBarHelper
     {
         private static readonly object DAServiceLock = new object();
 
+        internal static void NotifyGuideRouteChanged()
+        {
+            viiperEmulationManager?.OnGuideRouteChanged();
+        }
+
         private static global::Windows.Foundation.Collections.ValueSet HandleDAServiceRequest(PipeMessage request)
         {
             var response = new global::Windows.Foundation.Collections.ValueSet

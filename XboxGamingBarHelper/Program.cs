@@ -19,6 +19,8 @@ using Windows.System;
 using Windows.UI.Input.Preview.Injection;
 using XboxGamingBarHelper.AMD;
 using XboxGamingBarHelper.Core;
+using XboxGamingBarHelper.ControllerEmulation;
+using XboxGamingBarHelper.ControllerEmulation.Viiper;
 using XboxGamingBarHelper.Devices.Libraries.GPD;
 using XboxGamingBarHelper.Devices.Libraries.Legion;
 using XboxGamingBarHelper.LosslessScaling;
@@ -108,6 +110,8 @@ namespace XboxGamingBarHelper
         private static LosslessScalingManager losslessScalingManager;
         private static SettingsManager settingsManager;
         private static LegionManager legionManager;
+        private static ControllerEmulationManager controllerEmulationManager;
+        private static ViiperEmulationManager viiperEmulationManager;
         private static GPDManager gpdManager;
         private static XboxGamingBarHelper.AutoTDP.AutoTDPManager autoTDPManager;
         private static List<IManager> Managers;
@@ -319,6 +323,8 @@ namespace XboxGamingBarHelper
                 if (!peerGone)
                 {
                     Logger.Warn("Another XboxGamingBarHelper.exe is still running after wait. Exiting to prevent duplicate.");
+                    try { viiperEmulationManager?.Stop(); }
+                    catch (Exception ex) { Logger.Warn(ex, "VIIPER shutdown failed"); }
                     LogManager.Flush();
                     return;
                 }
@@ -770,6 +776,7 @@ namespace XboxGamingBarHelper
                 pipeServer.Connected += (s, e) =>
                 {
                     Logger.Info("Widget connected via Named Pipe");
+                    SendGyroBiasOffsetToWidget();
                     // Snapshot every saved per-mode fan curve + unlock state so the
                     // widget can populate its cache and let the user edit any mode
                     // without changing the running power mode.
@@ -1048,6 +1055,8 @@ namespace XboxGamingBarHelper
 
             // Set PerformanceManager reference in LegionManager for CPU temperature sensor access
             legionManager.SetPerformanceManager(performanceManager);
+            controllerEmulationManager = new ControllerEmulationManager(legionManager, gpdManager, settingsManager);
+            viiperEmulationManager = new ViiperEmulationManager(settingsManager, controllerEmulationManager, legionManager);
 
             // Set PerformanceManager reference in GPDManager for software fan curve CPU temperature access
             gpdManager?.SetPerformanceManager(performanceManager);
@@ -1214,6 +1223,29 @@ namespace XboxGamingBarHelper
                 losslessScalingManager.LosslessScalingEnabled,
                 settingsManager.AutoStartRTSS,
                 settingsManager.UseManufacturerWMI,
+                settingsManager.EmulationBackend,
+                settingsManager.UsbipInstalled,
+                settingsManager.ViiperDeviceType,
+                settingsManager.ViiperInputSource,
+                settingsManager.ViiperGyroSource,
+                settingsManager.ViiperJoyconGyroPerHalf,
+                settingsManager.ViiperAlternateGyroConvention,
+                settingsManager.ViiperSteamSubDevice,
+                settingsManager.ViiperSonySubDevice,
+                settingsManager.ViiperNintendoSubDevice,
+                settingsManager.ViiperGuideButtonMode,
+                settingsManager.ViiperSwapRumbleMotors,
+                settingsManager.ViiperRumbleIntensity,
+                settingsManager.ViiperMirrorLightbarToStick,
+                settingsManager.ViiperStickGyroEnabled,
+                settingsManager.ViiperStickTriggerConfig,
+                settingsManager.ViiperStickTriggerPreviewEnabled,
+                settingsManager.ViiperGyroAxisMapX,
+                settingsManager.ViiperGyroAxisMapY,
+                settingsManager.ViiperGyroAxisMapZ,
+                viiperEmulationManager.StickTriggerLiveSample,
+                settingsManager.ViiperSuppressPhysical,
+                settingsManager.ViiperRuntimeStatus,
                 settingsManager.GoTweaksLightingConfig,
                 settingsManager.GoTweaksHapticsConfig,
                 settingsManager.LegionControllerSleepMinutes,
@@ -1345,6 +1377,7 @@ namespace XboxGamingBarHelper
             };
 
             // Initialize properties
+            propertyList.AddRange(controllerEmulationManager.Properties.Cast<FunctionalProperty>());
             properties = new HelperProperties(propertyList.ToArray());
 
             Logger.Info("Initialize callbacks.");
@@ -1669,6 +1702,11 @@ namespace XboxGamingBarHelper
         private static void DisposeManagers()
         {
             Logger.Info("Disposing all managers...");
+            try { viiperEmulationManager?.Dispose(); }
+            catch (Exception ex) { Logger.Warn(ex, "VIIPER disposal failed"); }
+            viiperEmulationManager = null;
+            controllerEmulationManager?.Dispose();
+            controllerEmulationManager = null;
             if (Managers != null)
             {
                 // Create a copy of the list to avoid "collection was modified" exception

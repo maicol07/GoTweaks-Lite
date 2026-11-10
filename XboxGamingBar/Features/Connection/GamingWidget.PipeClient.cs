@@ -129,6 +129,14 @@ namespace XboxGamingBar
                     return;
                 }
 
+                if (message.TryGetValue("Function", out object gyroFunction) &&
+                    Convert.ToInt32(gyroFunction) == (int)Shared.Enums.Function.GyroBiasOffset)
+                {
+                    if (message.TryGetValue("Content", out object gyroContent) && gyroContent is string json)
+                        OnGyroBiasOffsetReceived(json);
+                    return;
+                }
+
                 // Check for Quick Metrics push from helper
                 if (message.TryGetValue("Function", out object qmFuncObj) &&
                     Convert.ToInt32(qmFuncObj) == (int)Shared.Enums.Function.QuickMetrics)

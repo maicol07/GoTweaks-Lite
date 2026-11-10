@@ -59,6 +59,129 @@ namespace XboxGamingBarHelper.Settings
             get { return legionControllerSleepMinutes; }
         }
 
+        private readonly EmulationBackendProperty emulationBackend;
+        public EmulationBackendProperty EmulationBackend
+        {
+            get { return emulationBackend; }
+        }
+
+        private readonly UsbipInstalledProperty usbipInstalled;
+        public UsbipInstalledProperty UsbipInstalled
+        {
+            get { return usbipInstalled; }
+        }
+
+        private readonly ViiperDeviceTypeProperty viiperDeviceType;
+        public ViiperDeviceTypeProperty ViiperDeviceType
+        {
+            get { return viiperDeviceType; }
+        }
+
+        private readonly ViiperInputSourceProperty viiperInputSource;
+        public ViiperInputSourceProperty ViiperInputSource
+        {
+            get { return viiperInputSource; }
+        }
+
+        private readonly ViiperGyroSourceProperty viiperGyroSource;
+        public ViiperGyroSourceProperty ViiperGyroSource
+        {
+            get { return viiperGyroSource; }
+        }
+
+        private readonly ViiperJoyconGyroPerHalfProperty viiperJoyconGyroPerHalf;
+        public ViiperJoyconGyroPerHalfProperty ViiperJoyconGyroPerHalf
+        {
+            get { return viiperJoyconGyroPerHalf; }
+        }
+
+        private readonly ViiperAlternateGyroConventionProperty viiperAlternateGyroConvention;
+        public ViiperAlternateGyroConventionProperty ViiperAlternateGyroConvention
+        {
+            get { return viiperAlternateGyroConvention; }
+        }
+
+        private readonly ViiperSteamSubDeviceProperty viiperSteamSubDevice;
+        public ViiperSteamSubDeviceProperty ViiperSteamSubDevice
+        {
+            get { return viiperSteamSubDevice; }
+        }
+
+        private readonly ViiperSonySubDeviceProperty viiperSonySubDevice;
+        public ViiperSonySubDeviceProperty ViiperSonySubDevice
+        {
+            get { return viiperSonySubDevice; }
+        }
+
+        private readonly ViiperNintendoSubDeviceProperty viiperNintendoSubDevice;
+        public ViiperNintendoSubDeviceProperty ViiperNintendoSubDevice
+        {
+            get { return viiperNintendoSubDevice; }
+        }
+
+        private readonly ViiperGuideButtonModeProperty viiperGuideButtonMode;
+        public ViiperGuideButtonModeProperty ViiperGuideButtonMode
+        {
+            get { return viiperGuideButtonMode; }
+        }
+
+        private readonly ViiperSwapRumbleMotorsProperty viiperSwapRumbleMotors;
+        public ViiperSwapRumbleMotorsProperty ViiperSwapRumbleMotors
+        {
+            get { return viiperSwapRumbleMotors; }
+        }
+
+        private readonly ViiperRumbleIntensityProperty viiperRumbleIntensity;
+        public ViiperRumbleIntensityProperty ViiperRumbleIntensity
+        {
+            get { return viiperRumbleIntensity; }
+        }
+
+        private readonly ViiperMirrorLightbarToStickProperty viiperMirrorLightbarToStick;
+        public ViiperMirrorLightbarToStickProperty ViiperMirrorLightbarToStick
+        {
+            get { return viiperMirrorLightbarToStick; }
+        }
+
+        private readonly ViiperStickGyroEnabledProperty viiperStickGyroEnabled;
+        public ViiperStickGyroEnabledProperty ViiperStickGyroEnabled
+        {
+            get { return viiperStickGyroEnabled; }
+        }
+
+        private readonly ViiperStickTriggerConfigProperty viiperStickTriggerConfig;
+        public ViiperStickTriggerConfigProperty ViiperStickTriggerConfig
+        {
+            get { return viiperStickTriggerConfig; }
+        }
+
+        private readonly ViiperStickTriggerPreviewEnabledProperty viiperStickTriggerPreviewEnabled;
+        public ViiperStickTriggerPreviewEnabledProperty ViiperStickTriggerPreviewEnabled
+        {
+            get { return viiperStickTriggerPreviewEnabled; }
+        }
+
+        private readonly ViiperGyroAxisMapProperty viiperGyroAxisMapX;
+        public ViiperGyroAxisMapProperty ViiperGyroAxisMapX
+        {
+            get { return viiperGyroAxisMapX; }
+        }
+
+        private readonly ViiperGyroAxisMapProperty viiperGyroAxisMapY;
+        public ViiperGyroAxisMapProperty ViiperGyroAxisMapY
+        {
+            get { return viiperGyroAxisMapY; }
+        }
+
+        private readonly ViiperGyroAxisMapProperty viiperGyroAxisMapZ;
+        public ViiperGyroAxisMapProperty ViiperGyroAxisMapZ
+        {
+            get { return viiperGyroAxisMapZ; }
+        }
+
+        public ViiperSuppressPhysicalProperty ViiperSuppressPhysical { get; }
+        public HelperProperty<string, SettingsManager> ViiperRuntimeStatus { get; }
+
         // Profile Detection Settings
         private readonly ProfileMatchByExeProperty profileMatchByExe;
         public ProfileMatchByExeProperty ProfileMatchByExe
@@ -92,6 +215,29 @@ namespace XboxGamingBarHelper.Settings
             goTweaksLightingConfig = new GoTweaksLightingConfigProperty(this);
             goTweaksHapticsConfig = new GoTweaksHapticsConfigProperty(this);
             legionControllerSleepMinutes = new LegionControllerSleepMinutesProperty(this);
+            emulationBackend = new EmulationBackendProperty(this);
+            usbipInstalled = new UsbipInstalledProperty(this);
+            viiperDeviceType = new ViiperDeviceTypeProperty(this);
+            viiperInputSource = new ViiperInputSourceProperty(this);
+            viiperGyroSource = new ViiperGyroSourceProperty(this);
+            viiperJoyconGyroPerHalf = new ViiperJoyconGyroPerHalfProperty(this);
+            viiperAlternateGyroConvention = new ViiperAlternateGyroConventionProperty(this);
+            viiperSteamSubDevice = new ViiperSteamSubDeviceProperty(this);
+            viiperSonySubDevice = new ViiperSonySubDeviceProperty(this);
+            viiperNintendoSubDevice = new ViiperNintendoSubDeviceProperty(this);
+            viiperGuideButtonMode = new ViiperGuideButtonModeProperty(this);
+            viiperSwapRumbleMotors = new ViiperSwapRumbleMotorsProperty(this);
+            viiperRumbleIntensity = new ViiperRumbleIntensityProperty(this);
+            viiperMirrorLightbarToStick = new ViiperMirrorLightbarToStickProperty(this);
+            viiperStickGyroEnabled = new ViiperStickGyroEnabledProperty(this);
+            viiperStickTriggerConfig = new ViiperStickTriggerConfigProperty(this);
+            viiperStickTriggerPreviewEnabled = new ViiperStickTriggerPreviewEnabledProperty(this);
+            viiperGyroAxisMapX = new ViiperGyroAxisMapProperty(this, Shared.Enums.Function.Viiper_GyroAxisMapX, "ViiperGyroAxisMapX", "X");
+            viiperGyroAxisMapY = new ViiperGyroAxisMapProperty(this, Shared.Enums.Function.Viiper_GyroAxisMapY, "ViiperGyroAxisMapY", "Y");
+            viiperGyroAxisMapZ = new ViiperGyroAxisMapProperty(this, Shared.Enums.Function.Viiper_GyroAxisMapZ, "ViiperGyroAxisMapZ", "Z");
+            ViiperSuppressPhysical = new ViiperSuppressPhysicalProperty(this);
+            ViiperRuntimeStatus = new HelperProperty<string, SettingsManager>(
+                "Off", null, Shared.Enums.Function.ViiperRuntimeStatus, this);
             // Profile Detection Settings
             profileMatchByExe = new ProfileMatchByExeProperty(this);
             profileCustomGamePath = new ProfileCustomGamePathProperty(this);

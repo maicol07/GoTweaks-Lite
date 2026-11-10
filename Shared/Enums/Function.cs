@@ -653,5 +653,7 @@
         // the widget takes from the Custom card's SPPT Boost / FPPT Boost sliders. Widget -> helper.
         AutoTDPSpptBoost,               // int watts added to the AutoTDP value for SPPT (0-10)
         AutoTDPFpptBoost,               // int watts added to the AutoTDP value for FPPT (0-15)
+        ViiperSuppressPhysical,
+        ViiperRuntimeStatus,
     }
 }

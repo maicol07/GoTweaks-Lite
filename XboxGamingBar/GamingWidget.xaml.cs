@@ -645,6 +645,39 @@ namespace XboxGamingBar
         private readonly ControllerConnectedLeftProperty controllerConnectedLeft;
         private readonly ControllerConnectedRightProperty controllerConnectedRight;
         private readonly ControllerVidPidProperty controllerVidPid;
+        private readonly ControllerEmulationAvailableProperty controllerEmulationAvailable;
+        private readonly ControllerEmulationEnabledProperty controllerEmulationEnabled;
+        private readonly ControllerEmulationGyroActivationModeProperty controllerEmulationGyroActivationMode;
+        private readonly ControllerEmulationGyroActivationButtonProperty controllerEmulationGyroActivationButton;
+        private readonly ControllerEmulationStickInvertXProperty controllerEmulationStickInvertX;
+        private readonly ControllerEmulationStickInvertYProperty controllerEmulationStickInvertY;
+        private readonly ControllerEmulationStickSelectProperty controllerEmulationStickSelect;
+        private readonly ControllerEmulationStickSensitivityV2Property controllerEmulationStickSensitivityV2;
+        private readonly ControllerEmulationStickOrientationV2Property controllerEmulationStickOrientationV2;
+        private readonly ControllerEmulationStickConversionProperty controllerEmulationStickConversion;
+        private readonly EmulationBackendProperty emulationBackend;
+        private readonly UsbipInstalledProperty usbipInstalled;
+        private readonly ViiperStringComboProperty viiperDeviceType;
+        private readonly ViiperStringComboProperty viiperInputSource;
+        private readonly ViiperStringComboProperty viiperGyroSource;
+        private readonly ViiperStringComboProperty viiperSteamSubDevice;
+        private readonly ViiperStringComboProperty viiperSonySubDevice;
+        private readonly ViiperStringComboProperty viiperNintendoSubDevice;
+        private readonly ViiperStringComboProperty viiperGuideButtonMode;
+        private readonly ViiperSwapRumbleMotorsProperty viiperSwapRumbleMotors;
+        private readonly ViiperMirrorLightbarToStickProperty viiperMirrorLightbarToStick;
+        private readonly ViiperStickGyroEnabledProperty viiperStickGyroEnabled;
+        private readonly ViiperJoyconGyroPerHalfProperty viiperJoyconGyroPerHalf;
+        private readonly ViiperAlternateGyroConventionProperty viiperAlternateGyroConvention;
+        private readonly ViiperRumbleIntensityProperty viiperRumbleIntensity;
+        private readonly ViiperStringComboProperty viiperGyroAxisMapX;
+        private readonly ViiperStringComboProperty viiperGyroAxisMapY;
+        private readonly ViiperStringComboProperty viiperGyroAxisMapZ;
+        private readonly ViiperStickTriggerConfigProperty viiperStickTriggerConfig;
+        private readonly ViiperStickTriggerPreviewEnabledProperty viiperStickTriggerPreviewEnabled;
+        private readonly ViiperStickTriggerLiveSampleProperty viiperStickTriggerLiveSample;
+        private readonly WidgetToggleProperty viiperSuppressPhysical;
+        private readonly WidgetProperty<string> viiperRuntimeStatus;
         private readonly LegionControllerModeProperty legionControllerMode;
         private readonly ControllerDeviceStatusProperty controllerDeviceStatus;
 
@@ -1167,6 +1200,46 @@ namespace XboxGamingBar
             controllerConnectedLeft = new ControllerConnectedLeftProperty();
             controllerConnectedRight = new ControllerConnectedRightProperty();
             controllerVidPid = new ControllerVidPidProperty();
+            controllerEmulationAvailable = new ControllerEmulationAvailableProperty(this);
+            controllerEmulationEnabled = new ControllerEmulationEnabledProperty(ControllerEmulationEnabledToggle, this);
+            controllerEmulationGyroActivationMode = new ControllerEmulationGyroActivationModeProperty(ControllerEmulationGyroActivationModeComboBox, this);
+            controllerEmulationGyroActivationButton = new ControllerEmulationGyroActivationButtonProperty(ControllerEmulationGyroActivationButtonComboBox, this);
+            controllerEmulationStickInvertX = new ControllerEmulationStickInvertXProperty(ControllerEmulationStickInvertXToggle, this);
+            controllerEmulationStickInvertY = new ControllerEmulationStickInvertYProperty(ControllerEmulationStickInvertYToggle, this);
+            controllerEmulationStickSelect = new ControllerEmulationStickSelectProperty(ControllerEmulationStickSelectComboBox, this);
+            controllerEmulationStickSensitivityV2 = new ControllerEmulationStickSensitivityV2Property(StickSensitivityV2Slider, this);
+            controllerEmulationStickOrientationV2 = new ControllerEmulationStickOrientationV2Property(StickOrientationV2ComboBox, this);
+            controllerEmulationStickConversion = new ControllerEmulationStickConversionProperty(StickConversionComboBox, this);
+            emulationBackend = new EmulationBackendProperty(null, this);
+            usbipInstalled = new UsbipInstalledProperty();
+            viiperDeviceType = new ViiperStringComboProperty("xbox360", Shared.Enums.Function.Viiper_DeviceType, ViiperDeviceTypeComboBox, this);
+            viiperInputSource = new ViiperStringComboProperty("XInput", Shared.Enums.Function.Viiper_InputSource, ViiperInputSourceComboBox, this);
+            viiperGyroSource = new ViiperStringComboProperty("Left", Shared.Enums.Function.Viiper_GyroSource, ViiperGyroSourceComboBox, this);
+            viiperSteamSubDevice = new ViiperStringComboProperty("steam-deck", Shared.Enums.Function.Viiper_SteamSubDevice, ViiperSteamSubDeviceComboBox, this);
+            viiperSonySubDevice = new ViiperStringComboProperty("dualsense-edge", Shared.Enums.Function.Viiper_SonySubDevice, ViiperSonySubDeviceComboBox, this);
+            viiperNintendoSubDevice = new ViiperStringComboProperty("switchpro", Shared.Enums.Function.Viiper_NintendoSubDevice, ViiperNintendoSubDeviceComboBox, this);
+            viiperGuideButtonMode = new ViiperStringComboProperty("Native", Shared.Enums.Function.Viiper_GuideButtonMode, ViiperGuideButtonModeComboBox, this);
+            viiperSwapRumbleMotors = new ViiperSwapRumbleMotorsProperty(ViiperSwapRumbleMotorsToggle, this);
+            viiperMirrorLightbarToStick = new ViiperMirrorLightbarToStickProperty(ViiperMirrorLightbarToStickToggle, this);
+            viiperStickGyroEnabled = new ViiperStickGyroEnabledProperty(ViiperStickGyroEnabledToggle, this);
+            viiperJoyconGyroPerHalf = new ViiperJoyconGyroPerHalfProperty(ViiperJoyconGyroPerHalfToggle, this);
+            viiperAlternateGyroConvention = new ViiperAlternateGyroConventionProperty(ViiperAlternateGyroConventionToggle, this);
+            viiperRumbleIntensity = new ViiperRumbleIntensityProperty(100, ViiperRumbleIntensitySlider, this);
+            viiperGyroAxisMapX = new ViiperStringComboProperty("X", Shared.Enums.Function.Viiper_GyroAxisMapX, ViiperGyroAxisMapXComboBox, this);
+            viiperGyroAxisMapY = new ViiperStringComboProperty("Y", Shared.Enums.Function.Viiper_GyroAxisMapY, ViiperGyroAxisMapYComboBox, this);
+            viiperGyroAxisMapZ = new ViiperStringComboProperty("Z", Shared.Enums.Function.Viiper_GyroAxisMapZ, ViiperGyroAxisMapZComboBox, this);
+            viiperStickTriggerConfig = new ViiperStickTriggerConfigProperty(string.Empty);
+            viiperStickTriggerPreviewEnabled = new ViiperStickTriggerPreviewEnabledProperty();
+            viiperStickTriggerLiveSample = new ViiperStickTriggerLiveSampleProperty();
+            viiperSuppressPhysical = new WidgetToggleProperty(false, Shared.Enums.Function.ViiperSuppressPhysical, ViiperSuppressPhysicalToggle, this);
+            viiperRuntimeStatus = new WidgetProperty<string>("Off", null, Shared.Enums.Function.ViiperRuntimeStatus);
+            viiperRuntimeStatus.PropertyChanged += (s, e) => UpdateViiperAvailability();
+            controllerEmulationAvailable.SetAvailabilityCallback(_ => UpdateViiperAvailability());
+            usbipInstalled.PropertyChanged += (s, e) => UpdateViiperAvailability();
+            controllerEmulationEnabled.PropertyChanged += (s, e) => UpdateViiperAvailability();
+            viiperDeviceType.PropertyChanged += (s, e) => UpdateViiperConfigVisibility();
+            viiperNintendoSubDevice.PropertyChanged += (s, e) => UpdateViiperConfigVisibility();
+            ViiperRumbleIntensitySlider.ValueChanged += (s, e) => ViiperRumbleIntensityValue.Text = ((int)e.NewValue) + "%";
             legionControllerMode = new LegionControllerModeProperty();
             controllerDeviceStatus = new ControllerDeviceStatusProperty();
 
@@ -1365,6 +1438,39 @@ namespace XboxGamingBar
                 controllerConnectedLeft,
                 controllerConnectedRight,
                 controllerVidPid,
+                controllerEmulationAvailable,
+                controllerEmulationEnabled,
+                controllerEmulationGyroActivationMode,
+                controllerEmulationGyroActivationButton,
+                controllerEmulationStickInvertX,
+                controllerEmulationStickInvertY,
+                controllerEmulationStickSelect,
+                controllerEmulationStickSensitivityV2,
+                controllerEmulationStickOrientationV2,
+                controllerEmulationStickConversion,
+                emulationBackend,
+                usbipInstalled,
+                viiperDeviceType,
+                viiperInputSource,
+                viiperGyroSource,
+                viiperSteamSubDevice,
+                viiperSonySubDevice,
+                viiperNintendoSubDevice,
+                viiperGuideButtonMode,
+                viiperSwapRumbleMotors,
+                viiperMirrorLightbarToStick,
+                viiperStickGyroEnabled,
+                viiperJoyconGyroPerHalf,
+                viiperAlternateGyroConvention,
+                viiperRumbleIntensity,
+                viiperGyroAxisMapX,
+                viiperGyroAxisMapY,
+                viiperGyroAxisMapZ,
+                viiperStickTriggerConfig,
+                viiperStickTriggerPreviewEnabled,
+                viiperStickTriggerLiveSample,
+                viiperSuppressPhysical,
+                viiperRuntimeStatus,
                 legionControllerMode,
                 controllerDeviceStatus,
                 // Device capability properties (for UI visibility)
@@ -1546,6 +1652,9 @@ namespace XboxGamingBar
 
             // Initialize Legion remap and gesture settings.
             InitializeLabsSection();
+            InitStickTriggerControls();
+            InitStickTriggerPreview();
+            UpdateViiperConfigVisibility();
         }
 
         private void SubscribeToQuickSettingsPropertyChanges()

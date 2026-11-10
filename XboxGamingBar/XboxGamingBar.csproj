@@ -206,6 +206,22 @@
     <Compile Include="Data\Base\WidgetToggleProperty.cs" />
     <Compile Include="Event\BackgroundTaskCancellationEventArgs.cs" />
     <Compile Include="IPC\NamedPipeClient.cs" />
+    <Compile Include="Data\Controller\ControllerEmulationProperties.cs" />
+    <Compile Include="Data\EmulationBackendProperty.cs" />
+    <Compile Include="Data\UsbipInstalledProperty.cs" />
+    <Compile Include="Data\ViiperAlternateGyroConventionProperty.cs" />
+    <Compile Include="Data\ViiperJoyconGyroPerHalfProperty.cs" />
+    <Compile Include="Data\ViiperMirrorLightbarToStickProperty.cs" />
+    <Compile Include="Data\ViiperRumbleIntensityProperty.cs" />
+    <Compile Include="Data\ViiperStickGyroEnabledProperty.cs" />
+    <Compile Include="Data\ViiperStickTriggerConfigProperty.cs" />
+    <Compile Include="Data\ViiperStickTriggerLiveSampleProperty.cs" />
+    <Compile Include="Data\ViiperStickTriggerPreviewEnabledProperty.cs" />
+    <Compile Include="Data\ViiperStringComboProperty.cs" />
+    <Compile Include="Data\ViiperSwapRumbleMotorsProperty.cs" />
+    <Compile Include="Features\Debug\GamingWidget.ViiperStickGyro.cs" />
+    <Compile Include="Features\Debug\GamingWidget.ViiperToggle.cs" />
+    <Compile Include="GamingWidget.ViiperStickTrigger.cs" />
     <Compile Include="GamingWidget.xaml.cs">
       <DependentUpon>GamingWidget.xaml</DependentUpon>
     </Compile>

@@ -35,11 +35,26 @@ The removed installer pinned
 The maintainer warns that this release can cause memory corruption and a
 BSOD. Exclude it from restoration. Evaluate
 [usbip-win2 0.9.8.1](https://github.com/vadimgrn/usbip-win2/releases/tag/v.0.9.8.1)
-against the pinned VIIPER revision. Its x64 installer's Authenticode signature
-validated on the development PC. Verify the driver catalog, certificate-store
-changes and attach/detach behavior separately. Keep the emulator on
+against the pinned VIIPER revision. Its x64 installer and client passed
+Authenticode validation on the development PC. SignTool also verified both
+extracted INF/SYS pairs against their Microsoft kernel-policy catalogs.
+The extracted installer contained no PFX or CER files. Verify attach/detach,
+the certificate stores and driver rollback on the target. Keep the emulator on
 loopback as in the historical implementation. Verify a non-controller input
 method and rollback before enabling optional physical-device suppression.
+
+After an x64 Release build, run the managed driver-free smoke test from
+the repository root:
+
+```powershell
+powershell.exe -NoProfile -File Tests/Smoke-Viiper.ps1 -HelperDirectory XboxGamingBarHelper/bin/x64/Release
+```
+
+For the first Legion smoke test, use the widget's Legion tab, leave
+physical controller suppression off, select Xbox 360 and enable VIIPER.
+Check the virtual device and its input in `joy.cpl`. Disable VIIPER and
+check that the virtual device disappears while the physical pad still works.
+Test native gyro on a supported target separately.
 
 ## Legion Space service check
 
