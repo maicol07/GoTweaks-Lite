@@ -351,12 +351,22 @@ namespace XboxGamingBarHelper
         {
             if (pipeMsg.Extra.TryGetValue("LaunchUrl", out object urlValue) && urlValue is string url)
             {
+                // The helper is elevated: ShellExecute of an arbitrary string would run any local
+                // file with high integrity. Only web URLs are allowed.
+                if (!Uri.TryCreate(url, UriKind.Absolute, out Uri uri)
+                    || (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
+                {
+                    Logger.Warn($"Pipe: LaunchUrl rejected (not an http/https URL): {url}");
+                    SendPipeAck(pipeMsg.RequestId, false);
+                    return;
+                }
+
                 try
                 {
-                    Logger.Info($"Pipe: LaunchUrl request received: {url}");
+                    Logger.Info($"Pipe: LaunchUrl request received: {uri.AbsoluteUri}");
                     System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                     {
-                        FileName = url,
+                        FileName = uri.AbsoluteUri,
                         UseShellExecute = true
                     });
                     Logger.Info("Pipe: URL launched successfully");
