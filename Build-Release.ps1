@@ -88,7 +88,8 @@ if (-not $SkipBuild) {
                  "${env:ProgramFiles}\Microsoft Visual Studio\Installer\vswhere.exe") |
                Where-Object { Test-Path $_ } | Select-Object -First 1
     if ($vswhere) {
-        $msbuild = & $vswhere -latest -prerelease -find MSBuild\**\Bin\MSBuild.exe 2>$null |
+        # -products '*' also matches standalone Build Tools installs.
+        $msbuild = & $vswhere -latest -prerelease -products '*' -find MSBuild\**\Bin\MSBuild.exe 2>$null |
                    Select-Object -First 1
     }
     if (-not $msbuild) {
