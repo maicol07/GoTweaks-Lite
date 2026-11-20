@@ -167,6 +167,15 @@ namespace XboxGamingBarHelper.Power
 
         public static bool GetCpuBoostMode(bool isAC)
         {
+            return (ReadCpuBoostModeValue(isAC) ?? 0) != 0;
+        }
+
+        /// <summary>
+        /// Reads the raw processor performance boost mode index (0 Disabled, 1 Enabled,
+        /// 2 Aggressive, 3-6 efficient / guaranteed variants). Null when the read fails.
+        /// </summary>
+        public static uint? ReadCpuBoostModeValue(bool isAC)
+        {
             var scheme = GetActiveScheme();
             var subgroup = PowerGuids.GUID_PROCESSOR_SETTINGS_SUBGROUP;
             var setting = PowerGuids.GUID_PROCESSOR_PERFBOOST_MODE;
@@ -178,31 +187,40 @@ namespace XboxGamingBarHelper.Power
             if (status != 0)
             {
                 Logger.Error("Can't get CPU Boost Mode?");
-                return false;
+                return null;
             }
 
-            return result != 0;
+            return result;
         }
 
         public static void SetCpuBoostMode(bool isAC, bool enabled)
         {
-            // Save original values before first modification (for clean uninstall)
+            // Save original values before first modification (for clean uninstall). The raw
+            // mode is kept so uninstall can restore e.g. Enabled (1) instead of Aggressive (2).
             try
             {
-                bool currentAC = GetCpuBoostMode(true);
-                bool currentDC = GetCpuBoostMode(false);
-                SystemRestoreService.SaveOriginalCpuBoost(currentAC, currentDC);
+                uint? currentAC = ReadCpuBoostModeValue(true);
+                uint? currentDC = ReadCpuBoostModeValue(false);
+                if (currentAC.HasValue && currentDC.HasValue)
+                {
+                    SystemRestoreService.SaveOriginalCpuBoost(currentAC.Value, currentDC.Value);
+                }
             }
             catch (Exception ex)
             {
                 Logger.Warn($"Failed to save original CPU Boost values: {ex.Message}");
             }
 
+            Logger.Info($"Set CPU Boost to {(enabled ? "Aggressive" : "Disabled")}.");
+            WriteCpuBoostModeValue(isAC, enabled ? 2u : 0u);
+        }
+
+        /// <summary>Writes a raw processor performance boost mode index to the active plan.</summary>
+        public static void WriteCpuBoostModeValue(bool isAC, uint value)
+        {
             var scheme = GetActiveScheme();
             var subgroup = PowerGuids.GUID_PROCESSOR_SETTINGS_SUBGROUP;
             var setting = PowerGuids.GUID_PROCESSOR_PERFBOOST_MODE;
-            uint value = (uint)(enabled ? 2 : 0);
-            Logger.Info($"Set CPU Boost to {(enabled ? "Aggressive" : "Disabled")}.");
 
             var status = isAC ? PowrProf.PowerWriteACValueIndex(IntPtr.Zero, ref scheme, ref subgroup, ref setting, value)
                 : PowrProf.PowerWriteDCValueIndex(IntPtr.Zero, ref scheme, ref subgroup, ref setting, value);

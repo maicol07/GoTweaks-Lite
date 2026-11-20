@@ -45,6 +45,9 @@ namespace XboxGamingBarHelper.Services
             // CPU Boost original values
             public bool? OriginalCpuBoostAC { get; set; }
             public bool? OriginalCpuBoostDC { get; set; }
+            // Raw boost mode index; files written by older builds only have the bools above.
+            public uint? OriginalCpuBoostModeAC { get; set; }
+            public uint? OriginalCpuBoostModeDC { get; set; }
             public bool CpuBoostSaved { get; set; } = false;
 
             // EPP original values
@@ -154,7 +157,7 @@ namespace XboxGamingBarHelper.Services
         /// Saves the original CPU Boost values before first modification.
         /// Call this BEFORE changing CPU Boost for the first time.
         /// </summary>
-        public static void SaveOriginalCpuBoost(bool currentAC, bool currentDC)
+        public static void SaveOriginalCpuBoost(uint currentAC, uint currentDC)
         {
             Initialize();
 
@@ -164,8 +167,10 @@ namespace XboxGamingBarHelper.Services
                 return;
             }
 
-            _restoreData.OriginalCpuBoostAC = currentAC;
-            _restoreData.OriginalCpuBoostDC = currentDC;
+            _restoreData.OriginalCpuBoostModeAC = currentAC;
+            _restoreData.OriginalCpuBoostModeDC = currentDC;
+            _restoreData.OriginalCpuBoostAC = currentAC != 0;
+            _restoreData.OriginalCpuBoostDC = currentDC != 0;
             _restoreData.CpuBoostSaved = true;
             Save();
 
@@ -416,9 +421,20 @@ namespace XboxGamingBarHelper.Services
             {
                 try
                 {
-                    Logger.Info($"Uninstall: Restoring CPU Boost to AC={_restoreData.OriginalCpuBoostAC}, DC={_restoreData.OriginalCpuBoostDC}");
-                    PowerManager.SetCpuBoostMode(true, _restoreData.OriginalCpuBoostAC.Value);
-                    if (_restoreData.OriginalCpuBoostDC.HasValue)
+                    Logger.Info($"Uninstall: Restoring CPU Boost to AC={_restoreData.OriginalCpuBoostModeAC?.ToString() ?? _restoreData.OriginalCpuBoostAC.ToString()}, DC={_restoreData.OriginalCpuBoostModeDC?.ToString() ?? _restoreData.OriginalCpuBoostDC.ToString()}");
+                    if (_restoreData.OriginalCpuBoostModeAC.HasValue)
+                    {
+                        PowerManager.WriteCpuBoostModeValue(true, _restoreData.OriginalCpuBoostModeAC.Value);
+                    }
+                    else
+                    {
+                        PowerManager.SetCpuBoostMode(true, _restoreData.OriginalCpuBoostAC.Value);
+                    }
+                    if (_restoreData.OriginalCpuBoostModeDC.HasValue)
+                    {
+                        PowerManager.WriteCpuBoostModeValue(false, _restoreData.OriginalCpuBoostModeDC.Value);
+                    }
+                    else if (_restoreData.OriginalCpuBoostDC.HasValue)
                     {
                         PowerManager.SetCpuBoostMode(false, _restoreData.OriginalCpuBoostDC.Value);
                     }
