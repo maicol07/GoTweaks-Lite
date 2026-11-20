@@ -207,6 +207,13 @@ namespace XboxGamingBarHelper.Settings
             get { return profileBlacklistPaths; }
         }
 
+        // Game Bar: show the GoTweaks widget first (the device-maker slot left of Home)
+        private readonly GameBarFirstSlotProperty gameBarFirstSlot;
+        public GameBarFirstSlotProperty GameBarFirstSlot
+        {
+            get { return gameBarFirstSlot; }
+        }
+
         protected SettingsManager() : base()
         {
             autoStartRTSS = new AutoStartRTSSProperty(this);
@@ -243,6 +250,7 @@ namespace XboxGamingBarHelper.Settings
             profileCustomGamePath = new ProfileCustomGamePathProperty(this);
             profileGamesOnly = new ProfileGamesOnlyProperty(this);
             profileBlacklistPaths = new ProfileBlacklistPathsProperty(this);
+            gameBarFirstSlot = new GameBarFirstSlotProperty(this);
         }
     }
 }

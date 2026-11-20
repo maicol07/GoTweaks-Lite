@@ -656,5 +656,14 @@
         ViiperSuppressPhysical,
         ViiperRuntimeStatus,
         LosslessScalingProfiles,
+
+        // AutoTDP "Fast response": jump straight to an estimated wattage when FPS is far from the
+        // target, then fine-tune. Global, saved by the helper. Both directions.
+        AutoTDPFastResponse,            // bool (default true)
+
+        // Puts the GoTweaks widget in Game Bar's device-maker slot (left of Home, normally Legion
+        // Space / Armoury Crate) via HKLM GamingConfiguration\OEMGameBarWidget. Saved by the
+        // helper, which keeps the replaced value and restores it when turned off. Both directions.
+        GameBarFirstSlot,               // bool (default false)
     }
 }

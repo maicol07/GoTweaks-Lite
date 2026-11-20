@@ -1182,6 +1182,7 @@ namespace XboxGamingBarHelper
                 autoTDPManager.PauseWhenUnfocused,
                 autoTDPManager.SpptBoost,
                 autoTDPManager.FpptBoost,
+                autoTDPManager.FastResponse,
                 profileManager.PerGameProfile,
                 profileManager.DeleteGameProfile,
                 powerManager.CPUBoost,
@@ -1254,6 +1255,7 @@ namespace XboxGamingBarHelper
                 settingsManager.ProfileCustomGamePath,
                 settingsManager.ProfileGamesOnly,
                 settingsManager.ProfileBlacklistPaths,
+                settingsManager.GameBarFirstSlot,
                 systemManager.ForegroundApp,
                 // GPD specific properties
                 gpdManager.GPDDetected,
