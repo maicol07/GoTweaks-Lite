@@ -146,6 +146,16 @@ namespace XboxGamingBarHelper.IPC
                     if (cancellationToken.IsCancellationRequested)
                         break;
 
+                    // The ACL lets any process of this user and any AppContainer open the pipe,
+                    // and the helper is elevated: only accept GoTweaks' own package.
+                    if (!IsGoTweaksPackageClient(_pipeServer, out string clientInfo))
+                    {
+                        Logger.Warn($"Rejected pipe client: {clientInfo}");
+                        _pipeServer.Dispose();
+                        _pipeServer = null;
+                        continue;
+                    }
+
                     _isConnected = true;
                     _reader = new StreamReader(_pipeServer, Encoding.UTF8);
                     _writer = new StreamWriter(_pipeServer, Encoding.UTF8) { AutoFlush = false };
@@ -230,6 +240,60 @@ namespace XboxGamingBarHelper.IPC
                 4096, // inBufferSize
                 4096, // outBufferSize
                 pipeSecurity);
+        }
+
+        private const uint PROCESS_QUERY_LIMITED_INFORMATION = 0x1000;
+        private const int ERROR_SUCCESS = 0;
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool GetNamedPipeClientProcessId(Microsoft.Win32.SafeHandles.SafePipeHandle pipe, out uint clientProcessId);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern IntPtr OpenProcess(uint desiredAccess, bool inheritHandle, uint processId);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool CloseHandle(IntPtr handle);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
+        private static extern int GetPackageFamilyName(IntPtr process, ref uint packageFamilyNameLength, StringBuilder packageFamilyName);
+
+        /// <summary>
+        /// True when the connected client process runs with GoTweaks' package identity
+        /// (<see cref="Shared.Constants.PackageConstants.PackageFamilyName"/>).
+        /// </summary>
+        private static bool IsGoTweaksPackageClient(NamedPipeServerStream pipe, out string clientInfo)
+        {
+            if (!GetNamedPipeClientProcessId(pipe.SafePipeHandle, out uint pid))
+            {
+                clientInfo = $"unknown process (GetNamedPipeClientProcessId error {Marshal.GetLastWin32Error()})";
+                return false;
+            }
+
+            IntPtr process = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
+            if (process == IntPtr.Zero)
+            {
+                clientInfo = $"PID {pid} (OpenProcess error {Marshal.GetLastWin32Error()})";
+                return false;
+            }
+
+            try
+            {
+                uint length = 256;
+                var familyName = new StringBuilder((int)length);
+                int result = GetPackageFamilyName(process, ref length, familyName);
+                if (result != ERROR_SUCCESS)
+                {
+                    clientInfo = $"PID {pid} (no package identity, error {result})";
+                    return false;
+                }
+
+                clientInfo = $"PID {pid} ({familyName})";
+                return string.Equals(familyName.ToString(), Shared.Constants.PackageConstants.PackageFamilyName, StringComparison.OrdinalIgnoreCase);
+            }
+            finally
+            {
+                CloseHandle(process);
+            }
         }
 
         /// <summary>
