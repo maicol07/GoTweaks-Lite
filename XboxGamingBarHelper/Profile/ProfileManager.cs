@@ -292,14 +292,28 @@ namespace XboxGamingBarHelper.Profile
                 return false;
             }
 
-            // Find the profile by name
+            // Find the profile by name: exact first, then the normalized match TryGetProfile uses,
+            // so a widget name variant ("Game: Title" vs "Game Title") doesn't orphan the XML.
+            // The global profile can sit in the cache too and must never be deleted.
             GameId? targetKey = null;
             foreach (var kvp in gameProfiles)
             {
-                if (string.Equals(kvp.Key.Name, gameName, StringComparison.OrdinalIgnoreCase))
+                if (!kvp.Value.IsGlobalProfile && string.Equals(kvp.Key.Name, gameName, StringComparison.OrdinalIgnoreCase))
                 {
                     targetKey = kvp.Key;
                     break;
+                }
+            }
+            if (!targetKey.HasValue)
+            {
+                var normalizedName = NormalizeName(gameName);
+                foreach (var kvp in gameProfiles)
+                {
+                    if (!kvp.Value.IsGlobalProfile && NormalizeName(kvp.Key.Name) == normalizedName)
+                    {
+                        targetKey = kvp.Key;
+                        break;
+                    }
                 }
             }
 
