@@ -525,6 +525,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Uwp.Controls.Segmented">
+      <Version>8.2.251219</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Uwp.Controls.SettingsControls">
+      <Version>8.2.251219</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.Gaming.XboxGameBar">
       <Version>7.3.2506120</Version>
     </PackageReference>
