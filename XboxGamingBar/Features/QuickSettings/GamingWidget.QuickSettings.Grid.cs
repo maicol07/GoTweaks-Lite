@@ -334,7 +334,7 @@ namespace XboxGamingBar
             else
             {
                 SelectedTileIndicator.Visibility = Visibility.Visible;
-                SelectedTileText.Text = $"Selected: {tile.Name}\nTap another tile to swap, or tap again to toggle visibility";
+                SelectedTileText.Text = string.Format(LocalizedString("CodeF_29", "Selected: {0}\nTap another tile to swap, or tap again to toggle visibility"), tile.Name);
 
                 // Show delete button for custom shortcuts (identified by having a CustomShortcut value)
                 if (DeleteSelectedTileButton != null)

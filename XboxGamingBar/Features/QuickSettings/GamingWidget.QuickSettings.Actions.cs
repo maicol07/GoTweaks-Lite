@@ -704,7 +704,7 @@ namespace XboxGamingBar
             // Update display text when toggle is enabled
             if (FPSLimitToggle.IsOn && FPSLimitValue != null)
             {
-                FPSLimitValue.Text = $"{(int)FPSLimitSlider.Value} FPS";
+                FPSLimitValue.Text = string.Format(LocalizedString("CodeF_28", "{0} FPS"), (int)FPSLimitSlider.Value);
             }
 
             if (fpsLimit == null || isApplyingHelperUpdate) return;
@@ -730,7 +730,7 @@ namespace XboxGamingBar
                 // Update display text with the final value
                 if (FPSLimitValue != null)
                 {
-                    FPSLimitValue.Text = $"{limit} FPS";
+                    FPSLimitValue.Text = string.Format(LocalizedString("CodeF_28", "{0} FPS"), limit);
                 }
 
                 fpsLimit.SetValue(limit);
@@ -758,7 +758,7 @@ namespace XboxGamingBar
             // Always update the display text
             if (FPSLimitValue != null)
             {
-                FPSLimitValue.Text = $"{(int)e.NewValue} FPS";
+                FPSLimitValue.Text = string.Format(LocalizedString("CodeF_28", "{0} FPS"), (int)e.NewValue);
             }
 
             if (fpsLimit == null || isApplyingHelperUpdate) return;

@@ -270,7 +270,7 @@ namespace XboxGamingBar
                     {
                         if (ScrollRemapStatusText != null)
                         {
-                            ScrollRemapStatusText.Text = $"{actionName}: Please select keys";
+                            ScrollRemapStatusText.Text = string.Format(LocalizedString("CodeF_1", "{0}: Please select keys"), actionName);
                             ScrollRemapStatusText.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 200, 100));
                         }
                         return;
@@ -283,7 +283,7 @@ namespace XboxGamingBar
                     {
                         if (ScrollRemapStatusText != null)
                         {
-                            ScrollRemapStatusText.Text = $"{actionName}: Please enter a command";
+                            ScrollRemapStatusText.Text = string.Format(LocalizedString("CodeF_2", "{0}: Please enter a command"), actionName);
                             ScrollRemapStatusText.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 200, 100));
                         }
                         return;
@@ -317,7 +317,7 @@ namespace XboxGamingBar
                             else
                             {
                                 string errorMsg = "Controller not found";
-                                ScrollRemapStatusText.Text = $"{actionName}: Failed - {errorMsg}";
+                                ScrollRemapStatusText.Text = string.Format(LocalizedString("CodeF_3", "{0}: Failed - {1}"), actionName, errorMsg);
                                 ScrollRemapStatusText.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 100, 100));
                                 actionComboBox.SelectedIndex = 0; // Reset to Disabled
                             }

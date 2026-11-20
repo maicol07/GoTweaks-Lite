@@ -173,7 +173,7 @@ namespace XboxGamingBar
             // so this creation-time value is final.
             var stateText = new TextBlock
             {
-                Text = tile.IsAction ? "Action" : "Off",
+                Text = tile.IsAction ? TileStateAction : TileStateOff,
                 FontSize = 12,
                 Foreground = tile.IsAction ? tileActionBrush : new SolidColorBrush(Windows.UI.Color.FromArgb(255, 136, 136, 136)),
                 HorizontalAlignment = HorizontalAlignment.Left,
@@ -481,7 +481,7 @@ namespace XboxGamingBar
                 if (qsTileMap.TryGetValue("AutoTDP", out var autoTdpTile) && autoTdpTile.TileButton != null)
                 {
                     bool autoTdpOn = AutoTDPToggle?.IsOn == true;
-                    autoTdpTile.StateText.Text = autoTdpOn ? "On" : "Off";
+                    autoTdpTile.StateText.Text = autoTdpOn ? TileStateOn : TileStateOff;
                     autoTdpTile.StateText.Foreground = autoTdpOn ? accentForeground : offForeground;
                     SetTileAccentBar(autoTdpTile, autoTdpOn);
                     autoTdpTile.TileButton.Background = autoTdpOn ? tileOnBrush : tileOffBrush;
@@ -511,7 +511,7 @@ namespace XboxGamingBar
                 {
                     if (osdProvider == 1) // AMD
                     {
-                        string amdLevelText = amdOverlayLevel > 0 ? $"AMD {amdOverlayLevel}" : "Off";
+                        string amdLevelText = amdOverlayLevel > 0 ? $"AMD {amdOverlayLevel}" : TileStateOff;
                         overlayTile.StateText.Text = amdLevelText;
                         overlayTile.StateText.Foreground = amdOverlayLevel > 0 ? accentForeground : offForeground;
                         SetTileAccentBar(overlayTile, amdOverlayLevel > 0);
@@ -521,7 +521,7 @@ namespace XboxGamingBar
                     {
                         int level = (int)(osd?.Value ?? 0);
                         bool isOn = level > 0;
-                        overlayTile.StateText.Text = isOn ? osdPreset : "Off";
+                        overlayTile.StateText.Text = isOn ? osdPreset : TileStateOff;
                         overlayTile.StateText.Foreground = isOn ? accentForeground : offForeground;
                         SetTileAccentBar(overlayTile, isOn);
                         overlayTile.TileButton.Background = isOn ? tileOnBrush : tileOffBrush;
@@ -554,7 +554,7 @@ namespace XboxGamingBar
                 if (qsTileMap.TryGetValue("FPSLimit", out var fpsLimitTile) && fpsLimitTile.TileButton != null)
                 {
                     int limit = fpsLimit?.Value ?? 0;
-                    string limitText = limit == 0 ? "Off" : $"{limit}";
+                    string limitText = limit == 0 ? TileStateOff : $"{limit}";
                     fpsLimitTile.StateText.Text = limitText;
                     fpsLimitTile.StateText.Foreground = limit > 0 ? accentForeground : offForeground;
                     SetTileAccentBar(fpsLimitTile, limit > 0);
@@ -576,7 +576,7 @@ namespace XboxGamingBar
                     }
                     else
                     {
-                        rotationTile.StateText.Text = "Built-in Only";
+                        rotationTile.StateText.Text = LocalizedString("Code_BuiltInOnly", "Built-in Only");
                         rotationTile.StateText.Foreground = offForeground;
                         SetTileAccentBar(rotationTile, false);
                         rotationTile.TileButton.Background = tileOffBrush;
@@ -588,7 +588,7 @@ namespace XboxGamingBar
                 if (qsTileMap.TryGetValue("LosslessScaling", out var lsTile) && lsTile.TileButton != null)
                 {
                     bool enabled = losslessScalingEnabled?.Value ?? false;
-                    lsTile.StateText.Text = enabled ? "On" : "Off";
+                    lsTile.StateText.Text = enabled ? TileStateOn : TileStateOff;
                     lsTile.StateText.Foreground = enabled ? accentForeground : offForeground;
                     SetTileAccentBar(lsTile, enabled);
                     lsTile.TileButton.Background = enabled ? tileOnBrush : tileOffBrush;
@@ -598,7 +598,7 @@ namespace XboxGamingBar
                 if (qsTileMap.TryGetValue("CPUBoost", out var boostTile) && boostTile.TileButton != null)
                 {
                     bool enabled = cpuBoost?.Value ?? false;
-                    boostTile.StateText.Text = enabled ? "On" : "Off";
+                    boostTile.StateText.Text = enabled ? TileStateOn : TileStateOff;
                     boostTile.StateText.Foreground = enabled ? accentForeground : offForeground;
                     SetTileAccentBar(boostTile, enabled);
                     boostTile.TileButton.Background = enabled ? tileOnBrush : tileOffBrush;
@@ -626,7 +626,7 @@ namespace XboxGamingBar
                 // the same neutral as every other tile.
                 if (qsTileMap.TryGetValue("Keyboard", out var keyboardTile) && keyboardTile.TileButton != null)
                 {
-                    keyboardTile.StateText.Text = "Open";
+                    keyboardTile.StateText.Text = LocalizedString("Code_Open", "Open");
                     keyboardTile.StateText.Foreground = tileActionBrush;
                     if (keyboardTile.AccentBar != null) keyboardTile.AccentBar.Background = tileActionBrush;
                     keyboardTile.TileButton.Background = tileOffBrush;
@@ -650,7 +650,7 @@ namespace XboxGamingBar
                     if (legionGoDetected?.Value == true)
                     {
                         bool enabled = legionTouchpadEnabled?.Value ?? false;
-                        touchpadTile.StateText.Text = enabled ? "On" : "Off";
+                        touchpadTile.StateText.Text = enabled ? TileStateOn : TileStateOff;
                         touchpadTile.StateText.Foreground = enabled ? accentForeground : offForeground;
                         SetTileAccentBar(touchpadTile, enabled);
                         touchpadTile.TileButton.Background = enabled ? tileOnBrush : tileOffBrush;
@@ -663,7 +663,7 @@ namespace XboxGamingBar
                     if (legionGoDetected?.Value == true)
                     {
                         bool enabled = touchscreenEnabled?.Value ?? true;
-                        touchscreenTile.StateText.Text = enabled ? "On" : "Off";
+                        touchscreenTile.StateText.Text = enabled ? TileStateOn : TileStateOff;
                         touchscreenTile.StateText.Foreground = enabled ? accentForeground : offForeground;
                         SetTileAccentBar(touchscreenTile, enabled);
                         touchscreenTile.TileButton.Background = enabled ? tileOnBrush : tileOffBrush;
@@ -679,12 +679,12 @@ namespace XboxGamingBar
                         string modeText;
                         switch (mode)
                         {
-                            case 0: modeText = "Off"; break;
+                            case 0: modeText = TileStateOff; break;
                             case 1: modeText = "Static"; break;
                             case 2: modeText = "Breathing"; break;
                             case 3: modeText = "Rainbow"; break;
                             case 4: modeText = "Spiral"; break;
-                            default: modeText = "Off"; break;
+                            default: modeText = TileStateOff; break;
                         }
                         lightTile.StateText.Text = modeText;
                         lightTile.StateText.Foreground = mode > 0 ? accentForeground : offForeground;
@@ -702,11 +702,11 @@ namespace XboxGamingBar
                         string levelText;
                         switch (level)
                         {
-                            case 0: levelText = "Off"; break;
+                            case 0: levelText = TileStateOff; break;
                             case 1: levelText = "Weak"; break;
                             case 2: levelText = "Medium"; break;
                             case 3: levelText = "Strong"; break;
-                            default: levelText = "Off"; break;
+                            default: levelText = TileStateOff; break;
                         }
                         vibrationTile.StateText.Text = levelText;
                         vibrationTile.StateText.Foreground = level > 0 ? accentForeground : offForeground;
@@ -749,7 +749,7 @@ namespace XboxGamingBar
                     if (legionGoDetected?.Value == true)
                     {
                         bool enabled = LegionDesktopControlsToggle?.IsOn ?? false;
-                        desktopTile.StateText.Text = enabled ? "On" : "Off";
+                        desktopTile.StateText.Text = enabled ? TileStateOn : TileStateOff;
                         desktopTile.StateText.Foreground = enabled ? accentForeground : offForeground;
                         SetTileAccentBar(desktopTile, enabled);
                         desktopTile.TileButton.Background = enabled ? tileOnBrush : tileOffBrush;
@@ -762,7 +762,7 @@ namespace XboxGamingBar
                     if (legionGoDetected?.Value == true)
                     {
                         bool enabled = legionChargeLimit?.Value ?? false;
-                        chargeLimitTile.StateText.Text = enabled ? "80%" : "Off";
+                        chargeLimitTile.StateText.Text = enabled ? "80%" : TileStateOff;
                         chargeLimitTile.StateText.Foreground = enabled ? accentForeground : offForeground;
                         SetTileAccentBar(chargeLimitTile, enabled);
                         chargeLimitTile.TileButton.Background = enabled ? tileOnBrush : tileOffBrush;
@@ -775,7 +775,7 @@ namespace XboxGamingBar
                     if (legionGoDetected?.Value == true)
                     {
                         bool enabled = legionPowerLight?.Value ?? false;
-                        powerLightTile.StateText.Text = enabled ? "On" : "Off";
+                        powerLightTile.StateText.Text = enabled ? TileStateOn : TileStateOff;
                         powerLightTile.StateText.Foreground = enabled ? accentForeground : offForeground;
                         SetTileAccentBar(powerLightTile, enabled);
                         powerLightTile.TileButton.Background = enabled ? tileOnBrush : tileOffBrush;
@@ -823,7 +823,7 @@ namespace XboxGamingBar
                     {
                         enabled = gpdFanMaxActive;
                     }
-                    fanFullSpeedTile.StateText.Text = enabled ? "On" : "Off";
+                    fanFullSpeedTile.StateText.Text = enabled ? TileStateOn : TileStateOff;
                     fanFullSpeedTile.StateText.Foreground = enabled ? accentForeground : offForeground;
                     SetTileAccentBar(fanFullSpeedTile, enabled);
                     fanFullSpeedTile.TileButton.Background = enabled ? tileOnBrush : tileOffBrush;
@@ -840,7 +840,7 @@ namespace XboxGamingBar
                     }
                     else
                     {
-                        screenSaverTile.StateText.Text = "Off";
+                        screenSaverTile.StateText.Text = TileStateOff;
                         screenSaverTile.StateText.Foreground = offForeground;
                     }
                     screenSaverTile.TileButton.Background = enabled ? tileOnBrush : tileOffBrush;

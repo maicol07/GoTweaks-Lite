@@ -61,31 +61,31 @@ namespace XboxGamingBar
             {
                 case BannerState.Disconnected:
                     ConnectionStatusBanner.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 204, 51, 51)); // #CC3333
-                    ConnectionStatusText.Text = "Not connected to helper";
+                    ConnectionStatusText.Text = LocalizedString("Code_NotConnectedToHelper", "Not connected to helper");
                     break;
                 case BannerState.Syncing:
                     ConnectionStatusBanner.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 51, 102, 204)); // #3366CC
-                    ConnectionStatusText.Text = "Syncing...";
+                    ConnectionStatusText.Text = LocalizedString("Code_Syncing", "Syncing...");
                     break;
                 case BannerState.Reconnecting:
                     ConnectionStatusBanner.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 204, 102, 51)); // #CC6633
-                    ConnectionStatusText.Text = "Reconnecting...";
+                    ConnectionStatusText.Text = LocalizedString("Code_Reconnecting", "Reconnecting...");
                     break;
                 case BannerState.Launching:
                     ConnectionStatusBanner.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 51, 102, 204)); // #3366CC
-                    ConnectionStatusText.Text = "Launching helper...";
+                    ConnectionStatusText.Text = LocalizedString("Code_LaunchingHelper", "Launching helper...");
                     break;
                 case BannerState.Loading:
                     ConnectionStatusBanner.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 51, 102, 204)); // #3366CC
-                    ConnectionStatusText.Text = "Loading...";
+                    ConnectionStatusText.Text = LocalizedString("Code_Loading", "Loading...");
                     break;
                 case BannerState.InitialSetup:
                     ConnectionStatusBanner.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 102, 51, 153)); // #663399 Purple
-                    ConnectionStatusText.Text = "Initial setup in progress - please wait...";
+                    ConnectionStatusText.Text = LocalizedString("Code_InitialSetupInProgressPleaseWait", "Initial setup in progress - please wait...");
                     break;
                 case BannerState.Upgrading:
                     ConnectionStatusBanner.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 51, 153, 102)); // #339966 Green
-                    ConnectionStatusText.Text = "Upgrading helper...";
+                    ConnectionStatusText.Text = LocalizedString("Code_UpgradingHelper", "Upgrading helper...");
                     break;
             }
             ConnectionStatusBanner.Visibility = Visibility.Visible;
@@ -150,15 +150,15 @@ namespace XboxGamingBar
                 {
                     case HelperStatus.Disconnected:
                         HelperStatusDot.Fill = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 85, 85)); // #FF5555 Red
-                        if (HelperStatusText != null) HelperStatusText.Text = "Disconnected";
+                        if (HelperStatusText != null) HelperStatusText.Text = LocalizedString("Code_Disconnected", "Disconnected");
                         break;
                     case HelperStatus.Connecting:
                         HelperStatusDot.Fill = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 200, 50)); // #FFC832 Yellow/Orange
-                        if (HelperStatusText != null) HelperStatusText.Text = "Connecting...";
+                        if (HelperStatusText != null) HelperStatusText.Text = LocalizedString("Code_Connecting", "Connecting...");
                         break;
                     case HelperStatus.Connected:
                         HelperStatusDot.Fill = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 85, 200, 85)); // #55C855 Green
-                        if (HelperStatusText != null) HelperStatusText.Text = "Connected";
+                        if (HelperStatusText != null) HelperStatusText.Text = LocalizedString("Code_Connected", "Connected");
                         break;
                 }
             });

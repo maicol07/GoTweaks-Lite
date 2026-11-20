@@ -146,9 +146,9 @@ namespace XboxGamingBar
                     if (QuickGoTweaksUpdateTile != null)
                         QuickGoTweaksUpdateTile.Visibility = showBanner ? Visibility.Visible : Visibility.Collapsed;
                     if (QuickGoTweaksTitleText != null && isUpdate)
-                        QuickGoTweaksTitleText.Text = $"GoTweaks Lite {latest} available";
+                        QuickGoTweaksTitleText.Text = string.Format(LocalizedString("CodeF_25", "GoTweaks Lite {0} available"), latest);
                     if (QuickGoTweaksSubtitleText != null)
-                        QuickGoTweaksSubtitleText.Text = "Tap to install";
+                        QuickGoTweaksSubtitleText.Text = LocalizedString("Code_TapToInstall", "Tap to install");
                 });
             }
             catch (Exception ex)
@@ -182,17 +182,17 @@ namespace XboxGamingBar
             if (string.IsNullOrWhiteSpace(_goTweaksDownloadUrl))
             {
                 if (QuickGoTweaksSubtitleText != null)
-                    QuickGoTweaksSubtitleText.Text = "No download URL cached.";
+                    QuickGoTweaksSubtitleText.Text = LocalizedString("Code_NoDownloadURLCached", "No download URL cached.");
                 return;
             }
             if (QuickGoTweaksSubtitleText != null)
-                QuickGoTweaksSubtitleText.Text = "Downloading GoTweaks update\u2026";
+                QuickGoTweaksSubtitleText.Text = LocalizedString("Code_DownloadingGoTweaksUpdate", "Downloading GoTweaks update\u2026");
             try
             {
                 if (!App.IsConnected)
                 {
                     if (QuickGoTweaksSubtitleText != null)
-                        QuickGoTweaksSubtitleText.Text = "Helper not connected.";
+                        QuickGoTweaksSubtitleText.Text = LocalizedString("Code_HelperNotConnected_2", "Helper not connected.");
                     return;
                 }
                 var request = new ValueSet();
@@ -215,7 +215,7 @@ namespace XboxGamingBar
             {
                 Logger.Warn($"TriggerGoTweaksInstallAsync failed: {ex.Message}");
                 if (QuickGoTweaksSubtitleText != null)
-                    QuickGoTweaksSubtitleText.Text = $"Install failed: {ex.Message}";
+                    QuickGoTweaksSubtitleText.Text = string.Format(LocalizedString("CodeF_23", "Install failed: {0}"), ex.Message);
             }
         }
     }

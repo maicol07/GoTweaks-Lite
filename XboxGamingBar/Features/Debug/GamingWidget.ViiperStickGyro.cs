@@ -168,7 +168,7 @@ namespace XboxGamingBar
             if (ViiperStickGyroSectionHeader == null || ViiperStickGyroSelectComboBox == null) return;
             int idx = ViiperStickGyroSelectComboBox.SelectedIndex;
             string side = idx == 0 ? "Left" : "Right";
-            ViiperStickGyroSectionHeader.Text = $"Gyro → {side} Stick";
+            ViiperStickGyroSectionHeader.Text = string.Format(LocalizedString("CodeF_12", "Gyro → {0} Stick"), side);
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace XboxGamingBar
             bool on = ViiperStickGyroEnabledToggle?.IsOn ?? true;
             if (!on)
             {
-                ViiperStickGyroStatusBadgeText.Text = "OFF";
+                ViiperStickGyroStatusBadgeText.Text = LocalizedString("Code_OFF", "OFF");
                 ViiperStickGyroStatusBadgeText.Foreground = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(0xFF, 0xAA, 0xAA, 0xAA));
                 ViiperStickGyroStatusBadge.BorderBrush = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(0xFF, 0x55, 0x55, 0x55));
                 return;
@@ -728,7 +728,7 @@ namespace XboxGamingBar
         {
             if (!App.IsConnected)
             {
-                if (GyroBiasStatusText != null) GyroBiasStatusText.Text = "Helper not connected.";
+                if (GyroBiasStatusText != null) GyroBiasStatusText.Text = LocalizedString("Code_HelperNotConnected_2", "Helper not connected.");
                 return;
             }
             try
@@ -738,10 +738,10 @@ namespace XboxGamingBar
                 for (int n = 3; n >= 1; n--)
                 {
                     if (GyroBiasStatusText != null)
-                        GyroBiasStatusText.Text = $"Hold still on a flat surface... {n}";
+                        GyroBiasStatusText.Text = string.Format(LocalizedString("CodeF_13", "Hold still on a flat surface... {0}"), n);
                     await System.Threading.Tasks.Task.Delay(1000);
                 }
-                if (GyroBiasStatusText != null) GyroBiasStatusText.Text = "Capturing...";
+                if (GyroBiasStatusText != null) GyroBiasStatusText.Text = LocalizedString("Code_Capturing", "Capturing...");
                 var request = new Windows.Foundation.Collections.ValueSet
                 {
                     { "Command", (int)Shared.Enums.Command.Set },
@@ -755,7 +755,7 @@ namespace XboxGamingBar
             catch (Exception ex)
             {
                 Logger.Error($"CalibrateGyroBiasButton_Click failed: {ex.Message}");
-                if (GyroBiasStatusText != null) GyroBiasStatusText.Text = "Calibration failed.";
+                if (GyroBiasStatusText != null) GyroBiasStatusText.Text = LocalizedString("Code_CalibrationFailed", "Calibration failed.");
                 if (CalibrateGyroBiasButton != null) CalibrateGyroBiasButton.IsEnabled = true;
                 if (ResetGyroBiasButton != null) ResetGyroBiasButton.IsEnabled = true;
             }
@@ -765,7 +765,7 @@ namespace XboxGamingBar
         {
             if (!App.IsConnected)
             {
-                if (GyroBiasStatusText != null) GyroBiasStatusText.Text = "Helper not connected.";
+                if (GyroBiasStatusText != null) GyroBiasStatusText.Text = LocalizedString("Code_HelperNotConnected_2", "Helper not connected.");
                 return;
             }
             try
@@ -810,11 +810,11 @@ namespace XboxGamingBar
                     if (GyroBiasStatusText == null) return;
                     if (!valid || at == 0)
                     {
-                        GyroBiasStatusText.Text = "Not calibrated";
+                        GyroBiasStatusText.Text = LocalizedString("Code_NotCalibrated", "Not calibrated");
                         return;
                     }
                     string ageDesc = FormatAgeFromUtcTicks(at);
-                    GyroBiasStatusText.Text = $"Calibrated {ageDesc} — X {x:+0.00;-0.00;0.00}°/s, Y {y:+0.00;-0.00;0.00}°/s, Z {z:+0.00;-0.00;0.00}°/s";
+                    GyroBiasStatusText.Text = string.Format(LocalizedString("CodeF_14", "Calibrated {0} — X {1:+0.00;-0.00;0.00}°/s, Y {2:+0.00;-0.00;0.00}°/s, Z {3:+0.00;-0.00;0.00}°/s"), ageDesc, x, y, z);
                 });
             }
             catch (Exception ex) { Logger.Debug($"OnGyroBiasOffsetReceived parse failed: {ex.Message}"); }

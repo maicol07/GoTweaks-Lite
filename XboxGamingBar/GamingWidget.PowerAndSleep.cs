@@ -58,7 +58,7 @@ namespace XboxGamingBar
 
                 if (DisableSleepTimersStatusText != null)
                 {
-                    DisableSleepTimersStatusText.Text = "Windows Sleep timer disabled (AC+DC)";
+                    DisableSleepTimersStatusText.Text = LocalizedString("Code_WindowsSleepTimerDisabledACDC", "Windows Sleep timer disabled (AC+DC)");
                 }
             }
             catch (Exception ex)
@@ -66,7 +66,7 @@ namespace XboxGamingBar
                 Logger.Error($"Failed to disable Windows sleep timers: {ex.Message}");
                 if (DisableSleepTimersStatusText != null)
                 {
-                    DisableSleepTimersStatusText.Text = "Failed - see log";
+                    DisableSleepTimersStatusText.Text = LocalizedString("Code_FailedSeeLog", "Failed - see log");
                 }
             }
             finally

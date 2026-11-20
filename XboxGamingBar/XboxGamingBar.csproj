@@ -225,6 +225,7 @@
     <Compile Include="Features\Debug\GamingWidget.ViiperToggle.cs" />
     <Compile Include="Features\Navigation\GamingWidget.SettingsRows.cs" />
     <Compile Include="Features\Navigation\GamingWidget.LegionSections.cs" />
+    <Compile Include="Features\Navigation\GamingWidget.Localization.cs" />
     <Compile Include="Features\QuickSettings\GamingWidget.QuickSettings.MetricCells.cs" />
     <Compile Include="GamingWidget.ViiperStickTrigger.cs" />
     <Compile Include="GamingWidget.xaml.cs">
@@ -526,6 +527,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\en-US\Resources.resw" />
+    <PRIResource Include="Strings\it-IT\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Uwp.Controls.Segmented">

@@ -670,7 +670,7 @@ namespace XboxGamingBar
                     BorderBrush = new SolidColorBrush(Windows.UI.Colors.Transparent),
                     BorderThickness = new Thickness(2)
                 };
-                Windows.UI.Xaml.Automation.AutomationProperties.SetName(deleteButton, "Delete profile");
+                Windows.UI.Xaml.Automation.AutomationProperties.SetName(deleteButton, LocalizedString("DeleteProfile", "Delete profile"));
                 deleteButton.Click += DeleteProfileButton_Click;
                 deleteButton.GotFocus += (s, args) =>
                 {

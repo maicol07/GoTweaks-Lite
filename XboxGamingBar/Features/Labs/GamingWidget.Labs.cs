@@ -57,7 +57,7 @@ namespace XboxGamingBar
 
             ToggleDAServiceButton.IsEnabled = false;
             daServiceAction = null;
-            ToggleDAServiceButton.Content = "Refresh";
+            ToggleDAServiceButton.Content = LocalizedString("Code_Refresh", "Refresh");
             try
             {
                 var request = new Windows.Foundation.Collections.ValueSet
@@ -76,7 +76,7 @@ namespace XboxGamingBar
                     if (response == null || !response.TryGetValue("Content", out var content) ||
                         !int.TryParse(content?.ToString(), out status))
                     {
-                        DAServiceStatusText.Text = "Service status unavailable. Refresh to try again.";
+                        DAServiceStatusText.Text = LocalizedString("Code_ServiceStatusUnavailableRefreshToTry", "Service status unavailable. Refresh to try again.");
                         return;
                     }
 
@@ -89,7 +89,7 @@ namespace XboxGamingBar
                     if (status != 4 || wait.Elapsed >= TimeSpan.FromSeconds(15))
                         break;
 
-                    DAServiceStatusText.Text = "Waiting for the service to finish starting or stopping...";
+                    DAServiceStatusText.Text = LocalizedString("Code_WaitingForTheServiceToFinish", "Waiting for the service to finish starting or stopping...");
                     request[nameof(Command)] = (int)Command.Get;
                     request[nameof(Function)] = (int)Function.Labs_DAServiceStatus;
                     request.Remove("Content");
@@ -99,30 +99,30 @@ namespace XboxGamingBar
                 switch (status)
                 {
                     case 0:
-                        DAServiceStatusText.Text = "Auto-start blocked. Legion Space can still start the service on demand.";
-                        ToggleDAServiceButton.Content = "Restore auto-start";
+                        DAServiceStatusText.Text = LocalizedString("Code_AutoStartBlockedLegionSpaceCan", "Auto-start blocked. Legion Space can still start the service on demand.");
+                        ToggleDAServiceButton.Content = LocalizedString("Code_RestoreAutoStart", "Restore auto-start");
                         daServiceAction = 1;
                         break;
                     case 1:
-                        DAServiceStatusText.Text = "Auto-start enabled. Blocking stops the service if it is running.";
-                        ToggleDAServiceButton.Content = "Block auto-start";
+                        DAServiceStatusText.Text = LocalizedString("Code_AutoStartEnabledBlockingStopsThe", "Auto-start enabled. Blocking stops the service if it is running.");
+                        ToggleDAServiceButton.Content = LocalizedString("Code_BlockAutoStart", "Block auto-start");
                         daServiceAction = 0;
                         break;
                     case 2:
-                        DAServiceStatusText.Text = "DAService is not installed.";
+                        DAServiceStatusText.Text = LocalizedString("Code_DAServiceIsNotInstalled", "DAService is not installed.");
                         break;
                     case 4:
-                        DAServiceStatusText.Text = "Service is starting or stopping. Refresh to check again.";
+                        DAServiceStatusText.Text = LocalizedString("Code_ServiceIsStartingOrStoppingRefresh", "Service is starting or stopping. Refresh to check again.");
                         break;
                     default:
-                        DAServiceStatusText.Text = "The current service configuration cannot be changed here.";
+                        DAServiceStatusText.Text = LocalizedString("Code_TheCurrentServiceConfigurationCannotBe", "The current service configuration cannot be changed here.");
                         break;
                 }
             }
             catch (Exception ex)
             {
                 Logger.Error(ex, "Failed to communicate with the Legion Space service helper");
-                DAServiceStatusText.Text = "Could not reach the helper. Refresh to try again.";
+                DAServiceStatusText.Text = LocalizedString("Code_CouldNotReachTheHelperRefresh", "Could not reach the helper. Refresh to try again.");
             }
             finally
             {
@@ -659,7 +659,7 @@ namespace XboxGamingBar
                     {
                         if (LegionRemapStatusText != null)
                         {
-                            LegionRemapStatusText.Text = $"{buttonName}: Please select keys";
+                            LegionRemapStatusText.Text = string.Format(LocalizedString("CodeF_1", "{0}: Please select keys"), buttonName);
                             LegionRemapStatusText.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 200, 100));
                         }
                         return;
@@ -672,7 +672,7 @@ namespace XboxGamingBar
                     {
                         if (LegionRemapStatusText != null)
                         {
-                            LegionRemapStatusText.Text = $"{buttonName}: Please enter a command";
+                            LegionRemapStatusText.Text = string.Format(LocalizedString("CodeF_2", "{0}: Please enter a command"), buttonName);
                             LegionRemapStatusText.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 200, 100));
                         }
                         return;
@@ -706,7 +706,7 @@ namespace XboxGamingBar
                             else
                             {
                                 string errorMsg = "Controller not found";
-                                LegionRemapStatusText.Text = $"{buttonName}: Failed - {errorMsg}";
+                                LegionRemapStatusText.Text = string.Format(LocalizedString("CodeF_3", "{0}: Failed - {1}"), buttonName, errorMsg);
                                 LegionRemapStatusText.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 100, 100));
                                 actionComboBox.SelectedIndex = 0; // Reset to Disabled
                             }

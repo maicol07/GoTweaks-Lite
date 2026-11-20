@@ -113,12 +113,12 @@ namespace XboxGamingBar
 
             if (active == selectedFanCurveMode)
             {
-                FanCurveActiveModeLabel.Text = "Custom mode curve (running)";
+                FanCurveActiveModeLabel.Text = LocalizedString("Code_CustomModeCurveRunning", "Custom mode curve (running)");
                 FanCurveActiveModeLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x88, 0x88, 0x88));
             }
             else
             {
-                FanCurveActiveModeLabel.Text = $"Custom mode curve — applies when TDP Mode is Custom (running {LegionModeShortName(active)})";
+                FanCurveActiveModeLabel.Text = string.Format(LocalizedString("CodeF_26", "Custom mode curve — applies when TDP Mode is Custom (running {0})"), LegionModeShortName(active));
                 FanCurveActiveModeLabel.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x88, 0xB0, 0xE0));
             }
             FanCurveActiveModeLabel.Visibility = Visibility.Visible;
@@ -399,7 +399,7 @@ namespace XboxGamingBar
             // (the card being expanded is what gates polling; which mode's curve you're viewing
             // below is irrelevant to the fan's actual RPM). This is the fix for the readout
             // showing "-- RPM" whenever the viewed mode differed from the running mode.
-            if (FanRPMLabel != null) FanRPMLabel.Text = $"{rpm} RPM";
+            if (FanRPMLabel != null) FanRPMLabel.Text = string.Format(LocalizedString("CodeF_27", "{0} RPM"), rpm);
 
             // The on-graph RPM line maps onto the displayed curve, so only draw it for the
             // curve that's actually running.
@@ -473,7 +473,7 @@ namespace XboxGamingBar
             bool viewingActive = IsViewingActiveFanCurveMode();
 
             if (CurrentTempPrefixLabel != null)
-                CurrentTempPrefixLabel.Text = "CPU Temp: ";
+                CurrentTempPrefixLabel.Text = LocalizedString("Code_CPUTemp", "CPU Temp: ");
 
             // The protection-floor line + legend describe the running curve, so hide them
             // while the console is running a different mode.

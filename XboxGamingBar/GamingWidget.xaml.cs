@@ -1943,7 +1943,7 @@ namespace XboxGamingBar
                 {
                     if (!lightEnabled)
                     {
-                        LegionControllerLightText.Text = "Off";
+                        LegionControllerLightText.Text = LocalizedString("Code_Off_2", "Off");
                     }
                     else
                     {
@@ -2297,7 +2297,7 @@ namespace XboxGamingBar
                 if (!GetGlobalPowerSourceProfileEnabled())
                 {
                     // Power source profiles disabled, show global
-                    ActiveProfileText.Text = "Global Settings";
+                    ActiveProfileText.Text = LocalizedString("Code_GlobalSettings", "Global Settings");
                 }
                 else
                 {
@@ -2313,11 +2313,11 @@ namespace XboxGamingBar
 
                     if (isOnAC)
                     {
-                        ActiveProfileText.Text = "AC Profile (Plugged In)";
+                        ActiveProfileText.Text = LocalizedString("Code_ACProfilePluggedIn", "AC Profile (Plugged In)");
                     }
                     else
                     {
-                        ActiveProfileText.Text = "DC Profile (Battery)";
+                        ActiveProfileText.Text = LocalizedString("Code_DCProfileBattery", "DC Profile (Battery)");
                     }
                 }
             }

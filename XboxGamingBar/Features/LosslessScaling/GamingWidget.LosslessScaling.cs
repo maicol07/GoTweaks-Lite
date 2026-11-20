@@ -21,7 +21,7 @@ namespace XboxGamingBar
         private async void OpenLosslessApp_Click(object sender, RoutedEventArgs e)
         {
             if (!await Windows.System.Launcher.LaunchUriAsync(new Uri("steam://rungameid/993090")))
-                LosslessProfilesStatus.Text = "Could not open Steam. Launch Lossless Scaling manually.";
+                LosslessProfilesStatus.Text = LocalizedString("Code_CouldNotOpenSteamLaunchLossless", "Could not open Steam. Launch Lossless Scaling manually.");
         }
 
         private void ToggleLosslessScaling_Click(object sender, RoutedEventArgs e)
@@ -29,7 +29,7 @@ namespace XboxGamingBar
             if (losslessScalingInstalled?.Value == true)
                 ToggleLosslessScaling();
             else
-                LosslessProfilesStatus.Text = "Lossless Scaling installation was not detected.";
+                LosslessProfilesStatus.Text = LocalizedString("Code_LosslessScalingInstallationWasNotDetected", "Lossless Scaling installation was not detected.");
         }
 
         private async void LoadLosslessProfiles_Click(object sender, RoutedEventArgs e) =>
@@ -48,7 +48,7 @@ namespace XboxGamingBar
 
             if (fields.Count == 0)
             {
-                LosslessProfilesStatus.Text = "No changes to save.";
+                LosslessProfilesStatus.Text = LocalizedString("Code_NoChangesToSave", "No changes to save.");
                 return;
             }
 
@@ -84,7 +84,7 @@ namespace XboxGamingBar
                 if (response == null || !response.TryGetValue(nameof(PipeMessage.Content), out var value) ||
                     !JsonObject.TryParse(value as string ?? string.Empty, out var payload))
                 {
-                    LosslessProfilesStatus.Text = "Lossless Scaling profiles could not be loaded from the helper.";
+                    LosslessProfilesStatus.Text = LocalizedString("Code_LosslessScalingProfilesCouldNotBe", "Lossless Scaling profiles could not be loaded from the helper.");
                     return;
                 }
 
@@ -105,7 +105,7 @@ namespace XboxGamingBar
             catch (Exception ex)
             {
                 Logger.Warn(ex, "Lossless Scaling profile request failed.");
-                LosslessProfilesStatus.Text = "Lossless Scaling profile request failed.";
+                LosslessProfilesStatus.Text = LocalizedString("Code_LosslessScalingProfileRequestFailed", "Lossless Scaling profile request failed.");
             }
             finally
             {

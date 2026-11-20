@@ -234,7 +234,7 @@ namespace XboxGamingBar
         {
             if (MetricsSelectionCount != null)
             {
-                MetricsSelectionCount.Text = $"{selectedMetrics.Count} selected";
+                MetricsSelectionCount.Text = string.Format(LocalizedString("CodeF_30", "{0} selected"), selectedMetrics.Count);
                 MetricsSelectionCount.Foreground = new SolidColorBrush(
                     selectedMetrics.Count >= MaxSelectedMetrics
                         ? Windows.UI.Color.FromArgb(255, 255, 150, 100)  // Orange when at max

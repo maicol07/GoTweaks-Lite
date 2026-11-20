@@ -213,7 +213,7 @@ namespace XboxGamingBar
             if (AutoTDPMinSlider != null) AutoTDPMinSlider.Value = minTdp;
             if (AutoTDPMaxSlider != null) AutoTDPMaxSlider.Value = maxTdp;
             if (AutoTDPTargetFPSSlider != null) AutoTDPTargetFPSSlider.Value = targetFps;
-            if (AutoTDPTargetFPSValue != null) AutoTDPTargetFPSValue.Text = $"{targetFps} FPS";
+            if (AutoTDPTargetFPSValue != null) AutoTDPTargetFPSValue.Text = string.Format(LocalizedString("CodeF_28", "{0} FPS"), targetFps);
             // Labels show the values the sliders actually took (clamped to the device range).
             if (AutoTDPMinValue != null) AutoTDPMinValue.Text = $"{(int)(AutoTDPMinSlider?.Value ?? minTdp)}W";
             if (AutoTDPMaxValue != null) AutoTDPMaxValue.Text = $"{(int)(AutoTDPMaxSlider?.Value ?? maxTdp)}W";
@@ -283,7 +283,7 @@ namespace XboxGamingBar
 
             if (AutoTDPTargetFPSValue != null)
             {
-                AutoTDPTargetFPSValue.Text = $"{targetFPS} FPS";
+                AutoTDPTargetFPSValue.Text = string.Format(LocalizedString("CodeF_28", "{0} FPS"), targetFPS);
             }
 
             pendingAutoTDPTargetFPS = targetFPS;
@@ -432,7 +432,7 @@ namespace XboxGamingBar
                     }
                     if (AutoTDPTargetFPSValue != null)
                     {
-                        AutoTDPTargetFPSValue.Text = $"{autoTDPTargetFPS.Value} FPS";
+                        AutoTDPTargetFPSValue.Text = string.Format(LocalizedString("CodeF_28", "{0} FPS"), autoTDPTargetFPS.Value);
                     }
                 }
                 finally

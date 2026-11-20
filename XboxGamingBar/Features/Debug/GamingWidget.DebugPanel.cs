@@ -84,7 +84,7 @@ namespace XboxGamingBar
                 {
                     var version = Windows.ApplicationModel.Package.Current.Id.Version;
                     string build = $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
-                    AboutVersionText.Text = $"{Shared.Constants.UpdateConstants.FriendlyVersion} (build {build})";
+                    AboutVersionText.Text = string.Format(LocalizedString("CodeF_4", "{0} (build {1})"), Shared.Constants.UpdateConstants.FriendlyVersion, build);
                 }
                 catch
                 {
@@ -98,7 +98,7 @@ namespace XboxGamingBar
             try
             {
                 RestartHelperButton.IsEnabled = false;
-                RestartHelperButton.Content = "Restarting...";
+                RestartHelperButton.Content = LocalizedString("Code_Restarting", "Restarting...");
 
                 // Send exit command to helper via IPC
                 if (App.IsConnected)
@@ -140,13 +140,13 @@ namespace XboxGamingBar
                 await LaunchHelperWithGuardsAsync("Restart Helper button", forceLaunch: true);
 
                 await Task.Delay(1500);
-                RestartHelperButton.Content = "Restart Helper";
+                RestartHelperButton.Content = LocalizedString("Code_RestartHelper", "Restart Helper");
                 RestartHelperButton.IsEnabled = true;
             }
             catch (Exception ex)
             {
                 Logger.Error($"Failed to restart helper: {ex.Message}");
-                RestartHelperButton.Content = "Restart Helper";
+                RestartHelperButton.Content = LocalizedString("Code_RestartHelper", "Restart Helper");
                 RestartHelperButton.IsEnabled = true;
             }
         }
@@ -156,7 +156,7 @@ namespace XboxGamingBar
             try
             {
                 ExportLogsButton.IsEnabled = false;
-                ExportLogsButton.Content = "Exporting...";
+                ExportLogsButton.Content = LocalizedString("Code_Exporting", "Exporting...");
 
                 // Send export logs command to helper via IPC
                 if (App.IsConnected)
@@ -177,37 +177,37 @@ namespace XboxGamingBar
                         {
                             var path = response.TryGetValue("Path", out object pathObj) ? pathObj as string : "Desktop";
                             Logger.Info($"Logs exported successfully to: {path}");
-                            ExportLogsButton.Content = "Exported!";
+                            ExportLogsButton.Content = LocalizedString("Code_Exported", "Exported!");
                         }
                         else
                         {
                             var error = response.TryGetValue("Error", out object errorObj) ? errorObj as string : "Unknown error";
                             Logger.Error($"Export logs failed: {error}");
-                            ExportLogsButton.Content = "Export Failed";
+                            ExportLogsButton.Content = LocalizedString("Code_ExportFailed", "Export Failed");
                         }
                     }
                     else
                     {
                         Logger.Error("Export logs request failed - no response");
-                        ExportLogsButton.Content = "Export Failed";
+                        ExportLogsButton.Content = LocalizedString("Code_ExportFailed", "Export Failed");
                     }
                 }
                 else
                 {
                     Logger.Error("Cannot export logs - no connection to helper");
-                    ExportLogsButton.Content = "No Helper";
+                    ExportLogsButton.Content = LocalizedString("Code_NoHelper", "No Helper");
                 }
 
                 await Task.Delay(2000);
-                ExportLogsButton.Content = "Export Logs";
+                ExportLogsButton.Content = LocalizedString("Code_ExportLogs", "Export Logs");
                 ExportLogsButton.IsEnabled = true;
             }
             catch (Exception ex)
             {
                 Logger.Error($"Failed to export logs: {ex.Message}");
-                ExportLogsButton.Content = "Export Failed";
+                ExportLogsButton.Content = LocalizedString("Code_ExportFailed", "Export Failed");
                 await Task.Delay(2000);
-                ExportLogsButton.Content = "Export Logs";
+                ExportLogsButton.Content = LocalizedString("Code_ExportLogs", "Export Logs");
                 ExportLogsButton.IsEnabled = true;
             }
         }
@@ -333,9 +333,9 @@ namespace XboxGamingBar
             try
             {
                 CheckForUpdateButton.IsEnabled = false;
-                CheckForUpdateButton.Content = "Checking...";
+                CheckForUpdateButton.Content = LocalizedString("Code_Checking", "Checking...");
                 UpdateStatusText.Visibility = Visibility.Visible;
-                UpdateStatusText.Text = "Checking for updates...";
+                UpdateStatusText.Text = LocalizedString("Code_CheckingForUpdates", "Checking for updates...");
                 UpdateButton.Visibility = Visibility.Collapsed;
                 _pendingUpdateZipUrl = null;
                 _pendingUpdateVersion = null;
@@ -352,8 +352,8 @@ namespace XboxGamingBar
                 if (!Shared.Constants.UpdateConstants.UpdatesEnabled)
                 {
                     UpdateStatusText.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 160, 160, 160));
-                    UpdateStatusText.Text = $"You're up to date! ({friendlyCurrent})";
-                    CheckForUpdateButton.Content = "Check for Update";
+                    UpdateStatusText.Text = string.Format(LocalizedString("CodeF_5", "You're up to date! ({0})"), friendlyCurrent);
+                    CheckForUpdateButton.Content = LocalizedString("Code_CheckForUpdate", "Check for Update");
                     CheckForUpdateButton.IsEnabled = true;
                     return;
                 }
@@ -366,8 +366,8 @@ namespace XboxGamingBar
                 if (!App.IsConnected)
                 {
                     UpdateStatusText.Foreground = new SolidColorBrush(Windows.UI.Colors.Orange);
-                    UpdateStatusText.Text = "Helper not connected — can't check for updates.";
-                    CheckForUpdateButton.Content = "Check for Update";
+                    UpdateStatusText.Text = LocalizedString("Code_HelperNotConnectedCanTCheck", "Helper not connected — can't check for updates.");
+                    CheckForUpdateButton.Content = LocalizedString("Code_CheckForUpdate", "Check for Update");
                     CheckForUpdateButton.IsEnabled = true;
                     return;
                 }
@@ -386,7 +386,7 @@ namespace XboxGamingBar
                 if (string.IsNullOrEmpty(payload) || !Windows.Data.Json.JsonObject.TryParse(payload, out var root))
                 {
                     UpdateStatusText.Foreground = new SolidColorBrush(Windows.UI.Colors.Orange);
-                    UpdateStatusText.Text = "Update check failed (no response from helper).";
+                    UpdateStatusText.Text = LocalizedString("Code_UpdateCheckFailedNoResponseFrom", "Update check failed (no response from helper).");
                 }
                 else
                 {
@@ -402,7 +402,7 @@ namespace XboxGamingBar
                     if (isUpdate && !string.IsNullOrWhiteSpace(url))
                     {
                         UpdateStatusText.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 0x6C, 0xCB, 0x5F)); // #6CCB5F - matches Quick Settings tile green
-                        UpdateStatusText.Text = $"New version available: {label}\nCurrent: {friendlyCurrent}";
+                        UpdateStatusText.Text = string.Format(LocalizedString("CodeF_6", "New version available: {0}\nCurrent: {1}"), label, friendlyCurrent);
                         _goTweaksDownloadUrl = url;          // .msixbundle URL — unified install
                         _pendingUpdateVersion = label;
                         _pendingUpdateIsRemote = true;
@@ -414,24 +414,24 @@ namespace XboxGamingBar
                         // unparsable response) - don't claim "up to date" when we don't actually
                         // know that.
                         UpdateStatusText.Foreground = new SolidColorBrush(Windows.UI.Colors.Orange);
-                        UpdateStatusText.Text = "Update check failed (GitHub unreachable or rate-limited) — try again later.";
+                        UpdateStatusText.Text = LocalizedString("Code_UpdateCheckFailedGitHubUnreachableOr", "Update check failed (GitHub unreachable or rate-limited) — try again later.");
                     }
                     else
                     {
                         UpdateStatusText.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 160, 160, 160));
-                        UpdateStatusText.Text = $"You're up to date! ({friendlyCurrent})";
+                        UpdateStatusText.Text = string.Format(LocalizedString("CodeF_5", "You're up to date! ({0})"), friendlyCurrent);
                     }
                 }
 
-                CheckForUpdateButton.Content = "Check for Update";
+                CheckForUpdateButton.Content = LocalizedString("Code_CheckForUpdate", "Check for Update");
                 CheckForUpdateButton.IsEnabled = true;
             }
             catch (Exception ex)
             {
                 Logger.Error($"Failed to check for update: {ex.Message}");
                 UpdateStatusText.Foreground = new SolidColorBrush(Windows.UI.Colors.Orange);
-                UpdateStatusText.Text = $"Failed to check for updates: {ex.Message}";
-                CheckForUpdateButton.Content = "Check for Update";
+                UpdateStatusText.Text = string.Format(LocalizedString("CodeF_7", "Failed to check for updates: {0}"), ex.Message);
+                CheckForUpdateButton.Content = LocalizedString("Code_CheckForUpdate", "Check for Update");
                 CheckForUpdateButton.IsEnabled = true;
             }
         }
@@ -441,7 +441,7 @@ namespace XboxGamingBar
             if (!App.IsConnected)
             {
                 UpdateStatusText.Foreground = new SolidColorBrush(Windows.UI.Colors.Orange);
-                UpdateStatusText.Text = "Helper not connected";
+                UpdateStatusText.Text = LocalizedString("Code_HelperNotConnected", "Helper not connected");
                 return;
             }
 
@@ -460,8 +460,8 @@ namespace XboxGamingBar
                         return;
                     }
 
-                    UpdateButton.Content = "Installing...";
-                    UpdateStatusText.Text = $"Installing {_pendingUpdateVersion}...";
+                    UpdateButton.Content = LocalizedString("Code_Installing", "Installing...");
+                    UpdateStatusText.Text = string.Format(LocalizedString("CodeF_8", "Installing {0}..."), _pendingUpdateVersion);
 
                     var request = new Windows.Foundation.Collections.ValueSet
                     {
@@ -482,7 +482,7 @@ namespace XboxGamingBar
                         {
                             UpdateStatusText.Foreground = new SolidColorBrush(Windows.UI.Colors.Orange);
                             UpdateStatusText.Text = message;
-                            UpdateButton.Content = "Update";
+                            UpdateButton.Content = LocalizedString("Code_Update", "Update");
                             UpdateButton.IsEnabled = true;
                             return;
                         }
@@ -500,8 +500,8 @@ namespace XboxGamingBar
                     return;
                 }
 
-                UpdateButton.Content = "Downloading...";
-                UpdateStatusText.Text = $"Downloading {_pendingUpdateVersion}...";
+                UpdateButton.Content = LocalizedString("Code_Downloading", "Downloading...");
+                UpdateStatusText.Text = string.Format(LocalizedString("CodeF_9", "Downloading {0}..."), _pendingUpdateVersion);
 
                 var message2 = new Windows.Foundation.Collections.ValueSet();
                 message2.Add("Command", (int)Shared.Enums.Command.Set);
@@ -515,22 +515,22 @@ namespace XboxGamingBar
                     if (statusStr == "Installing")
                     {
                         UpdateStatusText.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 0x6C, 0xCB, 0x5F)); // #6CCB5F - matches Quick Settings tile green
-                        UpdateStatusText.Text = "Installing update... Please follow the installer prompts.";
-                        UpdateButton.Content = "Installing...";
+                        UpdateStatusText.Text = LocalizedString("Code_InstallingUpdatePleaseFollowTheInstaller", "Installing update... Please follow the installer prompts.");
+                        UpdateButton.Content = LocalizedString("Code_Installing", "Installing...");
                     }
                     else if (statusStr.StartsWith("Error"))
                     {
                         UpdateStatusText.Foreground = new SolidColorBrush(Windows.UI.Colors.Orange);
                         UpdateStatusText.Text = statusStr;
-                        UpdateButton.Content = "Update";
+                        UpdateButton.Content = LocalizedString("Code_Update", "Update");
                         UpdateButton.IsEnabled = true;
                     }
                 }
                 else
                 {
                     UpdateStatusText.Foreground = new SolidColorBrush(Windows.UI.Colors.Orange);
-                    UpdateStatusText.Text = "Failed to communicate with helper";
-                    UpdateButton.Content = "Update";
+                    UpdateStatusText.Text = LocalizedString("Code_FailedToCommunicateWithHelper", "Failed to communicate with helper");
+                    UpdateButton.Content = LocalizedString("Code_Update", "Update");
                     UpdateButton.IsEnabled = true;
                 }
             }
@@ -538,8 +538,8 @@ namespace XboxGamingBar
             {
                 Logger.Error($"Failed to start update: {ex.Message}");
                 UpdateStatusText.Foreground = new SolidColorBrush(Windows.UI.Colors.Orange);
-                UpdateStatusText.Text = $"Update failed: {ex.Message}";
-                UpdateButton.Content = "Update";
+                UpdateStatusText.Text = string.Format(LocalizedString("CodeF_10", "Update failed: {0}"), ex.Message);
+                UpdateButton.Content = LocalizedString("Code_Update", "Update");
                 UpdateButton.IsEnabled = true;
             }
         }
@@ -648,7 +648,7 @@ namespace XboxGamingBar
         {
             if (UpdateAvailableBanner != null && UpdateAvailableText != null)
             {
-                UpdateAvailableText.Text = $"Update Available: {newVersion}";
+                UpdateAvailableText.Text = string.Format(LocalizedString("CodeF_11", "Update Available: {0}"), newVersion);
                 UpdateAvailableBanner.Visibility = Visibility.Visible;
             }
         }
@@ -678,7 +678,7 @@ namespace XboxGamingBar
             try
             {
                 UpdateBannerButton.IsEnabled = false;
-                UpdateBannerButton.Content = "Updating...";
+                UpdateBannerButton.Content = LocalizedString("Code_Updating", "Updating...");
 
                 if (App.IsConnected)
                 {
@@ -693,39 +693,39 @@ namespace XboxGamingBar
                         var statusStr = status?.ToString() ?? "";
                         if (statusStr == "Installing")
                         {
-                            UpdateBannerButton.Content = "Installing...";
+                            UpdateBannerButton.Content = LocalizedString("Code_Installing", "Installing...");
                             Logger.Info("Update installation started from banner");
                         }
                         else if (statusStr.StartsWith("Error"))
                         {
                             Logger.Error($"Update failed: {statusStr}");
-                            UpdateBannerButton.Content = "Failed";
+                            UpdateBannerButton.Content = LocalizedString("Code_Failed", "Failed");
                             await Task.Delay(2000);
-                            UpdateBannerButton.Content = "Update";
+                            UpdateBannerButton.Content = LocalizedString("Code_Update", "Update");
                             UpdateBannerButton.IsEnabled = true;
                         }
                     }
                     else
                     {
-                        UpdateBannerButton.Content = "Failed";
+                        UpdateBannerButton.Content = LocalizedString("Code_Failed", "Failed");
                         await Task.Delay(2000);
-                        UpdateBannerButton.Content = "Update";
+                        UpdateBannerButton.Content = LocalizedString("Code_Update", "Update");
                         UpdateBannerButton.IsEnabled = true;
                     }
                 }
                 else
                 {
                     Logger.Warn("Helper not connected for update");
-                    UpdateBannerButton.Content = "No Helper";
+                    UpdateBannerButton.Content = LocalizedString("Code_NoHelper", "No Helper");
                     await Task.Delay(2000);
-                    UpdateBannerButton.Content = "Update";
+                    UpdateBannerButton.Content = LocalizedString("Code_Update", "Update");
                     UpdateBannerButton.IsEnabled = true;
                 }
             }
             catch (Exception ex)
             {
                 Logger.Error($"Failed to start update from banner: {ex.Message}");
-                UpdateBannerButton.Content = "Update";
+                UpdateBannerButton.Content = LocalizedString("Code_Update", "Update");
                 UpdateBannerButton.IsEnabled = true;
             }
         }
@@ -743,13 +743,13 @@ namespace XboxGamingBar
             try
             {
                 ExportAllDataButton.IsEnabled = false;
-                ExportAllDataButton.Content = "Exporting...";
+                ExportAllDataButton.Content = LocalizedString("Code_Exporting", "Exporting...");
 
                 if (!App.IsConnected)
                 {
-                    ExportAllDataButton.Content = "Helper not connected";
+                    ExportAllDataButton.Content = LocalizedString("Code_HelperNotConnected", "Helper not connected");
                     await Task.Delay(2000);
-                    ExportAllDataButton.Content = "Export All Data";
+                    ExportAllDataButton.Content = LocalizedString("Code_ExportAllData", "Export All Data");
                     ExportAllDataButton.IsEnabled = true;
                     return;
                 }
@@ -769,28 +769,28 @@ namespace XboxGamingBar
                     string resultText = contentObj?.ToString() ?? "";
                     if (resultText.StartsWith("Error:"))
                     {
-                        ExportAllDataButton.Content = "Failed";
+                        ExportAllDataButton.Content = LocalizedString("Code_Failed", "Failed");
                         Logger.Error($"Export failed: {resultText}");
                     }
                     else
                     {
-                        ExportAllDataButton.Content = "Exported!";
+                        ExportAllDataButton.Content = LocalizedString("Code_Exported", "Exported!");
                         Logger.Info($"All data exported to: {resultText}");
                     }
                 }
                 else
                 {
-                    ExportAllDataButton.Content = "Failed";
+                    ExportAllDataButton.Content = LocalizedString("Code_Failed", "Failed");
                 }
 
                 await Task.Delay(2000);
-                ExportAllDataButton.Content = "Export All Data";
+                ExportAllDataButton.Content = LocalizedString("Code_ExportAllData", "Export All Data");
                 ExportAllDataButton.IsEnabled = true;
             }
             catch (Exception ex)
             {
                 Logger.Error($"Failed to export all data: {ex.Message}");
-                ExportAllDataButton.Content = "Export All Data";
+                ExportAllDataButton.Content = LocalizedString("Code_ExportAllData", "Export All Data");
                 ExportAllDataButton.IsEnabled = true;
             }
         }
@@ -841,13 +841,13 @@ namespace XboxGamingBar
                     return;
 
                 ImportAllDataButton.IsEnabled = false;
-                ImportAllDataButton.Content = "Importing...";
+                ImportAllDataButton.Content = LocalizedString("Code_Importing", "Importing...");
 
                 if (!App.IsConnected)
                 {
-                    ImportAllDataButton.Content = "Helper not connected";
+                    ImportAllDataButton.Content = LocalizedString("Code_HelperNotConnected", "Helper not connected");
                     await Task.Delay(2000);
-                    ImportAllDataButton.Content = "Import All Data";
+                    ImportAllDataButton.Content = LocalizedString("Code_ImportAllData", "Import All Data");
                     ImportAllDataButton.IsEnabled = true;
                     return;
                 }
@@ -878,21 +878,21 @@ namespace XboxGamingBar
                     var resultDialog = new Windows.UI.Popups.MessageDialog(summary, "Import Complete");
                     await resultDialog.ShowAsync();
 
-                    ImportAllDataButton.Content = "Imported!";
+                    ImportAllDataButton.Content = LocalizedString("Code_Imported", "Imported!");
                 }
                 else
                 {
-                    ImportAllDataButton.Content = "Failed";
+                    ImportAllDataButton.Content = LocalizedString("Code_Failed", "Failed");
                 }
 
                 await Task.Delay(2000);
-                ImportAllDataButton.Content = "Import All Data";
+                ImportAllDataButton.Content = LocalizedString("Code_ImportAllData", "Import All Data");
                 ImportAllDataButton.IsEnabled = true;
             }
             catch (Exception ex)
             {
                 Logger.Error($"Failed to import all data: {ex.Message}");
-                ImportAllDataButton.Content = "Import All Data";
+                ImportAllDataButton.Content = LocalizedString("Code_ImportAllData", "Import All Data");
                 ImportAllDataButton.IsEnabled = true;
             }
         }
@@ -1104,13 +1104,13 @@ namespace XboxGamingBar
                     return;
 
                 PrepareForUninstallButton.IsEnabled = false;
-                PrepareForUninstallButton.Content = "Restoring...";
+                PrepareForUninstallButton.Content = LocalizedString("Code_Restoring", "Restoring...");
 
                 if (!App.IsConnected)
                 {
-                    PrepareForUninstallButton.Content = "Helper not connected";
+                    PrepareForUninstallButton.Content = LocalizedString("Code_HelperNotConnected", "Helper not connected");
                     await Task.Delay(2000);
-                    PrepareForUninstallButton.Content = "Prepare for Uninstall";
+                    PrepareForUninstallButton.Content = LocalizedString("Code_PrepareForUninstall", "Prepare for Uninstall");
                     PrepareForUninstallButton.IsEnabled = true;
                     return;
                 }
@@ -1129,21 +1129,21 @@ namespace XboxGamingBar
                     // Show result in a dialog
                     await ShowWin11InfoDialogAsync("Uninstall Preparation Complete", resultText);
 
-                    PrepareForUninstallButton.Content = "Done!";
+                    PrepareForUninstallButton.Content = LocalizedString("Code_Done", "Done!");
                 }
                 else
                 {
-                    PrepareForUninstallButton.Content = "Failed";
+                    PrepareForUninstallButton.Content = LocalizedString("Code_Failed", "Failed");
                 }
 
                 await Task.Delay(2000);
-                PrepareForUninstallButton.Content = "Prepare for Uninstall";
+                PrepareForUninstallButton.Content = LocalizedString("Code_PrepareForUninstall", "Prepare for Uninstall");
                 PrepareForUninstallButton.IsEnabled = true;
             }
             catch (Exception ex)
             {
                 Logger.Error($"Failed to prepare for uninstall: {ex.Message}");
-                PrepareForUninstallButton.Content = "Prepare for Uninstall";
+                PrepareForUninstallButton.Content = LocalizedString("Code_PrepareForUninstall", "Prepare for Uninstall");
                 PrepareForUninstallButton.IsEnabled = true;
             }
         }

@@ -325,7 +325,7 @@ namespace XboxGamingBar
 
         private void AddTileDefinition(string id, string name, string glyph, bool isTrigger = false, bool isAction = false, string customShortcut = null, int order = 0)
         {
-            var def = new TileDefinition { Id = id, Name = name, Glyph = glyph, IsVisible = true, IsTrigger = isTrigger, IsAction = isAction, CustomShortcut = customShortcut, Order = order };
+            var def = new TileDefinition { Id = id, Name = LocalizedString("Tile_" + id, name), Glyph = glyph, IsVisible = true, IsTrigger = isTrigger, IsAction = isAction, CustomShortcut = customShortcut, Order = order };
             qsTileDefinitions.Add(def);
             qsTileMap[id] = def;
         }
@@ -846,7 +846,7 @@ namespace XboxGamingBar
                     foreach (var c in checks) if (c.cb.IsChecked == true) mask |= c.bit;
                     if (Shared.Input.ControllerComboButtons.BitCount(mask) < 2)
                     {
-                        status.Text = "Pick at least 2 buttons.";
+                        status.Text = LocalizedString("Code_PickAtLeast2Buttons", "Pick at least 2 buttons.");
                         return;
                     }
 

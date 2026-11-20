@@ -83,7 +83,7 @@ namespace XboxGamingBar
                 cell.Icon = new FontIcon { Glyph = header.Glyph, FontFamily = new FontFamily("Segoe Fluent Icons"), FontSize = 16, Foreground = captionBrush };
                 var headerRow = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 6 };
                 headerRow.Children.Add(cell.Icon);
-                headerRow.Children.Add(new TextBlock { Text = header.Label, FontSize = 12, Foreground = captionBrush, VerticalAlignment = VerticalAlignment.Center });
+                headerRow.Children.Add(new TextBlock { Text = LocalizedString("Metric_" + cell.Group, header.Label), FontSize = 12, Foreground = captionBrush, VerticalAlignment = VerticalAlignment.Center });
 
                 cell.Primary = new TextBlock { Text = "--", FontSize = 16, FontWeight = FontWeights.SemiBold, Foreground = new SolidColorBrush(Colors.White), Margin = new Thickness(0, 2, 0, 0) };
                 Typography.SetNumeralAlignment(cell.Primary, FontNumeralAlignment.Tabular);

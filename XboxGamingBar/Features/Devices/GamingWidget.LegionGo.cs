@@ -138,9 +138,9 @@ namespace XboxGamingBar
             // Brief UI feedback: disable the button while the request is in flight.
             Button button = LegionCalibrateGyroButton;
             string originalText = button?.Content?.ToString() ?? "Calibrate gyro";
-            if (button != null) { button.IsEnabled = false; button.Content = "Calibrating…"; }
+            if (button != null) { button.IsEnabled = false; button.Content = LocalizedString("Code_Calibrating", "Calibrating…"); }
             if (LegionCalibrateGyroStatus != null)
-                LegionCalibrateGyroStatus.Text = "Hold the controllers still…";
+                LegionCalibrateGyroStatus.Text = LocalizedString("Code_HoldTheControllersStill", "Hold the controllers still…");
 
             try
             {
@@ -150,19 +150,19 @@ namespace XboxGamingBar
                     request.Add("CalibrateLegionGyro", true);
                     await App.SendMessageAsync(request);
                     if (LegionCalibrateGyroStatus != null)
-                        LegionCalibrateGyroStatus.Text = "Calibration command sent. Keep the pads still for a moment.";
+                        LegionCalibrateGyroStatus.Text = LocalizedString("Code_CalibrationCommandSentKeepThePads", "Calibration command sent. Keep the pads still for a moment.");
                 }
                 else
                 {
                     if (LegionCalibrateGyroStatus != null)
-                        LegionCalibrateGyroStatus.Text = "Not connected to helper — try again after reconnecting.";
+                        LegionCalibrateGyroStatus.Text = LocalizedString("Code_NotConnectedToHelperTryAgain", "Not connected to helper — try again after reconnecting.");
                 }
             }
             catch (Exception ex)
             {
                 Logger.Warn($"CalibrateLegionGyro send failed: {ex.Message}");
                 if (LegionCalibrateGyroStatus != null)
-                    LegionCalibrateGyroStatus.Text = $"Calibration send failed: {ex.Message}";
+                    LegionCalibrateGyroStatus.Text = string.Format(LocalizedString("CodeF_15", "Calibration send failed: {0}"), ex.Message);
             }
             finally
             {
@@ -197,9 +197,9 @@ namespace XboxGamingBar
 
             string originalContent = DriverUpdatesCheckButton.Content?.ToString() ?? "Check for updates";
             DriverUpdatesCheckButton.IsEnabled = false;
-            DriverUpdatesCheckButton.Content = "Checking…";
+            DriverUpdatesCheckButton.Content = LocalizedString("Code_Checking_2", "Checking…");
             if (DriverUpdatesStatusText != null)
-                DriverUpdatesStatusText.Text = "Reading machine info and contacting Lenovo…";
+                DriverUpdatesStatusText.Text = LocalizedString("Code_ReadingMachineInfoAndContactingLenovo", "Reading machine info and contacting Lenovo…");
             if (DriverUpdatesList != null)
                 DriverUpdatesList.Visibility = Visibility.Collapsed;
 
@@ -208,7 +208,7 @@ namespace XboxGamingBar
                 if (!App.IsConnected)
                 {
                     if (DriverUpdatesStatusText != null)
-                        DriverUpdatesStatusText.Text = "Helper not connected. Try again once the widget reconnects.";
+                        DriverUpdatesStatusText.Text = LocalizedString("Code_HelperNotConnectedTryAgainOnce", "Helper not connected. Try again once the widget reconnects.");
                     return;
                 }
 
@@ -218,14 +218,14 @@ namespace XboxGamingBar
                 if (response == null)
                 {
                     if (DriverUpdatesStatusText != null)
-                        DriverUpdatesStatusText.Text = "No response from helper.";
+                        DriverUpdatesStatusText.Text = LocalizedString("Code_NoResponseFromHelper", "No response from helper.");
                     return;
                 }
 
                 if (!response.TryGetValue("DriverUpdateResult", out var payloadObj) || !(payloadObj is string payload))
                 {
                     if (DriverUpdatesStatusText != null)
-                        DriverUpdatesStatusText.Text = "Helper returned an unexpected response shape.";
+                        DriverUpdatesStatusText.Text = LocalizedString("Code_HelperReturnedAnUnexpectedResponseShape", "Helper returned an unexpected response shape.");
                     return;
                 }
 
@@ -235,7 +235,7 @@ namespace XboxGamingBar
             {
                 Logger.Warn($"DriverUpdatesCheckButton_Click failed: {ex.Message}");
                 if (DriverUpdatesStatusText != null)
-                    DriverUpdatesStatusText.Text = $"Check failed: {ex.Message}";
+                    DriverUpdatesStatusText.Text = string.Format(LocalizedString("CodeF_16", "Check failed: {0}"), ex.Message);
             }
             finally
             {
@@ -273,7 +273,7 @@ namespace XboxGamingBar
             {
                 Logger.Warn($"DriverUpdatesOpenPageButton_Click failed: {ex.Message}");
                 if (DriverUpdatesStatusText != null)
-                    DriverUpdatesStatusText.Text = $"Couldn't open browser: {ex.Message}";
+                    DriverUpdatesStatusText.Text = string.Format(LocalizedString("CodeF_17", "Couldn't open browser: {0}"), ex.Message);
             }
         }
 
@@ -305,7 +305,7 @@ namespace XboxGamingBar
                 if (!Windows.Data.Json.JsonObject.TryParse(json, out var root))
                 {
                     if (DriverUpdatesStatusText != null)
-                        DriverUpdatesStatusText.Text = "Helper returned a response the widget couldn't parse.";
+                        DriverUpdatesStatusText.Text = LocalizedString("Code_HelperReturnedAResponseTheWidget", "Helper returned a response the widget couldn't parse.");
                     return;
                 }
 
@@ -412,15 +412,15 @@ namespace XboxGamingBar
                                 default: unknown++; break;
                             }
                         }
-                        DriverUpdatesStatusText.Text = $"{items.Count} drivers checked — {upToDate} up to date, {update} update available, {notInstalled} not installed, {unknown} unknown.";
+                        DriverUpdatesStatusText.Text = string.Format(LocalizedString("CodeF_18", "{0} drivers checked — {1} up to date, {2} update available, {3} not installed, {4} unknown."), items.Count, upToDate, update, notInstalled, unknown);
                     }
                     else if (liveFetch)
                     {
-                        DriverUpdatesStatusText.Text = "Lenovo returned no drivers for this machine type.";
+                        DriverUpdatesStatusText.Text = LocalizedString("Code_LenovoReturnedNoDriversForThis", "Lenovo returned no drivers for this machine type.");
                     }
                     else
                     {
-                        DriverUpdatesStatusText.Text = "Lenovo's live driver list is unreachable. Use Open Lenovo driver page to browse on lenovo.com.";
+                        DriverUpdatesStatusText.Text = LocalizedString("Code_LenovoSLiveDriverListIs", "Lenovo's live driver list is unreachable. Use Open Lenovo driver page to browse on lenovo.com.");
                     }
                 }
             }
@@ -428,7 +428,7 @@ namespace XboxGamingBar
             {
                 Logger.Warn($"RenderDriverUpdateResult parse failed: {ex.Message}");
                 if (DriverUpdatesStatusText != null)
-                    DriverUpdatesStatusText.Text = $"Couldn't parse response: {ex.Message}";
+                    DriverUpdatesStatusText.Text = string.Format(LocalizedString("CodeF_19", "Couldn't parse response: {0}"), ex.Message);
             }
         }
 
@@ -794,22 +794,22 @@ namespace XboxGamingBar
             if (urls.Count == 0)
             {
                 if (DriverUpdatesStatusText != null)
-                    DriverUpdatesStatusText.Text = "No visible driver updates to install.";
+                    DriverUpdatesStatusText.Text = LocalizedString("Code_NoVisibleDriverUpdatesToInstall", "No visible driver updates to install.");
                 return;
             }
 
             string originalLabel = DriverUpdatesUpdateAllButton.Content?.ToString() ?? "Update all";
             DriverUpdatesUpdateAllButton.IsEnabled = false;
-            DriverUpdatesUpdateAllButton.Content = $"Updating {urls.Count}\u2026";
+            DriverUpdatesUpdateAllButton.Content = string.Format(LocalizedString("CodeF_20", "Updating {0}\u2026"), urls.Count);
             if (DriverUpdatesStatusText != null)
-                DriverUpdatesStatusText.Text = $"Downloading {urls.Count} installers\u2026";
+                DriverUpdatesStatusText.Text = string.Format(LocalizedString("CodeF_21", "Downloading {0} installers\u2026"), urls.Count);
 
             try
             {
                 if (!App.IsConnected)
                 {
                     if (DriverUpdatesStatusText != null)
-                        DriverUpdatesStatusText.Text = "Helper not connected — can't install.";
+                        DriverUpdatesStatusText.Text = LocalizedString("Code_HelperNotConnectedCanTInstall", "Helper not connected — can't install.");
                     return;
                 }
 
@@ -841,7 +841,7 @@ namespace XboxGamingBar
             {
                 Logger.Warn($"DriverUpdatesUpdateAllButton_Click failed: {ex.Message}");
                 if (DriverUpdatesStatusText != null)
-                    DriverUpdatesStatusText.Text = $"Update all failed: {ex.Message}";
+                    DriverUpdatesStatusText.Text = string.Format(LocalizedString("CodeF_22", "Update all failed: {0}"), ex.Message);
             }
             finally
             {
@@ -901,20 +901,20 @@ namespace XboxGamingBar
             if (string.IsNullOrWhiteSpace(url))
             {
                 if (DriverUpdatesStatusText != null)
-                    DriverUpdatesStatusText.Text = "No download URL for that driver.";
+                    DriverUpdatesStatusText.Text = LocalizedString("Code_NoDownloadURLForThatDriver", "No download URL for that driver.");
                 return;
             }
 
             string originalLabel = button.Content?.ToString() ?? "Install";
             button.IsEnabled = false;
-            button.Content = "Installing\u2026";
+            button.Content = LocalizedString("Code_Installing_2", "Installing\u2026");
 
             try
             {
                 if (!App.IsConnected)
                 {
                     if (DriverUpdatesStatusText != null)
-                        DriverUpdatesStatusText.Text = "Helper not connected — can't install.";
+                        DriverUpdatesStatusText.Text = LocalizedString("Code_HelperNotConnectedCanTInstall", "Helper not connected — can't install.");
                     return;
                 }
 
@@ -946,7 +946,7 @@ namespace XboxGamingBar
             {
                 Logger.Warn($"DriverInstallButton_Click failed: {ex.Message}");
                 if (DriverUpdatesStatusText != null)
-                    DriverUpdatesStatusText.Text = $"Install failed: {ex.Message}";
+                    DriverUpdatesStatusText.Text = string.Format(LocalizedString("CodeF_23", "Install failed: {0}"), ex.Message);
             }
             finally
             {
@@ -1402,7 +1402,7 @@ namespace XboxGamingBar
                 int modeIndex = TDPModeComboBox?.SelectedIndex ?? 1;
                 string[] defaultModeNames = { "Quiet", "Balanced", "Performance" };
                 string modeName = (modeIndex >= 0 && modeIndex < defaultModeNames.Length) ? defaultModeNames[modeIndex] : "Balanced";
-                if (CurrentTDPValueText != null) CurrentTDPValueText.Text = $"{modeName} mode";
+                if (CurrentTDPValueText != null) CurrentTDPValueText.Text = string.Format(LocalizedString("CodeF_24", "{0} mode"), modeName);
 
                 Logger.Debug($"Custom card hidden - using {modeName} mode");
             }
