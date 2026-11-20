@@ -482,6 +482,16 @@ namespace XboxGamingBarHelper
 
         private static void PerGameProfile_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            // Fires on the pipe thread while RunningGame_PropertyChanged fires on the main loop;
+            // share CurrentProfile_PropertyChanged's lock so isApplyingProfile is checked atomically.
+            lock (profileApplicationLock)
+            {
+                ApplyPerGameProfileToggle();
+            }
+        }
+
+        private static void ApplyPerGameProfileToggle()
+        {
             // Prevent reentrant profile handling
             if (isApplyingProfile)
             {
@@ -680,6 +690,14 @@ namespace XboxGamingBarHelper
             // Wrap in try/catch in the caller so PresentMon faults never break profile flow.
             OnRunningGameChangedForPresentMon();
 
+            lock (profileApplicationLock)
+            {
+                ApplyRunningGameProfile();
+            }
+        }
+
+        private static void ApplyRunningGameProfile()
+        {
             // Prevent reentrant profile handling
             if (isApplyingProfile)
             {
