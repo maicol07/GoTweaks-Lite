@@ -755,12 +755,10 @@ namespace XboxGamingBarHelper.AutoTDP
             double weightedSum = 0;
             double totalWeight = 0;
 
+            // i is the sample's age (0 = newest); newer samples weigh more.
             for (int i = 0; i < fpsHistoryCount; i++)
             {
-                int age = (fpsHistoryIndex - 1 - i + fpsHistory.Length) % fpsHistory.Length;
-                if (age >= fpsHistoryCount) continue;
-
-                double weight = fpsHistoryCount - age;
+                double weight = fpsHistoryCount - i;
                 weightedSum += fpsHistory[(fpsHistoryIndex - 1 - i + fpsHistory.Length) % fpsHistory.Length] * weight;
                 totalWeight += weight;
             }
