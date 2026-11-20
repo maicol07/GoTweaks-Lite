@@ -22,7 +22,11 @@ namespace XboxGamingBarHelper.ControllerEmulation
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly object syncRoot = new object();
+        // HidHide's block list is system-wide and shared with other tools (Handheld Companion,
+        // HHD, DS4Windows...). hiddenDeviceIds only holds blocked IDs GoTweaks manages (see
+        // IsGoTweaksManagedId); foreignBlockedCount counts the rest, which are never touched.
         private readonly HashSet<string> hiddenDeviceIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        private int foreignBlockedCount;
         private string cliPath;
         private bool appRegistered;
         private bool cloakingEnabled;
@@ -343,12 +347,13 @@ namespace XboxGamingBarHelper.ControllerEmulation
                     }
                 }
 
-                if (service.IsActive)
+                // Keep cloaking on while other tools still have devices blocked.
+                if (service.IsActive && foreignBlockedCount == 0)
                 {
                     service.IsActive = false;
                 }
 
-                cloakingEnabled = false;
+                cloakingEnabled = service.IsActive;
 
                 if (unhiddenCount > 0)
                 {
@@ -386,7 +391,8 @@ namespace XboxGamingBarHelper.ControllerEmulation
                 }
             }
 
-            if (RunCli("--cloak-off"))
+            // Keep cloaking on while other tools still have devices blocked.
+            if (foreignBlockedCount == 0 && RunCli("--cloak-off"))
             {
                 cloakingEnabled = false;
             }
@@ -1791,16 +1797,60 @@ namespace XboxGamingBarHelper.ControllerEmulation
                     service.BlockedInstanceIds ?? Enumerable.Empty<string>(),
                     StringComparer.OrdinalIgnoreCase);
 
-                hiddenDeviceIds.Clear();
-                foreach (string id in currentHidden)
-                {
-                    hiddenDeviceIds.Add(id);
-                }
+                SetHiddenDeviceIds(currentHidden);
             }
             catch (Exception ex)
             {
                 Logger.Debug($"HidHide hidden-device API refresh failed: {ex.Message}");
             }
+        }
+
+        /// <summary>
+        /// Splits HidHide's system-wide block list into the IDs GoTweaks manages
+        /// (<see cref="hiddenDeviceIds"/>) and a count of everyone else's.
+        /// </summary>
+        private void SetHiddenDeviceIds(IEnumerable<string> systemBlockedIds)
+        {
+            hiddenDeviceIds.Clear();
+            foreignBlockedCount = 0;
+            foreach (string id in systemBlockedIds)
+            {
+                if (IsGoTweaksManagedId(id))
+                {
+                    hiddenDeviceIds.Add(id);
+                }
+                else
+                {
+                    foreignBlockedCount++;
+                }
+            }
+        }
+
+        /// <summary>
+        /// True for device IDs <see cref="EnumerateDeviceInstanceIds"/> can produce: the
+        /// handheld's own gamepad interfaces and its Lenovo-parented Xbox bridge. Stateless on
+        /// purpose, so IDs hidden before a crash or by an older build are still recognized.
+        /// </summary>
+        private static bool IsGoTweaksManagedId(string deviceInstanceId)
+        {
+            if (string.IsNullOrWhiteSpace(deviceInstanceId))
+            {
+                return false;
+            }
+
+            if (IsLegionSuppressibleGamepadId(deviceInstanceId) || IsLegionGoSSuppressibleGamepadId(deviceInstanceId))
+            {
+                return true;
+            }
+
+            if (deviceInstanceId.IndexOf("VID_2F24", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return deviceInstanceId.IndexOf("PID_0137", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                       deviceInstanceId.IndexOf("PID_0135", StringComparison.OrdinalIgnoreCase) >= 0;
+            }
+
+            return deviceInstanceId.IndexOf("VID_045E&PID_028E", StringComparison.OrdinalIgnoreCase) >= 0 &&
+                   IsLegionParentedXboxBridge(deviceInstanceId);
         }
 
         private void RefreshHiddenDeviceIdsFromCli()
@@ -1812,12 +1862,7 @@ namespace XboxGamingBarHelper.ControllerEmulation
 
             try
             {
-                HashSet<string> currentHidden = QueryHiddenDeviceIdsFromCli();
-                hiddenDeviceIds.Clear();
-                foreach (string id in currentHidden)
-                {
-                    hiddenDeviceIds.Add(id);
-                }
+                SetHiddenDeviceIds(QueryHiddenDeviceIdsFromCli());
             }
             catch (Exception ex)
             {
