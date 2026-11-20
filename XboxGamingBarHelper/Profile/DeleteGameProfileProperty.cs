@@ -30,6 +30,7 @@ namespace XboxGamingBarHelper.Profile
                 if (deleted)
                 {
                     Logger.Info($"Successfully deleted profile for: {Value}");
+                    Program.RestoreGlobalIfActiveProfileDeleted();
                 }
                 else
                 {

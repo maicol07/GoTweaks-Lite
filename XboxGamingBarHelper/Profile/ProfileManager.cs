@@ -326,8 +326,9 @@ namespace XboxGamingBarHelper.Profile
             var profile = gameProfiles[targetKey.Value];
             var filePath = profile.Path;
 
-            // Remove from dictionary
+            // Remove from dictionary and drop any debounced write that would recreate the file.
             gameProfiles.Remove(targetKey.Value);
+            GameProfile.DiscardPendingWrite(filePath);
 
             // Delete the XML file
             if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))

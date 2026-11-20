@@ -1280,6 +1280,17 @@ namespace Shared.Data
         }
 
         /// <summary>
+        /// Drops a queued debounced save for <paramref name="path"/> (e.g. the profile was deleted).
+        /// </summary>
+        public static void DiscardPendingWrite(string path)
+        {
+            if (!string.IsNullOrEmpty(path))
+            {
+                PendingWrites.TryRemove(path, out _);
+            }
+        }
+
+        /// <summary>
         /// Forces any pending debounced saves to flush immediately. Useful on shutdown.
         /// </summary>
         public static void FlushAllPendingWrites()

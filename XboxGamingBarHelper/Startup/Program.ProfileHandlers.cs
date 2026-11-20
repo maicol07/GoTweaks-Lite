@@ -392,6 +392,35 @@ namespace XboxGamingBarHelper
             }
         }
 
+        /// <summary>
+        /// Called after a game profile was deleted. If it was the active per-game profile, switch
+        /// to the global profile: otherwise the next setting change would Save() the deleted
+        /// profile back into the cache and recreate its XML.
+        /// </summary>
+        internal static void RestoreGlobalIfActiveProfileDeleted()
+        {
+            lock (profileApplicationLock)
+            {
+                var current = profileManager.CurrentProfile;
+                if (current.IsGlobalProfile || profileManager.GameProfiles.ContainsKey(current.GameId))
+                {
+                    return;
+                }
+
+                try
+                {
+                    isApplyingProfile = true;
+                    Logger.Info($"Active profile {current.GameId.Name} was deleted, restoring global profile");
+                    RestoreGlobalProfileSettings();
+                }
+                finally
+                {
+                    profileSwitchTime = DateTime.UtcNow;
+                    isApplyingProfile = false;
+                }
+            }
+        }
+
         private static void CurrentProfile_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             // Use lock to ensure atomic profile application and prevent interleaved settings
