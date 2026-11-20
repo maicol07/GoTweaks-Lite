@@ -1720,8 +1720,11 @@ namespace XboxGamingBarHelper.Devices.Libraries.Legion
 
             // All succeeded - update cached values
             customTDPSlow = slow;
+            pendingTdpSlow = slow; // a scheduled Custom-mode reapply must not revert newer limits
             customTDPFast = fast;
+            pendingTdpFast = fast;
             customTDPPeak = peak;
+            pendingTdpPeak = peak;
             Logger.Info($"All TDP values applied successfully: SPL={slow}W, SPPL={fast}W, FPPT={peak}W");
             CustomTDPApplied?.Invoke();
         }
@@ -1744,9 +1747,10 @@ namespace XboxGamingBarHelper.Devices.Libraries.Legion
             }
 
             // Create new timer for 5 seconds
-            tdpReapplyTimer = new System.Timers.Timer(5000);
-            tdpReapplyTimer.AutoReset = false;
-            tdpReapplyTimer.Elapsed += (sender, e) =>
+            var timer = new System.Timers.Timer(5000);
+            tdpReapplyTimer = timer;
+            timer.AutoReset = false;
+            timer.Elapsed += (sender, e) =>
             {
                 try
                 {
@@ -1759,11 +1763,12 @@ namespace XboxGamingBarHelper.Devices.Libraries.Legion
                 }
                 finally
                 {
-                    tdpReapplyTimer?.Dispose();
-                    tdpReapplyTimer = null;
+                    // Only clear the field if a newer reapply hasn't replaced this timer.
+                    timer.Dispose();
+                    System.Threading.Interlocked.CompareExchange(ref tdpReapplyTimer, null, timer);
                 }
             };
-            tdpReapplyTimer.Start();
+            timer.Start();
             Logger.Info("Scheduled TDP reapply in 5 seconds");
         }
 
@@ -1797,6 +1802,7 @@ namespace XboxGamingBarHelper.Devices.Libraries.Legion
                 if (result.Success)
                 {
                     customTDPSlow = slow;
+                    pendingTdpSlow = slow; // a scheduled Custom-mode reapply must not revert newer limits
                     Logger.Info($"Slow TDP (SPL) set to {slow}W");
                     CustomTDPApplied?.Invoke();
                 }
@@ -1841,6 +1847,7 @@ namespace XboxGamingBarHelper.Devices.Libraries.Legion
                 if (result.Success)
                 {
                     customTDPFast = fast;
+                    pendingTdpFast = fast;
                     Logger.Info($"Fast TDP (SPPL) set to {fast}W");
                     CustomTDPApplied?.Invoke();
                 }
@@ -1885,6 +1892,7 @@ namespace XboxGamingBarHelper.Devices.Libraries.Legion
                 if (result.Success)
                 {
                     customTDPPeak = peak;
+                    pendingTdpPeak = peak;
                     Logger.Info($"Peak TDP (FPPT) set to {peak}W");
                     CustomTDPApplied?.Invoke();
                 }
