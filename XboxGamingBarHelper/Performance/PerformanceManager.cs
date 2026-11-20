@@ -1466,6 +1466,7 @@ namespace XboxGamingBarHelper.Performance
                 float cpuWattage = CPUWattage.Value;
                 float gpuWattage = GPUWattage.Value;
                 float memoryUsage = MemoryUsage.Value;
+                float vramUsedMB = GPUMemoryUsed.Value; // SmallData sensor: MB, -1 when unavailable
                 float batteryLevel = BatteryLevel.Value;
                 float timeRemaining = BatteryTimeRemaining;
                 float timeToFull = BatteryTimeToFull;
@@ -1481,6 +1482,7 @@ namespace XboxGamingBarHelper.Performance
                     $"\"cpuWattage\":{cpuWattage:F1}," +
                     $"\"gpuWattage\":{gpuWattage:F1}," +
                     $"\"memoryUsage\":{memoryUsage:F0}," +
+                    $"\"vramUsed\":{vramUsedMB:F0}," +
                     $"\"batteryLevel\":{batteryLevel:F0}," +
                     $"\"timeRemaining\":{timeRemaining:F0}," +
                     $"\"timeToFull\":{timeToFull:F0}," +
