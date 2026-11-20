@@ -1268,10 +1268,10 @@ namespace Shared.Data
             {
                 return;
             }
-            if (PendingTimers.TryRemove(path, out var timer))
-            {
-                timer.Dispose();
-            }
+            // Don't touch PendingTimers here: a concurrent Save() may already have registered a
+            // newer timer for this path, and removing it would strand that snapshot until shutdown.
+            // ponytail: the fired one-shot timer stays referenced until the next Save() disposes it
+            // (one idle Timer per profile path).
 
             lock (ProfileLock)
             {
