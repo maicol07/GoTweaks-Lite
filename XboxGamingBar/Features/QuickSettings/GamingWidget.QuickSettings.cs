@@ -46,6 +46,8 @@ namespace XboxGamingBar
         // Tile brushes
         private SolidColorBrush tileOffBrush;
         private SolidColorBrush tileOnBrush;
+        private SolidColorBrush tileOnForegroundBrush;
+        private SolidColorBrush tileNeutralForegroundBrush;
 
         // Active-tile accent signal: the live Windows accent color shows up on the
         // state text ("On") and the bottom accent bar; tile background/icon/name
@@ -88,6 +90,7 @@ namespace XboxGamingBar
             public TextBlock StateText { get; set; }
             public CheckBox VisibilityCheckBox { get; set; }
             public FontIcon IconElement { get; set; }
+            public TextBlock NameText { get; set; }
             public Border AccentBar { get; set; }
 
             // For scrolling text animation (Profile tile)
@@ -122,7 +125,8 @@ namespace XboxGamingBar
         // Optional built-in display brightness slider (hidden by default, revealed under Customize)
         private bool brightnessSliderEnabled = false;
         private const string BrightnessSliderEnabledKey = "QS_BrightnessSliderEnabled";
-        private const int MaxSelectedMetrics = 6;
+        // Metrics are grouped into at most four cells, so every metric can be selected.
+        private const int MaxSelectedMetrics = 11;
 
         // Available metric types with their display properties
         private enum MetricType
@@ -136,7 +140,8 @@ namespace XboxGamingBar
             GPUTemp,
             GPUWattage,
             MemoryUsage,
-            TimeRemaining
+            TimeRemaining,
+            VRAMUsage
         }
 
         // Metric display info
@@ -146,8 +151,6 @@ namespace XboxGamingBar
             public string Label { get; set; }
             public string Glyph { get; set; }
             public string Unit { get; set; }
-            public TextBlock ValueTextBlock { get; set; }
-            public TextBlock LabelTextBlock { get; set; }
         }
 
         // Map of metric type to display info
@@ -162,7 +165,8 @@ namespace XboxGamingBar
             { MetricType.GPUTemp, new MetricInfo { Id = "GPUTemp", Label = "GPU Temp", Glyph = "\uE9CA", Unit = "°" } },
             { MetricType.GPUWattage, new MetricInfo { Id = "GPUWattage", Label = "GPU", Glyph = ((char)0xE964).ToString(), Unit = "W" } },
             { MetricType.MemoryUsage, new MetricInfo { Id = "MemoryUsage", Label = "Memory", Glyph = ((char)0xEEA0).ToString(), Unit = "%" } },
-            { MetricType.TimeRemaining, new MetricInfo { Id = "TimeRemaining", Label = "Time", Glyph = "\uE916", Unit = "" } }
+            { MetricType.TimeRemaining, new MetricInfo { Id = "TimeRemaining", Label = "Time", Glyph = "\uE916", Unit = "" } },
+            { MetricType.VRAMUsage, new MetricInfo { Id = "VRAMUsage", Label = "VRAM", Glyph = ((char)0xEEA0).ToString(), Unit = "GB" } }
         };
 
         // Currently selected metrics (in order of display)
@@ -198,7 +202,11 @@ namespace XboxGamingBar
                 var liveAccent = (Windows.UI.Color)Application.Current.Resources["SystemAccentColorLight2"];
 
                 tileOffBrush = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 0x35, 0x39, 0x3F)); // flat neutral gray
-                tileOnBrush = tileOffBrush;
+                // On/off tiles that are on fill with the accent; ApplyTileFillVisual turns
+                // their text and icon dark for contrast.
+                tileOnBrush = new SolidColorBrush(liveAccent);
+                tileOnForegroundBrush = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 0x10, 0x16, 0x1C));
+                tileNeutralForegroundBrush = new SolidColorBrush(Windows.UI.Colors.White);
 
                 tileAccentBrush = new SolidColorBrush(liveAccent);
                 // Same muted gray as the state text's "off" color, so the bar is

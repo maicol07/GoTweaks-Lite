@@ -187,106 +187,23 @@ namespace XboxGamingBar
         }
 
         /// <summary>
-        /// Update the metrics display based on current data and selected metrics
-        /// </summary>
-        private void UpdateMetricsDisplay()
-        {
-            foreach (var metricType in selectedMetrics)
-            {
-                if (!metricDefinitions.TryGetValue(metricType, out var info) || info.ValueTextBlock == null)
-                    continue;
-
-                string displayValue = "--";
-                string label = info.Label;
-
-                switch (metricType)
-                {
-                    case MetricType.BatteryDrain:
-                        if (currentMetricsData.TryGetValue("batteryDrain", out var drain))
-                        {
-                            if (drain > 0)
-                                displayValue = $"{drain:F1}W";
-                            else if (drain < 0)
-                                displayValue = $"+{-drain:F1}W";
-                            else
-                                displayValue = "--W";
-                        }
-                        break;
-
-                    case MetricType.BatteryLevel:
-                        if (currentMetricsData.TryGetValue("batteryLevel", out var level) && level >= 0)
-                            displayValue = $"{level:F0}%";
-                        break;
-
-                    case MetricType.CPUUsage:
-                        if (currentMetricsData.TryGetValue("cpuUsage", out var cpuUse) && cpuUse >= 0)
-                            displayValue = $"{cpuUse:F0}%";
-                        break;
-
-                    case MetricType.CPUTemp:
-                        if (currentMetricsData.TryGetValue("cpuTemp", out var cpuTemp) && cpuTemp > 0)
-                            displayValue = $"{cpuTemp:F0}°";
-                        break;
-
-                    case MetricType.CPUWattage:
-                        if (currentMetricsData.TryGetValue("cpuWattage", out var cpuWatt) && cpuWatt >= 0)
-                            displayValue = $"{cpuWatt:F1}W";
-                        break;
-
-                    case MetricType.GPUUsage:
-                        if (currentMetricsData.TryGetValue("gpuUsage", out var gpuUse) && gpuUse >= 0)
-                            displayValue = $"{gpuUse:F0}%";
-                        break;
-
-                    case MetricType.GPUTemp:
-                        if (currentMetricsData.TryGetValue("gpuTemp", out var gpuTemp) && gpuTemp > 0)
-                            displayValue = $"{gpuTemp:F0}°";
-                        break;
-
-                    case MetricType.GPUWattage:
-                        if (currentMetricsData.TryGetValue("gpuWattage", out var gpuWatt) && gpuWatt >= 0)
-                            displayValue = $"{gpuWatt:F1}W";
-                        break;
-
-                    case MetricType.MemoryUsage:
-                        if (currentMetricsData.TryGetValue("memoryUsage", out var memUse) && memUse >= 0)
-                            displayValue = $"{memUse:F0}%";
-                        break;
-
-                    case MetricType.TimeRemaining:
-                        currentMetricsData.TryGetValue("timeRemaining", out var timeRem);
-                        currentMetricsData.TryGetValue("timeToFull", out var timeFull);
-                        if (currentMetricsIsCharging && timeFull > 0)
-                        {
-                            var hours = (int)(timeFull / 3600);
-                            var mins = (int)((timeFull % 3600) / 60);
-                            displayValue = $"{hours}:{mins:D2}";
-                            label = "To Full";
-                        }
-                        else if (!currentMetricsIsCharging && timeRem > 0)
-                        {
-                            var hours = (int)(timeRem / 3600);
-                            var mins = (int)((timeRem % 3600) / 60);
-                            displayValue = $"{hours}:{mins:D2}";
-                            label = "Remaining";
-                        }
-                        else
-                        {
-                            displayValue = "--:--";
-                            label = currentMetricsIsCharging ? "Charging" : "Time";
-                        }
-                        break;
-                }
-
-                info.ValueTextBlock.Text = displayValue;
-                if (info.LabelTextBlock != null)
-                    info.LabelTextBlock.Text = label;
-            }
-        }
-
-        /// <summary>
         /// Update checkbox states based on selected metrics
         /// </summary>
+        private Dictionary<CheckBox, MetricType> MetricCheckboxMap => new Dictionary<CheckBox, MetricType>
+        {
+            { MetricCheck_BatteryDrain, MetricType.BatteryDrain },
+            { MetricCheck_BatteryLevel, MetricType.BatteryLevel },
+            { MetricCheck_CPUUsage, MetricType.CPUUsage },
+            { MetricCheck_CPUTemp, MetricType.CPUTemp },
+            { MetricCheck_CPUWattage, MetricType.CPUWattage },
+            { MetricCheck_GPUUsage, MetricType.GPUUsage },
+            { MetricCheck_GPUTemp, MetricType.GPUTemp },
+            { MetricCheck_GPUWattage, MetricType.GPUWattage },
+            { MetricCheck_MemoryUsage, MetricType.MemoryUsage },
+            { MetricCheck_TimeRemaining, MetricType.TimeRemaining },
+            { MetricCheck_VRAMUsage, MetricType.VRAMUsage },
+        };
+
         private void UpdateMetricCheckboxes()
         {
             // Guard to prevent MetricCheckBox_Changed from firing during programmatic updates.
@@ -296,22 +213,7 @@ namespace XboxGamingBar
             isUpdatingMetricCheckboxes = true;
             try
             {
-                // Map checkboxes to metric types
-                var checkboxMap = new Dictionary<CheckBox, MetricType>
-                {
-                    { MetricCheck_BatteryDrain, MetricType.BatteryDrain },
-                    { MetricCheck_BatteryLevel, MetricType.BatteryLevel },
-                    { MetricCheck_CPUUsage, MetricType.CPUUsage },
-                    { MetricCheck_CPUTemp, MetricType.CPUTemp },
-                    { MetricCheck_CPUWattage, MetricType.CPUWattage },
-                    { MetricCheck_GPUUsage, MetricType.GPUUsage },
-                    { MetricCheck_GPUTemp, MetricType.GPUTemp },
-                    { MetricCheck_GPUWattage, MetricType.GPUWattage },
-                    { MetricCheck_MemoryUsage, MetricType.MemoryUsage },
-                    { MetricCheck_TimeRemaining, MetricType.TimeRemaining }
-                };
-
-                foreach (var kvp in checkboxMap)
+                foreach (var kvp in MetricCheckboxMap)
                 {
                     if (kvp.Key != null)
                         kvp.Key.IsChecked = selectedMetrics.Contains(kvp.Value);
@@ -332,7 +234,7 @@ namespace XboxGamingBar
         {
             if (MetricsSelectionCount != null)
             {
-                MetricsSelectionCount.Text = $"{selectedMetrics.Count}/{MaxSelectedMetrics} selected";
+                MetricsSelectionCount.Text = $"{selectedMetrics.Count} selected";
                 MetricsSelectionCount.Foreground = new SolidColorBrush(
                     selectedMetrics.Count >= MaxSelectedMetrics
                         ? Windows.UI.Color.FromArgb(255, 255, 150, 100)  // Orange when at max
@@ -348,22 +250,7 @@ namespace XboxGamingBar
             if (isUpdatingMetricCheckboxes) return;
             if (!(sender is CheckBox checkbox)) return;
 
-            // Map checkbox to metric type
-            var checkboxMap = new Dictionary<CheckBox, MetricType>
-            {
-                { MetricCheck_BatteryDrain, MetricType.BatteryDrain },
-                { MetricCheck_BatteryLevel, MetricType.BatteryLevel },
-                { MetricCheck_CPUUsage, MetricType.CPUUsage },
-                { MetricCheck_CPUTemp, MetricType.CPUTemp },
-                { MetricCheck_CPUWattage, MetricType.CPUWattage },
-                { MetricCheck_GPUUsage, MetricType.GPUUsage },
-                { MetricCheck_GPUTemp, MetricType.GPUTemp },
-                { MetricCheck_GPUWattage, MetricType.GPUWattage },
-                { MetricCheck_MemoryUsage, MetricType.MemoryUsage },
-                { MetricCheck_TimeRemaining, MetricType.TimeRemaining }
-            };
-
-            if (!checkboxMap.TryGetValue(checkbox, out var metricType))
+            if (!MetricCheckboxMap.TryGetValue(checkbox, out var metricType))
                 return;
 
             bool isChecked = checkbox.IsChecked == true;
@@ -410,128 +297,6 @@ namespace XboxGamingBar
             {
                 Logger.Error($"Error saving metrics selection: {ex.Message}");
             }
-        }
-
-        /// <summary>
-        /// Rebuild the metrics grid based on selected metrics
-        /// </summary>
-        private void RebuildMetricsGrid()
-        {
-            if (QuickMetricsGrid == null) return;
-
-            QuickMetricsGrid.Children.Clear();
-            QuickMetricsGrid.ColumnDefinitions.Clear();
-
-            if (selectedMetrics.Count == 0)
-            {
-                QuickMetricsRow.Visibility = Visibility.Collapsed;
-                return;
-            }
-
-            // Create columns: one star column per metric, plus a thin Auto divider
-            // column between each pair of metrics.
-            for (int c = 0; c < selectedMetrics.Count; c++)
-            {
-                if (c > 0) QuickMetricsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                QuickMetricsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            }
-
-            // Icon color: the user's live Windows accent color (unlike the Quick tab
-            // tile subtitle/state text, which stay pinned to the default Windows
-            // blue - this one deliberately follows the user's actual accent).
-            var metricIconBrush = new SolidColorBrush((Windows.UI.Color)Application.Current.Resources["SystemAccentColorLight2"]);
-
-            // Create UI for each selected metric: icon centered on top, value
-            // centered below the icon, gray label centered below the value.
-            int gridCol = 0;
-            for (int i = 0; i < selectedMetrics.Count; i++)
-            {
-                var metricType = selectedMetrics[i];
-                if (!metricDefinitions.TryGetValue(metricType, out var info))
-                    continue;
-
-                if (i > 0)
-                {
-                    // Thin gray divider between metrics.
-                    var divider = new Border
-                    {
-                        Width = 1,
-                        Background = new SolidColorBrush(Windows.UI.Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF)),
-                        Margin = new Thickness(0, 2, 0, 2)
-                    };
-                    Grid.SetColumn(divider, gridCol);
-                    QuickMetricsGrid.Children.Add(divider);
-                    gridCol++;
-                }
-
-                // Create metric panel
-                var panel = new StackPanel
-                {
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center
-                };
-
-                var icon = new FontIcon
-                {
-                    Glyph = info.Glyph,
-                    // Matches the Quick Settings tile icon font size (see
-                    // CreateTileButton in GamingWidget.QuickSettings.TileStates.cs).
-                    FontSize = 21,
-                    Foreground = metricIconBrush,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    Margin = new Thickness(0, 0, 0, 3)
-                };
-
-                var valueText = new TextBlock
-                {
-                    Text = "--",
-                    // Matches the Quick Settings tile state/subtitle font size (see
-                    // CreateTileButton in GamingWidget.QuickSettings.TileStates.cs).
-                    FontSize = 12,
-                    FontWeight = Windows.UI.Text.FontWeights.SemiBold,
-                    Foreground = new SolidColorBrush(Windows.UI.Colors.White),
-                    HorizontalAlignment = HorizontalAlignment.Center
-                };
-                info.ValueTextBlock = valueText;
-
-                // Label
-                var labelText = new TextBlock
-                {
-                    Text = info.Label,
-                    // Matches the Quick Settings tile name/title font size (see
-                    // CreateTileButton in GamingWidget.QuickSettings.TileStates.cs).
-                    FontSize = qsColumnCount == 4 ? 13 : 14,
-                    Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 136, 136, 136)), // #888888
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    Margin = new Thickness(0, 2, 0, 0)
-                };
-                info.LabelTextBlock = labelText;
-
-                panel.Children.Add(icon);
-                panel.Children.Add(valueText);
-                panel.Children.Add(labelText);
-
-                Grid.SetColumn(panel, gridCol);
-                QuickMetricsGrid.Children.Add(panel);
-
-                gridCol++;
-            }
-
-            // Show the row if we have metrics
-            if (quickMetricsEnabled && selectedMetrics.Count > 0)
-            {
-                QuickMetricsRow.Visibility = Visibility.Visible;
-            }
-
-            // The TextBlocks just created above are seeded with "--" and only get repainted
-            // by the next helper push (UpdateQuickMetrics). If a push isn't imminent (e.g. we
-            // just came back from an instance recreation, or the user is mid-reorder), the row
-            // would sit on "--" for a while. Repaint immediately from already-cached data so
-            // there's no visible gap when we have it.
-            UpdateMetricsDisplay();
-
-            // Also rebuild the reorder list
-            RebuildMetricsReorderList();
         }
 
         /// <summary>

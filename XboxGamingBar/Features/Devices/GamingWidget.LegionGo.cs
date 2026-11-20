@@ -704,6 +704,8 @@ namespace XboxGamingBar
                     ArmUserNavIntent(LegionNavItem.Tag as string);
                     LegionNavItem.IsChecked = true;
                 }
+                // Driver Updates lives in the Legion "Device" sub-section.
+                ShowLegionSection(LegionDeviceSection);
 
                 // If we haven't yet populated the driver list in this session
                 // (widget was re-opened since the helper pushed the count),

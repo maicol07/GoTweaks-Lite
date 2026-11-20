@@ -156,7 +156,7 @@ namespace XboxGamingBar
             content.Children.Add(icon);
             tile.IconElement = icon;
 
-            content.Children.Add(new TextBlock
+            tile.NameText = new TextBlock
             {
                 Text = tile.Name,
                 // Slightly smaller at 4 columns, where tiles are narrowest.
@@ -165,7 +165,8 @@ namespace XboxGamingBar
                 HorizontalAlignment = HorizontalAlignment.Center,
                 TextWrapping = TextWrapping.Wrap,
                 TextAlignment = TextAlignment.Center
-            });
+            };
+            content.Children.Add(tile.NameText);
 
             // Action tiles show "Action" instead of state, in tileActionBrush - they
             // never get revisited by UpdateQuickSettingsTileStates (no on/off state),
@@ -257,6 +258,27 @@ namespace XboxGamingBar
         {
             if (tile?.AccentBar == null) return;
             tile.AccentBar.Background = isOn ? tileAccentBrush : tileBarOffBrush;
+        }
+
+        /// <summary>
+        /// Final visual pass after the state updates above: on/off tiles that are on are
+        /// filled with the accent (tileOnBrush) and get dark text/icon, multi-value tiles
+        /// (severity-colored bar) tint their icon with the bar color, action tiles stay
+        /// neutral without a bar.
+        /// </summary>
+        private void ApplyTileFillVisual(TileDefinition tile)
+        {
+            if (tile?.TileButton == null || tile.IconElement == null || tile.NameText == null) return;
+            bool filled = tile.TileButton.Background == tileOnBrush;
+            if (tile.AccentBar != null)
+            {
+                tile.AccentBar.Visibility = filled || tile.IsAction ? Visibility.Collapsed : Visibility.Visible;
+            }
+            var barBrush = tile.AccentBar?.Background as SolidColorBrush;
+            bool severity = !filled && !tile.IsAction && barBrush != null && barBrush != tileAccentBrush && barBrush != tileBarOffBrush;
+            tile.IconElement.Foreground = filled ? tileOnForegroundBrush : severity ? barBrush : tileNeutralForegroundBrush;
+            tile.NameText.Foreground = filled ? tileOnForegroundBrush : tileNeutralForegroundBrush;
+            if (filled && tile.StateText != null) tile.StateText.Foreground = tileOnForegroundBrush;
         }
 
         /// <summary>
@@ -927,6 +949,7 @@ namespace XboxGamingBar
                     {
                         UpdateTileScrollAnimation(t);
                     }
+                    ApplyTileFillVisual(t);
                 }
 
                 Logger.Debug("Quick Settings tile states updated");

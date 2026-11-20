@@ -196,6 +196,9 @@ namespace XboxGamingBar
                 // Stop fan curve updates when leaving Legion tab (will be re-enabled if Legion is selected)
                 legionFanCurveVisible?.SetVisible(false);
 
+                // LB/RB hint only applies to the Legion sub-sections.
+                CommandHintSections.Visibility = tag == "Legion" ? Visibility.Visible : Visibility.Collapsed;
+
                 // Show selected section and scroll to top
                 switch (tag)
                 {
@@ -269,6 +272,17 @@ namespace XboxGamingBar
                     rtTriggerHeld = true;
                     lastTriggerNavigateUtc = DateTime.UtcNow;
                     NavigateToNextTab();
+                }
+                e.Handled = true;
+                return;
+            }
+            // LB/RB cycle the Legion tab's sub-sections (one press == one section).
+            else if ((e.Key == VirtualKey.GamepadLeftShoulder || e.Key == VirtualKey.GamepadRightShoulder)
+                     && lastUserNavTag == "Legion")
+            {
+                if (!e.KeyStatus.WasKeyDown)
+                {
+                    CycleLegionSection(e.Key == VirtualKey.GamepadRightShoulder ? 1 : -1);
                 }
                 e.Handled = true;
                 return;

@@ -166,7 +166,7 @@ namespace XboxGamingBar
                 var noProfilesText = new TextBlock
                 {
                     Text = "No saved game profiles yet. Play a game with Per-Game Profiles enabled to create profiles.",
-                    FontSize = 12,
+                    FontSize = 13,
                     Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 160, 160, 160)),
                     TextWrapping = TextWrapping.Wrap,
                     Margin = new Thickness(0, 8, 0, 0)
@@ -525,8 +525,8 @@ namespace XboxGamingBar
                 {
                     headerStack.Children.Add(new Image
                     {
-                        Width = 24,
-                        Height = 24,
+                        Width = 32,
+                        Height = 32,
                         VerticalAlignment = VerticalAlignment.Center,
                         Source = new BitmapImage(new Uri(iconPath))
                     });
@@ -550,7 +550,7 @@ namespace XboxGamingBar
                 Child = new TextBlock
                 {
                     Text = profileNames.Count == 1 ? "1 profile" : $"{profileNames.Count} profiles",
-                    FontSize = 11,
+                    FontSize = 12,
                     Foreground = new SolidColorBrush(Windows.UI.Colors.White)
                 }
             });
@@ -619,8 +619,8 @@ namespace XboxGamingBar
                     {
                         var icon = new Image
                         {
-                            Width = 24,
-                            Height = 24,
+                            Width = 32,
+                            Height = 32,
                             Margin = new Thickness(0, 0, 8, 0),
                             VerticalAlignment = VerticalAlignment.Center,
                             Source = new BitmapImage(new Uri(iconPath))
@@ -635,7 +635,7 @@ namespace XboxGamingBar
                 titleStack.Children.Add(new TextBlock
                 {
                     Text = gameName,
-                    FontSize = 13,
+                    FontSize = 14,
                     FontWeight = Windows.UI.Text.FontWeights.SemiBold,
                     Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 165, 0)),
                     TextTrimming = TextTrimming.CharacterEllipsis
@@ -646,7 +646,7 @@ namespace XboxGamingBar
                     titleStack.Children.Add(new TextBlock
                     {
                         Text = modifiedText,
-                        FontSize = 10,
+                        FontSize = 12,
                         Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 150, 150, 150))
                     });
                 }
@@ -656,10 +656,11 @@ namespace XboxGamingBar
                 // Delete button
                 var deleteButton = new Button
                 {
-                    Content = "🗑️",
-                    FontSize = 12,
-                    Width = 28,
-                    Height = 28,
+                    Content = "", // Delete glyph
+                    FontFamily = new FontFamily("Segoe Fluent Icons"),
+                    FontSize = 16,
+                    Width = 40,
+                    Height = 40,
                     Padding = new Thickness(0),
                     Background = new SolidColorBrush(Windows.UI.Color.FromArgb(100, 255, 0, 0)),
                     Foreground = new SolidColorBrush(Windows.UI.Colors.White),
@@ -669,6 +670,7 @@ namespace XboxGamingBar
                     BorderBrush = new SolidColorBrush(Windows.UI.Colors.Transparent),
                     BorderThickness = new Thickness(2)
                 };
+                Windows.UI.Xaml.Automation.AutomationProperties.SetName(deleteButton, "Delete profile");
                 deleteButton.Click += DeleteProfileButton_Click;
                 deleteButton.GotFocus += (s, args) =>
                 {
@@ -687,7 +689,7 @@ namespace XboxGamingBar
                 stackPanel.Children.Add(new TextBlock
                 {
                     Text = $"AC/DC split: {(gamePowerSourceSplit ? "On" : "Off")}",
-                    FontSize = 11,
+                    FontSize = 12,
                     Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 180, 180, 180)),
                     Margin = new Thickness(0, 0, 0, 6)
                 });

@@ -29,7 +29,7 @@ namespace XboxGamingBar
             yield return PerformanceOverlayToggle;
             yield return FPSLimitToggle;
             yield return FPSLimitSlider;
-            yield return TDPModeComboBox;
+            yield return SegmentFocusTarget(TDPModeComboBox);
             yield return CustomTDPSlowSlider;
             yield return CustomTDPFastSlider;
             yield return CustomTDPPeakSlider;
@@ -39,8 +39,17 @@ namespace XboxGamingBar
             yield return AutoTDPMaxSlider;
             yield return AutoTDPPauseWhenUnfocusedToggle;
             yield return AutoTDPFastResponseToggle;
-            yield return OSPowerModeComboBox;
+            yield return SegmentFocusTarget(OSPowerModeComboBox);
             yield return CPUExtrasExpandToggle;
+        }
+
+        /// <summary>
+        /// A Segmented is not a focus stop itself, its items are: link the chain to the selected
+        /// item (or the first one). Null until the items have been realized by layout.
+        /// </summary>
+        private static Control SegmentFocusTarget(ListViewBase segmented)
+        {
+            return segmented?.ContainerFromIndex(Math.Max(0, segmented.SelectedIndex)) as Control;
         }
 
         /// <summary>

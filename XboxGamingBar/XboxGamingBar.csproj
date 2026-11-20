@@ -223,6 +223,9 @@
     <Compile Include="Data\ViiperSwapRumbleMotorsProperty.cs" />
     <Compile Include="Features\Debug\GamingWidget.ViiperStickGyro.cs" />
     <Compile Include="Features\Debug\GamingWidget.ViiperToggle.cs" />
+    <Compile Include="Features\Navigation\GamingWidget.SettingsRows.cs" />
+    <Compile Include="Features\Navigation\GamingWidget.LegionSections.cs" />
+    <Compile Include="Features\QuickSettings\GamingWidget.QuickSettings.MetricCells.cs" />
     <Compile Include="GamingWidget.ViiperStickTrigger.cs" />
     <Compile Include="GamingWidget.xaml.cs">
       <DependentUpon>GamingWidget.xaml</DependentUpon>

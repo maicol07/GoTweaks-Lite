@@ -2,6 +2,7 @@ using Shared.Enums;
 using System;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace XboxGamingBar.Data
 {
@@ -9,7 +10,7 @@ namespace XboxGamingBar.Data
     /// Property for Legion performance mode (Quiet=1, Balanced=2, Performance=3, Custom=255)
     /// Uses ComboBox for selection
     /// </summary>
-    internal class LegionPerformanceModeProperty : WidgetControlProperty<int, ComboBox>
+    internal class LegionPerformanceModeProperty : WidgetControlProperty<int, Selector>
     {
         // Mode values: Quiet=1, Balanced=2, Performance=3, Custom=255
         private static readonly int[] PERFORMANCE_MODE_VALUES = { 1, 2, 3, 255 };
@@ -29,7 +30,7 @@ namespace XboxGamingBar.Data
         /// </summary>
         public bool SuppressUpdates { get; set; } = false;
 
-        public LegionPerformanceModeProperty(ComboBox inUI, Page inOwner) : base(2, Function.LegionPerformanceMode, inUI, inOwner)
+        public LegionPerformanceModeProperty(Selector inUI, Page inOwner) : base(2, Function.LegionPerformanceMode, inUI, inOwner)
         {
             if (UI != null)
             {
