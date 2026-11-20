@@ -102,10 +102,14 @@ namespace XboxGamingBarHelper
         // Routes a setting save to CurrentProfile (per-game capture) when saveToProfile is true,
         // else to GlobalProfile (treat as device-wide). Caller supplies a setter action for each
         // target; the target's own setter handles the equality check and debounced Save().
+        // GameProfile is a struct: onGlobal mutates a copy whose Save() lands in the shared cache,
+        // so GlobalProfile is re-synced from the cache before and after to avoid lost updates.
         private static void RouteProfileSave(bool saveToProfile, string settingName,
             Action<Profile.GameProfileProperty> onCurrent, Action<Shared.Data.GameProfile> onGlobal)
         {
-            if (saveToProfile)
+            // While no per-game profile is active CurrentProfile already is the global profile;
+            // writing through it keeps CurrentProfile.Value and GlobalProfile from diverging.
+            if (saveToProfile || profileManager.CurrentProfile.IsGlobalProfile)
             {
                 Logger.Info($"Saving {settingName} to profile {profileManager.CurrentProfile.GameId.Name}");
                 onCurrent(profileManager.CurrentProfile);
@@ -113,8 +117,10 @@ namespace XboxGamingBarHelper
             else
             {
                 Logger.Info($"Saving {settingName} to global (per-game capture disabled)");
+                profileManager.SyncGlobalFromCache();
                 onGlobal(profileManager.GlobalProfile);
             }
+            profileManager.SyncGlobalFromCache();
         }
 
         private static void ApplyLegionControllerSettingsFromProfile()

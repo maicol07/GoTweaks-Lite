@@ -248,12 +248,11 @@ namespace XboxGamingBarHelper
             {
                 Logger.Info($"Saving LegionPerformanceMode to profile {profileName}");
                 profileManager.CurrentProfile.LegionPerformanceMode = legionManager.LegionPerformanceMode.Value;
-                // Also save directly to GlobalProfile to ensure it's always in sync
-                // This fixes an issue where the restore reads from GlobalProfile but save goes to CurrentProfile
+                // Keep the GlobalProfile field in sync with the copy CurrentProfile just saved.
+                // Writing the stale field directly would revert every other global setting on disk.
                 if (profileManager.CurrentProfile.IsGlobalProfile)
                 {
-                    profileManager.GlobalProfile.LegionPerformanceMode = legionManager.LegionPerformanceMode.Value;
-                    Logger.Debug($"Also saved LegionPerformanceMode to GlobalProfile directly: {legionManager.LegionPerformanceMode.Value}");
+                    profileManager.SyncGlobalFromCache();
                 }
             }
             // Lighting settings — share a single Lighting flag

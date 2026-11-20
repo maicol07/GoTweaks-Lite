@@ -188,6 +188,19 @@ namespace XboxGamingBarHelper.Profile
             }
         }
 
+        /// <summary>
+        /// Copies the latest saved global profile from the cache into <see cref="GlobalProfile"/>.
+        /// Every GameProfile.Save() stores its struct copy in the cache, so this picks up writes
+        /// made through other copies (CurrentProfile, RouteProfileSave) without touching disk.
+        /// </summary>
+        public void SyncGlobalFromCache()
+        {
+            if (gameProfiles.TryGetValue(GlobalProfile.GameId, out GameProfile cached))
+            {
+                GlobalProfile = cached;
+            }
+        }
+
         public bool TryGetProfile(GameId gameId, out GameProfile gameProfile)
         {
             // Fast path: exact match
