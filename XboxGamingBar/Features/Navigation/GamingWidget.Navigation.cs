@@ -66,14 +66,17 @@ namespace XboxGamingBar
         }
 
         /// <summary>
-        /// Tabs are icon-only Segmented items: EqualPanel gives every item the widest item's width,
-        /// so labels would not fit. The localized name is the tooltip and the accessible name.
+        /// Icon-only tabs with the label (the localized AutomationProperties.Name) on the selected one.
+        /// The Segmented uses a StackPanel items panel, so only the selected tab grows.
         /// </summary>
-        private static void SetSegmentTooltips(ListViewBase segmented)
+        private static void UpdateSegmentLabels(ListViewBase segmented)
         {
             foreach (var item in segmented.Items.OfType<SegmentedItem>())
             {
-                ToolTipService.SetToolTip(item, Windows.UI.Xaml.Automation.AutomationProperties.GetName(item));
+                item.Content = item.IsSelected ? Windows.UI.Xaml.Automation.AutomationProperties.GetName(item) : null;
+                // Toolkit 8.2.251219 bug: SegmentedItem switches to "IconLeft" when Content is set, but its
+                // template names that state "IconOnLeft", so the label stays collapsed. Use the template state.
+                VisualStateManager.GoToState(item, item.IsSelected ? "IconOnLeft" : "IconOnly", true);
             }
         }
 
@@ -81,6 +84,7 @@ namespace XboxGamingBar
         {
             if (MainNavPanel.SelectedItem is SegmentedItem selectedItem)
             {
+                UpdateSegmentLabels(MainNavPanel);
                 string tag = selectedItem.Tag?.ToString() ?? "";
                 lastUserNavTag = tag;
 

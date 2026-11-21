@@ -197,7 +197,7 @@ namespace XboxGamingBar
             HandleHotkeySelectionChanged("MenuDpadRight", HotkeyMenuDpadRightComboBox, HotkeyMenuDpadRightKeyPanel);
         }
 
-        private void HandleHotkeySelectionChanged(string hotkeyName, ComboBox comboBox, StackPanel keyPanel)
+        private void HandleHotkeySelectionChanged(string hotkeyName, ComboBox comboBox, UIElement keyPanel)
         {
             if (isLoadingHotkeys) return;
             if (comboBox?.SelectedItem is ComboBoxItem selected && selected.Tag is string tagStr)

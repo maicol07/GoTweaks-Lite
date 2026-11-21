@@ -12,9 +12,9 @@ namespace XboxGamingBar.Data
     /// </summary>
     internal class LegionJoystickAsMouseModeProperty : WidgetControlProperty<int, ComboBox>
     {
-        private readonly Grid sensitivityGrid;
+        private readonly UIElement sensitivityGrid;
 
-        public LegionJoystickAsMouseModeProperty(ComboBox inUI, Grid inSensitivityGrid, Page inOwner) : base(0, Function.LegionJoystickAsMouseMode, inUI, inOwner)
+        public LegionJoystickAsMouseModeProperty(ComboBox inUI, UIElement inSensitivityGrid, Page inOwner) : base(0, Function.LegionJoystickAsMouseMode, inUI, inOwner)
         {
             sensitivityGrid = inSensitivityGrid;
 

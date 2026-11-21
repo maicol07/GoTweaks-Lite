@@ -16,7 +16,9 @@ https://claude.ai/artifact/3dj9prEoPe1GUJkUEcDcn5
   move ~660 named elements (2600 code-behind references) and 238 handlers out
   of the Page and break upstream merges of the code-behind too.
 - Tabs: the main bar and the Legion sub-sections are `Segmented`. Only the
-  selected item shows its label (`UpdateSegmentLabels`). The main bar does not
+  selected item shows its label (`UpdateSegmentLabels`; a `StackPanel` items
+  panel lets it grow, and it forces the `IconOnLeft` state because toolkit
+  8.2.251219 goes to a non-existent `IconLeft` state). The main bar does not
   select on focus (A or a tap selects), LT/RT switch tabs, LB/RB switch Legion
   sub-sections.
 - Settings: every setting is a `SettingsCard`; groups and collapsible sections
@@ -25,6 +27,11 @@ https://claude.ai/artifact/3dj9prEoPe1GUJkUEcDcn5
   `ContentAlignment="Left"` or `"Vertical"`. Logic that used to run on an expand
   button (load hotkeys, refresh remap UI, init fan graphs, stick preview) runs on
   the expander's `Expanded`/`Collapsed` events.
+- Each row in `Items` is its own `SettingsCard`. A panel the code shows or hides
+  as a group may sit in `Items` but needs `Style="{x:Null}"` (the expander puts
+  its SettingsCard style on every item and crashes otherwise); its cards get
+  that style from `ApplyExpanderItemStyles`. No expander nested inside a card:
+  color rows use a `DropDownButton` with the `ColorPicker` in its flyout.
 - Toggle rows also flip on a tap anywhere on the card (`ToggleRow_Tapped`).
 - 2-5 choices: `Segmented` with `SingleSelectionFollowsFocus="False"` (D-pad
   moves, A applies). `TDPModeComboBox` and `OSPowerModeComboBox` keep their

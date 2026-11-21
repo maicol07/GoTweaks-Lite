@@ -1,8 +1,6 @@
 using CommunityToolkit.WinUI.Controls;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
@@ -29,5 +27,49 @@ namespace XboxGamingBar
             toggle.IsOn = !toggle.IsOn;
         }
 
+        /// <summary>
+        /// SettingsExpander styles the SettingsCards that are its direct Items. Rows that sit inside a
+        /// panel the code shows or hides as a group are one level deeper, so they get the same style
+        /// from the expander's own ItemContainerStyleSelector.
+        /// </summary>
+        private static void ApplyExpanderItemStyles(object node)
+        {
+            switch (node)
+            {
+                case SettingsExpander expander:
+                    ApplyExpanderItemStyles(expander.Header);
+                    ApplyExpanderItemStyles(expander.Content);
+                    foreach (var item in expander.Items)
+                    {
+                        if (item is Panel group) StyleNestedRows(expander, group);
+                        ApplyExpanderItemStyles(item);
+                    }
+                    break;
+                case Panel panel:
+                    foreach (var child in panel.Children) ApplyExpanderItemStyles(child);
+                    break;
+                case ContentControl control:
+                    ApplyExpanderItemStyles(control.Content);
+                    break;
+                case Border border:
+                    ApplyExpanderItemStyles(border.Child);
+                    break;
+            }
+        }
+
+        private static void StyleNestedRows(SettingsExpander expander, Panel group)
+        {
+            foreach (var child in group.Children)
+            {
+                if (child is SettingsCard card && card.ReadLocalValue(StyleProperty) == DependencyProperty.UnsetValue)
+                {
+                    card.Style = expander.ItemContainerStyleSelector?.SelectStyle(null, card);
+                }
+                else if (child is Panel inner)
+                {
+                    StyleNestedRows(expander, inner);
+                }
+            }
+        }
     }
 }

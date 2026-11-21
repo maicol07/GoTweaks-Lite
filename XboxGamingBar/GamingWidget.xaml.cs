@@ -1548,8 +1548,9 @@ namespace XboxGamingBar
 
             // Initial tab: Quick. A on a focused tab also moves focus into its content.
             QuickNavItem.IsSelected = true;
-            SetSegmentTooltips(MainNavPanel);
-            SetSegmentTooltips(LegionSectionTabs);
+            UpdateSegmentLabels(MainNavPanel);
+            UpdateSegmentLabels(LegionSectionTabs);
+            ApplyExpanderItemStyles(Content);
             AttachNavInteractionTracking();
 
             // Load profile customization settings
