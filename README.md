@@ -4,24 +4,44 @@
 
 # 🎮 GoTweaks Lite
 <p align="center">
-  <a href="https://github.com/Rayekkk/GoTweaks-Lite/releases/latest"><img src="https://img.shields.io/github/v/release/Rayekkk/GoTweaks-Lite?display_name=tag&label=Latest%20Release&color=7C3AED&logo=github&logoColor=white" alt="Latest Release"></a>
-  <a href="https://github.com/Rayekkk/GoTweaks-Lite/releases"><img src="https://img.shields.io/github/downloads/Rayekkk/GoTweaks-Lite/total?label=Downloads&color=22C55E" alt="Downloads"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/Rayekkk/GoTweaks-Lite" alt="License: MIT"></a>
+  <a href="https://github.com/maicol07/GoTweaks-Lite/releases/latest"><img src="https://img.shields.io/github/v/release/maicol07/GoTweaks-Lite?display_name=tag&label=Latest%20Release&color=7C3AED&logo=github&logoColor=white" alt="Latest Release"></a>
+  <a href="https://github.com/maicol07/GoTweaks-Lite/releases"><img src="https://img.shields.io/github/downloads/maicol07/GoTweaks-Lite/total?label=Downloads&color=22C55E" alt="Downloads"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/maicol07/GoTweaks-Lite" alt="License: MIT"></a>
 </p>
 
-**A stripped-down, Lenovo Legion Go 2–focused fork of [GoTweaks](https://github.com/corando98/GoTweaks).**
+**A Lenovo Legion Go 2–focused fork of [GoTweaks Lite](https://github.com/Rulob/GoTweaks-Lite), itself a fork of [GoTweaks](https://github.com/corando98/GoTweaks).**
 
-An Xbox Game Bar widget for controlling TDP, fans, RGB, controller remapping, gyro, per-game
-profiles, and an OSD — rebuilt into a clean, predictable base tuned specifically for the
-**Legion Go 2 (AMD Ryzen Z2 Extreme)**.
+An Xbox Game Bar widget for controlling TDP, fans, RGB, controller remapping, gyro, controller
+emulation, per-game profiles, and an OSD — tuned specifically for the
+**Legion Go 2 (AMD Ryzen Z2 Extreme)**, with a touch- and gamepad-friendly UI close to Windows 11.
 
 </div>
+
+> [!NOTE]
+> **This is a fork of a fork.**
+>
+> The original [GoTweaks](https://github.com/corando98/GoTweaks) by corando98 hasn't been updated
+> since July 2026. I started this fork from [Rulob's GoTweaks Lite](https://github.com/Rulob/GoTweaks-Lite)
+> (a fork of [Rayekkk's GoTweaks Lite](https://github.com/Rayekkk/GoTweaks-Lite)) because it was the most
+> up-to-date. GoTweaks Lite also removed features I use, and I wanted a UI closer to the Windows system UI.
+>
+> - **Compared with GoTweaks:** everything GoTweaks Lite changes (single TDP Mode selector, PID
+>   AutoTDP, leaner feature set, reliability fixes) — see
+>   [What GoTweaks Lite changes](#-what-gotweaks-lite-changes-from-gotweaks).
+> - **Compared with GoTweaks Lite:** VIIPER controller emulation, Lossless Scaling profile editing,
+>   Legion Space service control and the overlay presets are back; the widget has a touch and
+>   gamepad redesign built on Windows-style controls, an Italian translation and extra security and
+>   profile fixes — see [What this fork changes](#-what-this-fork-changes-from-gotweaks-lite).
+> - Upstream GoTweaks Lite changes are still merged regularly. Thanks to **Rulob** and **Rayekkk**
+>   for GoTweaks Lite and to **corando98** for GoTweaks.
 
 ---
 
 ## 📑 Contents
 
-- [What's different from the original](#-whats-different-from-the-original)
+- [What's new in 1.11.0](#-whats-new-in-1110)
+- [What this fork changes from GoTweaks Lite](#-what-this-fork-changes-from-gotweaks-lite)
+- [What GoTweaks Lite changes from GoTweaks](#-what-gotweaks-lite-changes-from-gotweaks)
 - [Features](#-features)
 - [Installation](#-installation)
 - [Uninstalling](#uninstalling)
@@ -31,10 +51,60 @@ profiles, and an OSD — rebuilt into a clean, predictable base tuned specifical
 
 ---
 
-## ✨ What's different from the original
+## 🆕 What's new in 1.11.0
 
-This is the fork's identity — everything below is what GoTweaks Lite changes relative to
-upstream, and why.
+**In this fork**
+
+- **Touch and gamepad redesign.** Tabs are segmented controls with a sliding selection pill;
+  settings use Windows-style cards and collapsible sections (CommunityToolkit SettingsCard and
+  SettingsExpander) with icons; the Performance tab is laid out like Windows Settings; notices are
+  Windows-style info bars. Rows and buttons are at least 40-56 px tall, tapping a toggle row flips
+  it, TDP Mode and OS Power Mode are segmented controls, and sliders need A before the D-pad
+  changes them. A bottom bar shows the gamepad keys (LT/RT tabs, A select, B back).
+- **Legion tab sections:** Controller, Emulation, Input, Lighting and Device (tap, or LB/RB).
+- **Quick tab:** a metrics row grouped by Battery, CPU, GPU and Memory (now with VRAM), and
+  redesigned tiles filled with the accent color when active.
+- **Italian translation** — the app follows the Windows display language.
+- **Security:** the elevated helper only accepts pipe connections from the GoTweaks package and only
+  opens http/https URLs.
+- **Fixes:** HidHide leaves devices hidden by other tools alone; Custom TDP keeps the newest limits
+  on its delayed reapply; uninstall restores the exact CPU boost mode; read-back refresh rate and
+  resolution are no longer re-applied; several profile save, switch and delete races are fixed;
+  AutoTDP smoothing reacts faster to FPS drops.
+
+**From upstream GoTweaks Lite 1.9.3 – 1.9.6** — thanks to [Rulob](https://github.com/Rulob)
+
+- **Brightness Up / Down (5%)** controller hotkeys.
+- **AutoTDP Fast response** and **Show GoTweaks first in Game Bar**.
+- **GoTweaks Haptics**, the **Brightness Gesture** and the unused Game Bar settings widget are
+  removed.
+- Hotkey combos fire again when the second button is pressed again, and customizing Quick Settings
+  no longer jumps to the top.
+
+The full list is in the [1.11.0 release notes](https://github.com/maicol07/GoTweaks-Lite/releases/tag/1.11.0).
+
+---
+
+## 🔀 What this fork changes from GoTweaks Lite
+
+- **VIIPER controller emulation is back** (Legion tab → Emulation): virtual Xbox 360, DualShock 4,
+  DualSense, Switch Pro and Steam pads, stick and trigger shaping, and optional HidHide suppression
+  of the physical controller. `GoTweaks-Setup.exe` can install the signed usbip-win2 and HidHide
+  drivers offline.
+- **Lossless Scaling profiles** can be edited from the widget again.
+- **Legion Space service control** is back.
+- **Performance overlay presets and power readings** are back.
+- **Touch and gamepad redesign** with Windows-style controls, and an **Italian translation** (see
+  [What's new in 1.11.0](#-whats-new-in-1110)).
+- **Security and reliability fixes** for the elevated helper, HidHide, Custom TDP and profiles.
+
+---
+
+## ✨ What GoTweaks Lite changes from GoTweaks
+
+Everything below comes from upstream GoTweaks Lite by [Rayekkk](https://github.com/Rayekkk) and
+[Rulob](https://github.com/Rulob): what it changes relative to GoTweaks, and why. Items marked
+_restored in this fork_ are available again here.
 
 ### 🎯 Focus
 
@@ -64,12 +134,13 @@ upstream, and why.
 - **Controller Emulation** (the VIIPER virtual-gamepad feature: virtual Xbox 360 / DualShock 4 /
   DualSense / Switch Pro / Steam pads, gyro forwarding, the Sticks & Triggers shaping panel) and
   everything that only existed to support it. The Xbox Guide remap action now simply opens the
-  Xbox Game Bar (Win+G).
+  Xbox Game Bar (Win+G). _Restored in this fork._
 - The **Prerequisites** installer card and the setup-warning banner: GoTweaks Lite no longer
   installs or asks for **PawnIO**, **usbip-win2** or **HidHide**. With PawnIO gone, the
   _Unlock Fan Curve Override_ (direct EC fan control) and the per-mode fan curves for Quiet /
   Balanced / Performance went with it — the Fan Curve card now edits the **Custom**-mode curve
   (applied through Lenovo WMI), and **Fan Full Speed** is unchanged. TDP is Lenovo WMI only.
+  _This fork's setup bundles usbip-win2 and HidHide again, as optional drivers for VIIPER._
 - The **Display** tab (Resolution, Refresh Rate, HDR, Auto SDR, Adaptive Brightness, Color Settings
   and the AMD Radeon toggles: RSR, Fluid Motion Frames, Anti-Lag, Boost, Chill, Image Sharpening)
   and the matching Quick Settings tiles. The display and Radeon settings keep whatever values they
@@ -77,10 +148,11 @@ upstream, and why.
   (ADLX is still used for GPU metrics and the AMD overlay).
 - The **Scale** tab. Lossless Scaling is no longer configured from the widget (no more settings or
   per-game profile syncing) — the **Lossless** Quick Settings tile (and any controller combo bound to
-  it) still turns scaling on and off, launching Lossless Scaling first if needed.
+  it) still turns scaling on and off, launching Lossless Scaling first if needed. _Profile editing
+  is restored in this fork._
 - On the Legion tab: **Per-Game Controller Profile** (controller settings are always global now,
   so the _Remap_ tile went too), **Nintendo Layout**, and the Labs cards **Disable Legion Space
-  Service** and **Fix Task View Bug**. If Legion Space's service was disabled it stays disabled (the
+  Service** (_restored in this fork_) and **Fix Task View Bug**. If Legion Space's service was disabled it stays disabled (the
   uninstaller still restores it); the once-per-boot Task View fix no longer runs. The helper still
   power-cycles the controller's USB port on its own when the controller stops responding.
 
@@ -237,6 +309,8 @@ Deep support for the Legion Go 2 with automatic device detection.
 - **Gyroscope** — enable/disable with target selection, X/Y sensitivity, axis inversion, and
   activation mode (Hold/Toggle) with a button binding
 - **Vibration Mode** & **Touchpad Haptics** — configure vibration behavior and haptic feedback
+- **Controller emulation (VIIPER)** — virtual Xbox 360, DualShock 4, DualSense, Switch Pro or
+  Steam pad with stick and trigger shaping, and optional HidHide suppression of the physical pad
 
 **RGB lighting**
 - Light mode, color, brightness, and speed control
@@ -313,7 +387,8 @@ Designed for full gamepad control — no mouse needed.
    Lite** widget → enable **“Know which game or app is in focus”**.
 
 Everything is built into the one `.exe`, and installing over an existing version keeps your profiles
-and settings.
+and settings. Setup also offers the optional **USB/IP** (usbip-win2) and **HidHide** drivers for
+VIIPER controller emulation; it skips drivers that are already installed and works offline.
 
 > [!NOTE]
 > Windows may show a **"Windows protected your PC" SmartScreen warning** — normal for a freshly
@@ -325,8 +400,8 @@ For a plain removal, **Settings → Apps → Installed apps → GoTweaks Lite �
 
 For a deeper clean (stops the helper, removes the scheduled task and the deployed helper copy,
 then removes the app package itself), grab **`scripts/Uninstall-GoTweaks.ps1`** from the repo
-(not included in the release download). GoTweaks Lite installs no drivers, so there is nothing
-else to take out.
+(not included in the release download). The optional USB/IP and HidHide drivers are separate
+programs: remove them from **Installed apps** if you no longer need them.
 
 Open **PowerShell as Administrator**, `cd` to the folder with the script, then run:
 
@@ -367,9 +442,13 @@ Free and open source. Built with C#.
 
 ## 🙏 Credits
 
-GoTweaks Lite builds on the work of the upstream projects:
+This fork builds on the work of the upstream projects:
 
-- **[GoTweaks](https://github.com/corando98/GoTweaks)** by corando98 — the fork this project is based on.
+- **[GoTweaks Lite](https://github.com/Rulob/GoTweaks-Lite)** by Rulob — the fork this project is
+  based on, and the source of the upstream changes merged into each release.
+- **[GoTweaks Lite](https://github.com/Rayekkk/GoTweaks-Lite)** by Rayekkk — where GoTweaks Lite started.
+- **[GoTweaks](https://github.com/corando98/GoTweaks)** by corando98 — the original project, and
+  [VIIPER](https://github.com/corando98/VIIPER) for controller emulation.
 - **[Original widget](https://github.com/namquang93)** by namquang93 — where GoTweaks itself grew from.
 
 ## 📄 License
@@ -379,7 +458,9 @@ GoTweaks Lite has a layered license, inherited from upstream:
 - The **original source code** is licensed under the **MIT License** (see [`LICENSE`](LICENSE)).
 - Releases up to **1.6** shipped `libviiper.dll` (a GPL-3.0 fork of VIIPER) for the Controller
   Emulation feature, so those binaries were conveyed under the **GPL-3.0** (see [`COPYING`](COPYING)).
-  Controller Emulation and that DLL have since been removed, and newer builds no longer link it.
+  Upstream Lite 1.7 – 1.9.x removed it. This fork brings Controller Emulation back, so its builds
+  that include `libviiper.dll` are again conveyed under the **GPL-3.0**; each release ships the
+  pinned VIIPER source.
 
 See [`LICENSING.md`](LICENSING.md) and [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md) for the full
 details and the written offer of source for the older releases.
