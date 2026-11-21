@@ -53,13 +53,17 @@ namespace XboxGamingBar
             }
         }
 
-        /// <summary>The header's expand button: a direct child or inside a nested panel (e.g. next to a color swatch).</summary>
+        /// <summary>
+        /// The header's expand button: a direct child, inside a nested panel (e.g. next to a color
+        /// swatch) or as the content of a SettingsCard header row.
+        /// </summary>
         private static ButtonBase FindExpandButton(Panel panel)
         {
             foreach (var child in panel.Children)
             {
                 if (child is ButtonBase b && b.Name.Contains("Expand")) return b;
                 if (child is Panel nested && FindExpandButton(nested) is ButtonBase found) return found;
+                if (child is ContentControl host && host.Content is ButtonBase content && content.Name.Contains("Expand")) return content;
             }
             return null;
         }

@@ -130,16 +130,21 @@ namespace XboxGamingBar
                 // label), leaving the state-text Canvas squeezed and the marquee scrolling in
                 // a narrow strip while the tile itself looks mostly empty.
                 HorizontalContentAlignment = HorizontalAlignment.Stretch,
-                // Slightly taller at 4 columns (narrower tiles read as too squat
-                // otherwise) - overrides the Style's Padding="10,7" default.
-                Padding = qsColumnCount == 4 ? new Thickness(10, 9, 10, 9) : new Thickness(10, 7, 10, 7)
+                VerticalContentAlignment = VerticalAlignment.Stretch,
+                MinHeight = 84,
+                Padding = new Thickness(12, 10, 12, 10)
             };
 
             // Stretch so the state-text Canvas below gets the full tile width to scroll in
             // (otherwise the StackPanel sizes to its widest child — usually the centered label —
             // and marquees scroll in a narrow strip). Icon and label stay Center-aligned per-child
             // so the tile still looks centered.
-            var content = new StackPanel { HorizontalAlignment = HorizontalAlignment.Stretch };
+            // Layout: icon top-left and state bar top-right, name and state bottom-left.
+            var content = new Grid { HorizontalAlignment = HorizontalAlignment.Stretch };
+            content.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            content.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star), MinHeight = 6 });
+            content.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            content.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
             // Icon and tile name stay white always. The active-tile accent signal
             // lives in the state text color and the bottom accent bar (see
@@ -150,8 +155,8 @@ namespace XboxGamingBar
             {
                 Glyph = tile.Glyph,
                 FontFamily = new FontFamily("Segoe Fluent Icons"),
-                FontSize = 21,
-                HorizontalAlignment = HorizontalAlignment.Center
+                FontSize = 20,
+                HorizontalAlignment = HorizontalAlignment.Left
             };
             content.Children.Add(icon);
             tile.IconElement = icon;
@@ -159,13 +164,13 @@ namespace XboxGamingBar
             tile.NameText = new TextBlock
             {
                 Text = tile.Name,
-                // Slightly smaller at 4 columns, where tiles are narrowest.
-                FontSize = qsColumnCount == 4 ? 13 : 14,
-                Margin = new Thickness(0, 4, 0, 0),
-                HorizontalAlignment = HorizontalAlignment.Center,
-                TextWrapping = TextWrapping.Wrap,
-                TextAlignment = TextAlignment.Center
+                FontSize = 13,
+                FontWeight = Windows.UI.Text.FontWeights.SemiBold,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                TextWrapping = TextWrapping.NoWrap,
+                TextTrimming = TextTrimming.CharacterEllipsis
             };
+            Grid.SetRow(tile.NameText, 2);
             content.Children.Add(tile.NameText);
 
             // Action tiles show "Action" instead of state, in tileActionBrush - they
@@ -210,6 +215,7 @@ namespace XboxGamingBar
                 }
             };
 
+            Grid.SetRow(canvas, 3);
             content.Children.Add(canvas);
 
             tile.StateTextCanvas = canvas;
@@ -222,22 +228,16 @@ namespace XboxGamingBar
             // tileActionBrush immediately since they're never revisited afterward.
             var accentBar = new Border
             {
-                Height = 3,
-                CornerRadius = new CornerRadius(1.5),
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Margin = new Thickness(0, 5, 0, -3),
+                Width = 20,
+                Height = 4,
+                CornerRadius = new CornerRadius(2),
+                HorizontalAlignment = HorizontalAlignment.Right,
+                VerticalAlignment = VerticalAlignment.Top,
+                Margin = new Thickness(0, 4, 0, 0),
                 Background = tile.IsAction ? tileActionBrush : tileBarOffBrush
             };
             content.Children.Add(accentBar);
             tile.AccentBar = accentBar;
-
-            button.SizeChanged += (s, e) =>
-            {
-                if (e.NewSize.Width > 0)
-                {
-                    accentBar.Width = e.NewSize.Width * 0.25;
-                }
-            };
 
             button.Content = content;
             button.Click += QuickSettingsTile_Click;
@@ -331,10 +331,10 @@ namespace XboxGamingBar
             if (!(canvasWidth > 0)) return; // Not yet laid out — SizeChanged will retry
             if (!(textWidth >= 0) || double.IsInfinity(textWidth)) return;
 
-            // If text fits, no animation needed — just center it
+            // If text fits, no animation needed - left-aligned under the tile name
             if (textWidth <= canvasWidth)
             {
-                Canvas.SetLeft(tile.StateText, (canvasWidth - textWidth) / 2);
+                Canvas.SetLeft(tile.StateText, 0);
                 return;
             }
 

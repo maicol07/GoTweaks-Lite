@@ -113,7 +113,7 @@ namespace XboxGamingBar
         private int qsColumnCount = 4;
 
         // Quick Metrics row state
-        private bool quickMetricsEnabled = false;
+        private bool quickMetricsEnabled = true; // metric cells sit above the tiles by default
         private bool isUpdatingMetricCheckboxes = false;
         private bool screenSaverEnabled = false;
         private const string ScreenSaverEnabledKey = "QS_ScreenSaverEnabled";
@@ -536,8 +536,8 @@ namespace XboxGamingBar
                 }
                 else
                 {
-                    // Default selection: Battery Drain, CPU Usage, CPU Temp, GPU Usage, Time Remaining
-                    selectedMetrics.AddRange(new[] { MetricType.BatteryDrain, MetricType.CPUUsage, MetricType.CPUTemp, MetricType.GPUUsage, MetricType.TimeRemaining });
+                    // Default selection: one Battery, CPU, GPU and Memory cell each
+                    selectedMetrics.AddRange(new[] { MetricType.BatteryLevel, MetricType.TimeRemaining, MetricType.CPUUsage, MetricType.CPUTemp, MetricType.GPUUsage, MetricType.GPUTemp, MetricType.MemoryUsage, MetricType.VRAMUsage });
                 }
 
                 // Update Quick Metrics UI

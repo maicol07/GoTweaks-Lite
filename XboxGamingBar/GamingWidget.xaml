@@ -41,9 +41,9 @@
 
         <!-- Card Style - Win11 -->
         <Style x:Key="CardStyle" TargetType="Border">
-            <Setter Property="CornerRadius" Value="10"/>
-            <Setter Property="Padding" Value="12"/>
-            <Setter Property="Margin" Value="0,10,0,0"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="14"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}"/>
             <Setter Property="BorderBrush" Value="{StaticResource CardBorderBrush}"/>
@@ -94,10 +94,8 @@
                                 </VisualStateGroup>
                                 <VisualStateGroup x:Name="CheckStates">
                                     <VisualState x:Name="Checked">
+                                        <!-- The accent pill itself is a sliding sibling (PillTabIndicator). -->
                                         <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Pill" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SystemAccentBrush}"/>
-                                            </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Icon" Storyboard.TargetProperty="Foreground">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="#10161C"/>
                                             </ObjectAnimationUsingKeyFrames>
@@ -147,7 +145,7 @@
 
         <!-- Card Title Style - Win11 -->
         <Style x:Key="CardTitleStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontSize" Value="16"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Margin" Value="0,0,0,4"/>
@@ -482,6 +480,76 @@
             <Setter Property="Margin" Value="5,0,0,0"/>
         </Style>
 
+        <!-- Settings look (Windows Settings style). Page-level overrides of the toolkit/WinUI
+             theme brushes so SettingsCard/SettingsExpander/Expander match the widget palette. -->
+        <SolidColorBrush x:Key="SettingsCardBackground" Color="#35393F"/>
+        <SolidColorBrush x:Key="SettingsCardBackgroundPointerOver" Color="#3C4047"/>
+        <SolidColorBrush x:Key="SettingsCardBackgroundPressed" Color="#32363C"/>
+        <SolidColorBrush x:Key="SettingsCardBackgroundDisabled" Color="#2C3035"/>
+        <SolidColorBrush x:Key="SettingsCardBorderBrush" Color="#14FFFFFF"/>
+        <SolidColorBrush x:Key="SettingsCardBorderBrushPointerOver" Color="#22FFFFFF"/>
+        <SolidColorBrush x:Key="ExpanderHeaderBackground" Color="#35393F"/>
+        <SolidColorBrush x:Key="ExpanderContentBackground" Color="#2F3338"/>
+        <SolidColorBrush x:Key="ExpanderHeaderBorderBrush" Color="#14FFFFFF"/>
+        <SolidColorBrush x:Key="ExpanderContentBorderBrush" Color="#14FFFFFF"/>
+
+        <!-- Collapsible group (header row + content). -->
+        <Style x:Key="GroupExpanderStyle" TargetType="ctk:SettingsExpander">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+        </Style>
+
+        <!-- Standalone settings row (own card background), as in Windows Settings. -->
+        <Style x:Key="RowCardStyle" TargetType="ctk:SettingsCard">
+            <Setter Property="Background" Value="#35393F"/>
+            <Setter Property="BorderBrush" Value="#14FFFFFF"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="MinHeight" Value="64"/>
+            <Setter Property="Padding" Value="16,10,16,10"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+
+        <!-- Group of rows in one card (no padding; rows and dividers span the card). -->
+        <Style x:Key="GroupCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="#35393F"/>
+            <Setter Property="BorderBrush" Value="#14FFFFFF"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+        <Style x:Key="GroupDividerStyle" TargetType="Border">
+            <Setter Property="Height" Value="1"/>
+            <Setter Property="Background" Value="#14FFFFFF"/>
+        </Style>
+        <!-- Row inside a group card: transparent, full-row touch target with icon. -->
+        <Style x:Key="GroupRowStyle" TargetType="ctk:SettingsCard">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="MinHeight" Value="60"/>
+            <Setter Property="Padding" Value="16,10,16,10"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+
+        <!-- Header row of a collapsible card (inside CardStyle padding). -->
+        <Style x:Key="HeaderRowStyle" TargetType="ctk:SettingsCard">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="MinHeight" Value="52"/>
+            <Setter Property="Padding" Value="4,2,0,2"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+
+        <!-- Section title above a group of rows (14 px SemiBold, like Windows Settings). -->
+        <Style x:Key="SettingsSectionTitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="2,18,0,6"/>
+        </Style>
+
         <!-- Settings rows inside existing cards: transparent, at least 56 px tall so the whole
              row is a comfortable touch target. -->
         <Style TargetType="ctk:SettingsCard">
@@ -501,10 +569,10 @@
 
         <!-- Section Header Style - Win11 -->
         <Style x:Key="SectionHeaderStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Foreground" Value="{StaticResource SystemAccentBrush}"/>
-            <Setter Property="Margin" Value="0,20,0,0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="2,18,0,6"/>
         </Style>
 
         <!-- Quick Settings Tile Colors - Dark mode with sharp contrast -->
@@ -653,10 +721,13 @@
 
                 <!-- Navigation Tabs - StackPanel for proper horizontal XY navigation -->
                 <!-- XYFocusKeyboardNavigation="Disabled" prevents vertical nav within, allows left/right -->
+                <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Border x:Name="MainNavPill" Background="{StaticResource SystemAccentBrush}" CornerRadius="20"
+                        Height="40" Width="0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Border.RenderTransform><TranslateTransform x:Name="MainNavPillTransform"/></Border.RenderTransform>
+                </Border>
                 <StackPanel x:Name="MainNavPanel"
-                            Grid.Column="1"
                             Orientation="Horizontal"
-                            HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             XYFocusKeyboardNavigation="Disabled">
                     <RadioButton x:Name="QuickNavItem" x:Uid="QuickNavItem" AutomationProperties.Name="Quick" Tag="Quick" Style="{StaticResource NavRadioButtonStyle}" GroupName="MainNav" Checked="NavRadioButton_Checked"><FontIcon Glyph="&#xE80A;" FontSize="18"/></RadioButton>
@@ -666,6 +737,7 @@
                     <RadioButton x:Name="GPDNavItem" x:Uid="GPDNavItem" AutomationProperties.Name="GPD" Tag="GPD" Style="{StaticResource NavRadioButtonStyle}" GroupName="MainNav" Visibility="Collapsed" Checked="NavRadioButton_Checked"><FontIcon Glyph="&#xE7F8;" FontSize="18"/></RadioButton>
                     <RadioButton x:Name="SystemNavItem" x:Uid="SystemNavItem" AutomationProperties.Name="System" Tag="System" Style="{StaticResource NavRadioButtonStyle}" GroupName="MainNav" Checked="NavRadioButton_Checked"><FontIcon Glyph="&#xE713;" FontSize="18"/></RadioButton>
                 </StackPanel>
+                </Grid>
 
                 <!-- RT indicator and status dot -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Spacing="4">
@@ -708,86 +780,49 @@
                               BringIntoViewOnFocusChange="True">
                     <StackPanel Padding="16,8,16,16">
 
-                        <!-- Driver updates tile (Legion devices only, visible only when count > 0).
-                             Helper pushes DriverUpdatesAvailable after its startup probe; the
-                             click handler jumps to the Legion tab's Driver Updates section. -->
-                        <Button x:Name="QuickDriverUpdatesTile"
-                                Visibility="Collapsed"
-                                HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Stretch"
-                                Padding="14,10"
-                                Margin="0,0,0,8"
-                                Background="#2A2032"
-                                BorderBrush="#FFB060"
-                                BorderThickness="1"
-                                CornerRadius="12"
-                                Click="QuickDriverUpdatesTile_Click">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" Background="#FFB060" CornerRadius="14" Width="28" Height="28" VerticalAlignment="Center">
-                                    <TextBlock x:Name="QuickDriverUpdatesCountText"
-                                               Text="0"
-                                               FontSize="14"
-                                               FontWeight="Bold"
-                                               Foreground="#1A1A1A"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"/>
-                                </Border>
-                                <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
-                                    <TextBlock x:Uid="QuickDriverUpdatesTitleText" x:Name="QuickDriverUpdatesTitleText"
-                                               Text="Driver updates available"
-                                               FontSize="14"
-                                               FontWeight="SemiBold"
-                                               Foreground="#FFFFFF" />
-                                    <TextBlock x:Uid="S_TapToViewOnThe" Text="Tap to view on the Legion tab"
-                                               FontSize="12"
-                                               Foreground="#B9C0CC" />
+                        <!-- Driver updates (Legion only, visible when count > 0): View jumps to the
+                             Legion tab's Device section. -->
+                        <muxc:InfoBar x:Name="QuickDriverUpdatesTile"
+                                      Visibility="Collapsed"
+                                      IsOpen="True"
+                                      IsClosable="False"
+                                      Severity="Warning"
+                                      Margin="0,0,0,8">
+                            <muxc:InfoBar.Content>
+                                <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,0,0,12">
+                                    <Border Background="#FFB060" CornerRadius="11" MinWidth="22" Height="22" Padding="6,0" VerticalAlignment="Center">
+                                        <TextBlock x:Name="QuickDriverUpdatesCountText" Text="0" FontSize="12" FontWeight="Bold" Foreground="#1A1A1A"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock x:Uid="QuickDriverUpdatesTitleText" x:Name="QuickDriverUpdatesTitleText" Text="Driver updates available"
+                                               FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" TextWrapping="Wrap"/>
                                 </StackPanel>
-                                <FontIcon Grid.Column="2" Glyph="&#xE76C;" FontSize="13" Foreground="#B9C0CC" VerticalAlignment="Center"/>
-                            </Grid>
-                        </Button>
+                            </muxc:InfoBar.Content>
+                            <muxc:InfoBar.ActionButton>
+                                <Button x:Uid="S_QuickDriverUpdatesView" Content="View" Click="QuickDriverUpdatesTile_Click"/>
+                            </muxc:InfoBar.ActionButton>
+                        </muxc:InfoBar>
 
-                        <!-- GoTweaks self-update banner: helper pushes GoTweaksUpdate
-                             after its startup probe. Tap to trigger the install (the
-                             helper downloads the signed .msixbundle and runs
-                             Add-AppxPackage). Hidden when no update or when the user
-                             opted into "Hide update banner". -->
-                        <Button x:Name="QuickGoTweaksUpdateTile"
-                                Visibility="Collapsed"
-                                HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Stretch"
-                                Padding="14,10"
-                                Margin="0,0,0,8"
-                                Background="#202A38"
-                                BorderBrush="#7EB6FF"
-                                BorderThickness="1"
-                                CornerRadius="12"
-                                Click="QuickGoTweaksUpdateTile_Click">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <FontIcon Grid.Column="0" Glyph="&#xE896;" FontSize="20" Foreground="#7EB6FF" VerticalAlignment="Center"/>
-                                <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
-                                    <TextBlock x:Uid="QuickGoTweaksTitleText" x:Name="QuickGoTweaksTitleText"
-                                               Text="GoTweaks Lite update available"
-                                               FontSize="14"
-                                               FontWeight="SemiBold"
-                                               Foreground="#FFFFFF" />
-                                    <TextBlock x:Uid="QuickGoTweaksSubtitleText" x:Name="QuickGoTweaksSubtitleText"
-                                               Text="Tap to install"
-                                               FontSize="12"
-                                               Foreground="#B9C0CC" />
+                        <!-- GoTweaks self-update: Install asks the helper to download and install the
+                             signed bundle. Hidden when there is no update or the banner is turned off. -->
+                        <muxc:InfoBar x:Name="QuickGoTweaksUpdateTile"
+                                      Visibility="Collapsed"
+                                      IsOpen="True"
+                                      IsClosable="False"
+                                      Severity="Informational"
+                                      Margin="0,0,0,8">
+                            <muxc:InfoBar.Content>
+                                <StackPanel Margin="0,0,0,12">
+                                    <TextBlock x:Uid="QuickGoTweaksTitleText" x:Name="QuickGoTweaksTitleText" Text="GoTweaks Lite update available"
+                                               FontSize="14" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                                    <TextBlock x:Uid="QuickGoTweaksSubtitleText" x:Name="QuickGoTweaksSubtitleText" Text="Tap to install"
+                                               FontSize="12" Foreground="#B9C0CC" TextWrapping="Wrap"/>
                                 </StackPanel>
-                                <FontIcon Grid.Column="2" Glyph="&#xE896;" FontSize="13" Foreground="#B9C0CC" VerticalAlignment="Center"/>
-                            </Grid>
-                        </Button>
+                            </muxc:InfoBar.Content>
+                            <muxc:InfoBar.ActionButton>
+                                <Button x:Uid="S_QuickGoTweaksInstall" Content="Install" Click="QuickGoTweaksUpdateTile_Click"/>
+                            </muxc:InfoBar.ActionButton>
+                        </muxc:InfoBar>
 
                         <!-- Quick Metrics Row (compact stats display - dynamically populated) -->
                         <Border x:Name="QuickMetricsRow"
@@ -838,23 +873,29 @@
                         <!-- Dynamic Tiles Container - tiles generated in code-behind -->
                         <StackPanel x:Name="QuickSettingsTilesContainer"/>
 
-                        <Border Style="{StaticResource CardStyle}">
-                            <StackPanel Spacing="8">
-                                <TextBlock x:Uid="S_LosslessScaling" Text="Lossless Scaling" Style="{StaticResource CardTitleStyle}" />
-                                <TextBlock x:Uid="LosslessProfilesStatus" x:Name="LosslessProfilesStatus" Text="Load profiles to edit scaling settings."
-                                           Style="{StaticResource CardCaptionStyle}" TextWrapping="Wrap" />
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <Button x:Uid="S_OpenApp" Content="Open app" Click="OpenLosslessApp_Click" />
-                                    <Button x:Uid="S_ToggleScaling" Content="Toggle scaling" Click="ToggleLosslessScaling_Click" />
+                        <ctk:SettingsExpander Margin="0,12,0,0" Style="{StaticResource GroupExpanderStyle}">
+                            <ctk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xEA5F;"/></ctk:SettingsExpander.HeaderIcon>
+                            <ctk:SettingsExpander.Header>
+                                <TextBlock x:Uid="S_LosslessScaling" Text="Lossless Scaling"/>
+                            </ctk:SettingsExpander.Header>
+                            <ctk:SettingsExpander.Description>
+                                <TextBlock x:Uid="LosslessProfilesStatus" x:Name="LosslessProfilesStatus" Text="Load profiles to edit scaling settings." TextWrapping="Wrap"/>
+                            </ctk:SettingsExpander.Description>
+                            <Button x:Uid="S_ToggleScaling" Content="Toggle scaling" Click="ToggleLosslessScaling_Click" />
+                            <ctk:SettingsExpander.ItemsHeader>
+                                <StackPanel Spacing="8" Padding="16,12,16,12">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Button x:Uid="S_OpenApp" Content="Open app" Click="OpenLosslessApp_Click" />
+                                        <Button x:Uid="LoadLosslessProfilesButton" x:Name="LoadLosslessProfilesButton" Content="Load profiles" Click="LoadLosslessProfiles_Click" />
+                                    </StackPanel>
+                                    <ComboBox x:Uid="LosslessProfileSelector" x:Name="LosslessProfileSelector" Header="Profile" HorizontalAlignment="Stretch"
+                                              Visibility="Collapsed" SelectionChanged="LosslessProfileSelector_SelectionChanged" />
+                                    <StackPanel x:Name="LosslessProfileFields" Spacing="8"/>
+                                    <Button x:Uid="SaveLosslessProfileButton" x:Name="SaveLosslessProfileButton" Content="Save profile" Visibility="Collapsed"
+                                            Click="SaveLosslessProfile_Click" />
                                 </StackPanel>
-                                <Button x:Uid="LoadLosslessProfilesButton" x:Name="LoadLosslessProfilesButton" Content="Load profiles" Click="LoadLosslessProfiles_Click" />
-                                <ComboBox x:Uid="LosslessProfileSelector" x:Name="LosslessProfileSelector" Header="Profile" HorizontalAlignment="Stretch"
-                                          Visibility="Collapsed" SelectionChanged="LosslessProfileSelector_SelectionChanged" />
-                                <StackPanel x:Name="LosslessProfileFields" Spacing="8"/>
-                                <Button x:Uid="SaveLosslessProfileButton" x:Name="SaveLosslessProfileButton" Content="Save profile" Visibility="Collapsed"
-                                        Click="SaveLosslessProfile_Click" />
-                            </StackPanel>
-                        </Border>
+                            </ctk:SettingsExpander.ItemsHeader>
+                        </ctk:SettingsExpander>
 
                         <!-- Customize Button -->
                         <Button x:Uid="QuickSettingsCustomizeButton" x:Name="QuickSettingsCustomizeButton"
@@ -907,6 +948,7 @@
 
                                 <!-- Show Metrics Row Toggle -->
                                 <ctk:SettingsCard x:Uid="S_ShowMetricsRow" Margin="0,0,0,8" Header="Show Metrics Row" Description="Select up to 6 metrics below" Tapped="ToggleRow_Tapped">
+                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE9D2;"/></ctk:SettingsCard.HeaderIcon>
                                     <ToggleSwitch x:Name="QuickMetricsToggle"
                                     OffContent=""
                                     OnContent=""
@@ -915,6 +957,7 @@
 
                                 <!-- Show Brightness Slider Toggle -->
                                 <ctk:SettingsCard x:Uid="S_ShowBrightnessSlider" Margin="0,0,0,8" Header="Show Brightness Slider" Description="Built-in screen brightness" Tapped="ToggleRow_Tapped">
+                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE706;"/></ctk:SettingsCard.HeaderIcon>
                                     <ToggleSwitch x:Name="PanelBrightnessToggle"
                                     OffContent=""
                                     OnContent=""
@@ -1061,62 +1104,46 @@
                 <!-- PERFORMANCE TAB -->
                 <ScrollViewer x:Name="PerformanceScrollViewer" VerticalScrollBarVisibility="Auto" Visibility="Collapsed"
                               BringIntoViewOnFocusChange="True">
-                    <StackPanel Padding="16,8,16,16">
+                    <StackPanel Padding="16,0,16,16">
 
-                        <!-- Active Profile Indicator -->
-                        <Border x:Name="ActiveProfileCard" Style="{StaticResource CardStyle}">
-                            <StackPanel Spacing="10">
-                                <StackPanel>
-                                    <TextBlock x:Uid="S_CurrentProfile" Text="Current Profile" Style="{StaticResource CardTitleStyle}" />
-                                    <!--
-                                        Active profile name. Wrapped in a Canvas so long
-                                        names (e.g. detected window titles like Windows
-                                        Terminal showing the current task) marquee-scroll
-                                        instead of truncating with an ellipsis. Mirrors
-                                        the Quick Settings tile scroll pattern in
-                                        Features/QuickSettings/GamingWidget.QuickSettings.TileStates.cs.
-                                    -->
-                                    <Canvas x:Name="ActiveProfileTextCanvas"
-                                            Height="20"
-                                            HorizontalAlignment="Stretch">
-                                        <Canvas.Clip>
-                                            <RectangleGeometry Rect="0,0,0,20"/>
-                                        </Canvas.Clip>
-                                        <TextBlock x:Uid="ActiveProfileText" x:Name="ActiveProfileText"
-                                                   Text="Global Settings"
-                                                   FontSize="14"
-                                                   FontWeight="SemiBold"
-                                                   Foreground="{StaticResource SystemAccentBrush}">
-                                            <TextBlock.RenderTransform>
-                                                <TranslateTransform x:Name="ActiveProfileTextTransform"/>
-                                            </TextBlock.RenderTransform>
-                                        </TextBlock>
-                                    </Canvas>
-                                </StackPanel>
-
-                                <!-- Per-Game Profile Toggle -->
-                                <Grid>
+                        <!-- PROFILE -->
+                        <TextBlock x:Uid="S_SectionProfile" Text="Profile" Style="{StaticResource SettingsSectionTitleStyle}"/>
+                        <Border x:Name="ActiveProfileCard" Style="{StaticResource GroupCardStyle}">
+                            <StackPanel>
+                                <Grid Padding="16,12,16,12" ColumnSpacing="14">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                        <TextBlock x:Uid="S_UsePerGameProfile" Text="Use per-game profile"
-                                                   FontSize="14"
-                                                   Foreground="#FFFFFF" />
-                                        <!--
-                                            Detected-game name next to the per-game toggle.
-                                            Wrapped in a Canvas so long window titles (e.g.
-                                            Windows Terminal showing the foreground task)
-                                            marquee-scroll instead of truncating. Same
-                                            UpdateMarqueeScrollAnimation pattern used for
-                                            ActiveProfileText above and the QS tiles.
-                                        -->
-                                        <Canvas x:Name="DetectedGameTextCanvas"
-                                                Height="16"
-                                                MaxWidth="200"
-                                                Margin="0,4,0,0"
-                                                HorizontalAlignment="Left">
+                                    <FontIcon Glyph="&#xE77B;" FontSize="20" Foreground="#B9C0CC" VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock x:Uid="S_CurrentProfile" Text="Current Profile" FontSize="12" Foreground="#B9C0CC"/>
+                                        <!-- Long names marquee-scroll (UpdateMarqueeScrollAnimation). -->
+                                        <Canvas x:Name="ActiveProfileTextCanvas" Height="22" HorizontalAlignment="Stretch">
+                                            <Canvas.Clip>
+                                                <RectangleGeometry Rect="0,0,0,22"/>
+                                            </Canvas.Clip>
+                                            <TextBlock x:Uid="ActiveProfileText" x:Name="ActiveProfileText"
+                                                       Text="Global Settings"
+                                                       FontSize="16"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="{StaticResource SystemAccentBrush}">
+                                                <TextBlock.RenderTransform>
+                                                    <TranslateTransform x:Name="ActiveProfileTextTransform"/>
+                                                </TextBlock.RenderTransform>
+                                            </TextBlock>
+                                        </Canvas>
+                                    </StackPanel>
+                                </Grid>
+                                <Border Style="{StaticResource GroupDividerStyle}"/>
+                                <ctk:SettingsCard Style="{StaticResource GroupRowStyle}" Tapped="ToggleRow_Tapped">
+                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE7FC;"/></ctk:SettingsCard.HeaderIcon>
+                                    <ctk:SettingsCard.Header>
+                                        <TextBlock x:Uid="S_UsePerGameProfile" Text="Use per-game profile"/>
+                                    </ctk:SettingsCard.Header>
+                                    <ctk:SettingsCard.Description>
+                                        <!-- Detected game name; long window titles marquee-scroll. -->
+                                        <Canvas x:Name="DetectedGameTextCanvas" Height="16" MaxWidth="200" HorizontalAlignment="Left">
                                             <Canvas.Clip>
                                                 <RectangleGeometry Rect="0,0,200,16"/>
                                             </Canvas.Clip>
@@ -1129,34 +1156,32 @@
                                                 </TextBlock.RenderTransform>
                                             </TextBlock>
                                         </Canvas>
-                                    </StackPanel>
+                                    </ctk:SettingsCard.Description>
                                     <ToggleSwitch x:Name="PerGameProfileToggle"
-                                                  Grid.Column="1"
                                                   Style="{StaticResource ModernToggleStyle}"
                                                   IsEnabled="False"/>
-                                </Grid>
-
-                                <!-- Power Source Profile Toggle -->
-                                <StackPanel>
-                                    <Border Height="1" Background="#33FFFFFF" Margin="0,0,0,10"/>
-                                    <ctk:SettingsCard x:Uid="S_PowerSourceProfile" Header="Power Source Profile" Description="Separate profiles for AC (plugged in) and DC (battery)" Tapped="ToggleRow_Tapped">
-                                        <ToggleSwitch x:Name="PowerSourceProfileToggle"
-                                        Style="{StaticResource ModernToggleStyle}" Width="47"/>
-                                    </ctk:SettingsCard>
-                                    <TextBlock x:Uid="PowerSourceProfileScopeText" x:Name="PowerSourceProfileScopeText"
-                                               Margin="0,8,0,0"
-                                               FontSize="12"
-                                               Foreground="#B9C0CC"
-                                               TextWrapping="Wrap"
-                                               Text="Scope: Global profiles. AC/DC split: Off. Enable Per-Game Profile to set this per game." />
-                                </StackPanel>
+                                </ctk:SettingsCard>
+                                <Border Style="{StaticResource GroupDividerStyle}"/>
+                                <ctk:SettingsCard x:Uid="S_PowerSourceProfile" Style="{StaticResource GroupRowStyle}" Header="Power Source Profile" Description="Separate profiles for AC (plugged in) and DC (battery)" Tapped="ToggleRow_Tapped">
+                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE83F;"/></ctk:SettingsCard.HeaderIcon>
+                                    <ToggleSwitch x:Name="PowerSourceProfileToggle"
+                                                  Style="{StaticResource ModernToggleStyle}" Width="47"/>
+                                </ctk:SettingsCard>
+                                <TextBlock x:Uid="PowerSourceProfileScopeText" x:Name="PowerSourceProfileScopeText"
+                                           Margin="52,0,16,12"
+                                           FontSize="12"
+                                           Foreground="#B9C0CC"
+                                           TextWrapping="Wrap"
+                                           Text="Scope: Global profiles. AC/DC split: Off. Enable Per-Game Profile to set this per game." />
                             </StackPanel>
                         </Border>
 
-                        <!-- Performance Overlay Card -->
-                        <Border Style="{StaticResource CardStyle}">
+                        <!-- OVERLAY -->
+                        <TextBlock x:Uid="S_SectionOverlay" Text="Overlay" Style="{StaticResource SettingsSectionTitleStyle}"/>
+                        <Border Style="{StaticResource GroupCardStyle}">
                             <StackPanel>
-                                <ctk:SettingsCard x:Uid="S_PerformanceOverlay" Header="Performance Overlay" Description="FPS, CPU/GPU, RAM/VRAM, Battery, Time" Tapped="ToggleRow_Tapped">
+                                <ctk:SettingsCard x:Uid="S_PerformanceOverlay" Style="{StaticResource GroupRowStyle}" Header="Performance Overlay" Description="FPS, CPU/GPU, RAM/VRAM, Battery, Time" Tapped="ToggleRow_Tapped">
+                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE9D9;"/></ctk:SettingsCard.HeaderIcon>
                                     <ToggleSwitch x:Name="PerformanceOverlayToggle"
                                                   Style="{StaticResource ModernToggleStyle}"
                                                   Width="52"
@@ -1169,53 +1194,44 @@
                                         Minimum="0" Maximum="1"
                                         Value="0"
                                         ValueChanged="PerformanceOverlaySlider_ValueChanged"/>
-                            </StackPanel>
-                        </Border>
-
-                        <Border Style="{StaticResource CardStyle}">
-                            <ComboBox x:Uid="PerformanceOverlayPresetComboBox" x:Name="PerformanceOverlayPresetComboBox" Header="Overlay preset (RTSS)"
-                                      Style="{StaticResource ModernComboBoxStyle}" HorizontalAlignment="Stretch"
-                                      SelectedIndex="0" SelectionChanged="OSDPreset_Changed">
-                                <ComboBoxItem x:Uid="S_Custom" Content="Custom" Tag="Custom" />
-                                <ComboBoxItem x:Uid="S_Basic" Content="Basic" Tag="Basic" />
-                                <ComboBoxItem x:Uid="S_Detailed" Content="Detailed" Tag="Detailed" />
-                                <ComboBoxItem x:Uid="S_Full" Content="Full" Tag="Full" />
-                                <ComboBoxItem x:Uid="S_Original" Content="Original" Tag="Original" />
-                            </ComboBox>
-                        </Border>
-
-                        <!-- FPS Limit Card -->
-                        <Border Style="{StaticResource CardStyle}">
-                            <StackPanel>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                        <TextBlock x:Uid="S_FPSLimit" Text="FPS Limit" Style="{StaticResource CardTitleStyle}" />
-                                        <TextBlock x:Name="FPSLimitCaption"
+                                <Border Style="{StaticResource GroupDividerStyle}"/>
+                                <ctk:SettingsCard x:Uid="PerformanceOverlayPresetComboBox" Style="{StaticResource GroupRowStyle}" Header="Overlay preset (RTSS)">
+                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE8FD;"/></ctk:SettingsCard.HeaderIcon>
+                                    <ComboBox x:Name="PerformanceOverlayPresetComboBox"
+                                              Style="{StaticResource ModernComboBoxStyle}" MinWidth="130"
+                                              SelectedIndex="0" SelectionChanged="OSDPreset_Changed">
+                                        <ComboBoxItem x:Uid="S_Custom" Content="Custom" Tag="Custom" />
+                                        <ComboBoxItem x:Uid="S_Basic" Content="Basic" Tag="Basic" />
+                                        <ComboBoxItem x:Uid="S_Detailed" Content="Detailed" Tag="Detailed" />
+                                        <ComboBoxItem x:Uid="S_Full" Content="Full" Tag="Full" />
+                                        <ComboBoxItem x:Uid="S_Original" Content="Original" Tag="Original" />
+                                    </ComboBox>
+                                </ctk:SettingsCard>
+                                <Border Style="{StaticResource GroupDividerStyle}"/>
+                                <ctk:SettingsCard Style="{StaticResource GroupRowStyle}">
+                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE916;"/></ctk:SettingsCard.HeaderIcon>
+                                    <ctk:SettingsCard.Header>
+                                        <TextBlock x:Uid="S_FPSLimit" Text="FPS Limit"/>
+                                    </ctk:SettingsCard.Header>
+                                    <ctk:SettingsCard.Description>
+                                        <TextBlock x:Name="FPSLimitCaption" Text="" Visibility="Collapsed"/>
+                                    </ctk:SettingsCard.Description>
+                                    <StackPanel Orientation="Horizontal" Spacing="12">
+                                        <TextBlock x:Name="FPSLimitValue"
                                                    Text=""
-                                                   Style="{StaticResource CardCaptionStyle}"
-                                                   Visibility="Collapsed"/>
+                                                   FontSize="14"
+                                                   Foreground="#4CAF50"
+                                                   FontWeight="SemiBold"
+                                                   VerticalAlignment="Center"
+                                                   Visibility="{x:Bind FPSLimitToggle.IsOn, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"/>
+                                        <ToggleSwitch x:Name="FPSLimitToggle"
+                                                      Style="{StaticResource ModernToggleStyle}"
+                                                      IsEnabled="False" Width="52"/>
                                     </StackPanel>
-                                    <TextBlock x:Name="FPSLimitValue"
-                                               Grid.Column="1"
-                                               Text=""
-                                               FontSize="14"
-                                               Foreground="#4CAF50"
-                                               FontWeight="SemiBold"
-                                               VerticalAlignment="Center"
-                                               Margin="0,0,12,0"
-                                               Visibility="{x:Bind FPSLimitToggle.IsOn, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"/>
-                                    <ToggleSwitch x:Name="FPSLimitToggle"
-                                                  Grid.Column="2"
-                                                  Style="{StaticResource ModernToggleStyle}"
-                                                  IsEnabled="False" Width="52"/>
-                                </Grid>
+                                </ctk:SettingsCard>
                                 <Slider x:Name="FPSLimitSlider"
                                         Style="{StaticResource ModernSliderStyle}"
+                                        Margin="52,0,16,12"
                                         Minimum="15" Maximum="144"
                                         StepFrequency="1"
                                         TickFrequency="15"
@@ -1225,16 +1241,23 @@
                             </StackPanel>
                         </Border>
 
-                        <!-- TDP Mode Card (all devices) -->
-                        <Border x:Name="TDPModeCard" Style="{StaticResource CardStyle}">
-                            <StackPanel Spacing="10">
-                                <StackPanel>
-                                    <TextBlock x:Uid="S_TDPMode" Text="TDP Mode" FontSize="14" Foreground="#FFFFFF" />
-                                    <TextBlock x:Uid="S_ControlsPowerAndThermalProfile" Text="Controls power and thermal profile" FontSize="12" Foreground="#B9C0CC" TextWrapping="Wrap" />
-                                </StackPanel>
-                                <!-- Named *ComboBox for code-behind compatibility; Segmented is a Selector too.
-                                     Focus moves with the D-pad, A applies the mode. -->
+                        <!-- POWER -->
+                        <TextBlock x:Uid="S_SectionPower" Text="Power" Style="{StaticResource SettingsSectionTitleStyle}"/>
+                        <!-- TDP Mode (all devices). Named *ComboBox for code-behind compatibility;
+                             Segmented is a Selector too. Focus moves with the D-pad, A applies. -->
+                        <Border x:Name="TDPModeCard" Style="{StaticResource GroupCardStyle}">
+                            <StackPanel>
+                                <ctk:SettingsCard Style="{StaticResource GroupRowStyle}">
+                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE945;"/></ctk:SettingsCard.HeaderIcon>
+                                    <ctk:SettingsCard.Header>
+                                        <TextBlock x:Uid="S_TDPMode" Text="TDP Mode"/>
+                                    </ctk:SettingsCard.Header>
+                                    <ctk:SettingsCard.Description>
+                                        <TextBlock x:Uid="S_ControlsPowerAndThermalProfile" Text="Controls power and thermal profile" TextWrapping="Wrap"/>
+                                    </ctk:SettingsCard.Description>
+                                </ctk:SettingsCard>
                                 <ctk:Segmented x:Name="TDPModeComboBox"
+                                               Margin="16,0,16,14"
                                                HorizontalAlignment="Stretch"
                                                SingleSelectionFollowsFocus="False"
                                                SelectionChanged="TDPModeComboBox_SelectionChanged">
@@ -1246,179 +1269,156 @@
                             </StackPanel>
                         </Border>
 
-                        <!-- Custom Power Limits Card (Legion only, shown in Custom mode).
-                             Three explicit limits written straight through Lenovo WMI:
-                             TDP (base SPL), SPPT Boost (effective SPPT = TDP + boost), FPPT Boost
-                             (effective FPPT = TDP + boost). Boost is always on. The live hardware
-                             readout sits at the bottom of this card. -->
-                        <Border x:Name="CustomTDPCard" Style="{StaticResource CardStyle}" Visibility="Collapsed">
-                            <StackPanel Spacing="10">
-                                <TextBlock x:Uid="S_CustomPowerLimits" Text="Custom Power Limits" Style="{StaticResource CardTitleStyle}" />
-
-                                <!-- TDP (base SPL / sustained) -->
-                                <Grid>
-                                    <TextBlock x:Uid="S_TDP" Text="TDP" FontSize="14" Foreground="#FFFFFF" VerticalAlignment="Center" />
-                                    <TextBlock x:Name="CustomTDPSlowValue" Text="-- W" FontSize="14" Foreground="#B9C0CC" HorizontalAlignment="Right"/>
-                                </Grid>
-                                <Slider x:Name="CustomTDPSlowSlider"
-                                        Style="{StaticResource ModernSliderStyle}"
-                                        Minimum="5" Maximum="50"
-                                        TickFrequency="1"
-                                        SnapsTo="Ticks"
-                                        Value="15"
-                                        ValueChanged="CustomTDPSlowSlider_ValueChanged"/>
-
-                                <!-- SPPT Boost (effective SPPT = TDP + boost) -->
-                                <Grid>
-                                    <TextBlock x:Uid="S_SPPTBoost" Text="SPPT Boost" FontSize="14" Foreground="#FFFFFF" VerticalAlignment="Center" />
-                                    <TextBlock x:Name="CustomTDPFastValue" Text="-- W" FontSize="14" Foreground="#B9C0CC" HorizontalAlignment="Right"/>
-                                </Grid>
-                                <Slider x:Name="CustomTDPFastSlider"
-                                        Style="{StaticResource ModernSliderStyle}"
-                                        Minimum="0" Maximum="10"
-                                        TickFrequency="1"
-                                        SnapsTo="Ticks"
-                                        Value="2"
-                                        ValueChanged="CustomTDPFastSlider_ValueChanged"/>
-
-                                <!-- FPPT Boost (effective FPPT = TDP + boost; must be >= SPPT boost) -->
-                                <Grid>
-                                    <TextBlock x:Uid="S_FPPTBoost" Text="FPPT Boost" FontSize="14" Foreground="#FFFFFF" VerticalAlignment="Center" />
-                                    <TextBlock x:Name="CustomTDPPeakValue" Text="-- W" FontSize="14" Foreground="#B9C0CC" HorizontalAlignment="Right"/>
-                                </Grid>
-                                <Slider x:Name="CustomTDPPeakSlider"
-                                        Style="{StaticResource ModernSliderStyle}"
-                                        Minimum="0" Maximum="15"
-                                        TickFrequency="1"
-                                        SnapsTo="Ticks"
-                                        Value="5"
-                                        ValueChanged="CustomTDPPeakSlider_ValueChanged"/>
-
-                                <!-- Live hardware readout (helper pushes the actual SPL/SPPT/FPPT) -->
-                                <Grid Margin="0,4,0,0">
-                                    <TextBlock x:Uid="CurrentTDPText" x:Name="CurrentTDPText"
-                                               Text="Limits:"
-                                               FontSize="13"
-                                               Foreground="#B9C0CC" />
-                                    <TextBlock x:Name="CurrentTDPValueText"
-                                               Text="-- W"
-                                               FontSize="13"
-                                               Foreground="#B9C0CC"
-                                               HorizontalAlignment="Right"/>
-                                </Grid>
-                            </StackPanel>
-                        </Border>
-
-                        <!-- AutoTDP Card (Legion only; visible regardless of TDP Mode). Continuously
-                             adjusts TDP to hit a target FPS instead of a fixed wattage. Enabling it
-                             forces TDP Mode to Custom and locks the mode selector until disabled. -->
-                        <Border x:Name="AutoTDPCard" Style="{StaticResource CardStyle}" Visibility="Collapsed">
-                            <StackPanel Spacing="10">
-                                <ctk:SettingsCard x:Uid="S_AutoTDP" Header="AutoTDP" Description="Adjusts TDP live to hit a target FPS" Tapped="ToggleRow_Tapped">
-                                    <ToggleSwitch x:Name="AutoTDPToggle"
-                                    Style="{StaticResource ModernToggleStyle}"
-                                    Width="52"
-                                    Toggled="AutoTDPToggle_Toggled"/>
+                        <!-- Custom Power Limits (Legion only, Custom mode): TDP (SPL), SPPT and FPPT
+                             boosts through Lenovo WMI, with the live hardware readout at the bottom. -->
+                        <Border x:Name="CustomTDPCard" Style="{StaticResource GroupCardStyle}" Visibility="Collapsed">
+                            <StackPanel>
+                                <ctk:SettingsCard Style="{StaticResource GroupRowStyle}">
+                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE9E9;"/></ctk:SettingsCard.HeaderIcon>
+                                    <ctk:SettingsCard.Header>
+                                        <TextBlock x:Uid="S_CustomPowerLimits" Text="Custom Power Limits"/>
+                                    </ctk:SettingsCard.Header>
                                 </ctk:SettingsCard>
-
-                                <StackPanel x:Name="AutoTDPSettingsPanel"
-                                            Spacing="10"
-                                            Visibility="{Binding ElementName=AutoTDPToggle, Path=IsOn, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <!-- Target FPS -->
+                                <StackPanel Spacing="6" Padding="52,0,16,14">
                                     <Grid>
-                                        <TextBlock x:Uid="S_TargetFPS" Text="Target FPS" FontSize="14" Foreground="#FFFFFF" VerticalAlignment="Center" />
-                                        <TextBlock x:Uid="AutoTDPTargetFPSValue" x:Name="AutoTDPTargetFPSValue" Text="60 FPS" FontSize="14" Foreground="#B9C0CC" HorizontalAlignment="Right" />
+                                        <TextBlock x:Uid="S_TDP" Text="TDP" FontSize="14" Foreground="#FFFFFF" VerticalAlignment="Center" />
+                                        <TextBlock x:Name="CustomTDPSlowValue" Text="-- W" FontSize="14" FontWeight="SemiBold" Foreground="#FFFFFF" HorizontalAlignment="Right"/>
                                     </Grid>
-                                    <Slider x:Name="AutoTDPTargetFPSSlider"
+                                    <Slider x:Name="CustomTDPSlowSlider"
                                             Style="{StaticResource ModernSliderStyle}"
-                                            Minimum="30" Maximum="144"
-                                            StepFrequency="5" TickFrequency="15" TickPlacement="Outside" SnapsTo="StepValues"
-                                            Value="60"
-                                            ValueChanged="AutoTDPTargetFPSSlider_ValueChanged"/>
-
-                                    <!-- Live current FPS readout -->
-                                    <Grid>
-                                        <TextBlock x:Uid="S_CurrentFPS" Text="Current FPS" FontSize="14" Foreground="#FFFFFF" VerticalAlignment="Center" />
-                                        <TextBlock x:Uid="AutoTDPCurrentFPSValue" x:Name="AutoTDPCurrentFPSValue" Text="-- FPS" FontSize="14" Foreground="#B9C0CC" HorizontalAlignment="Right" />
+                                            Minimum="5" Maximum="50"
+                                            TickFrequency="1"
+                                            SnapsTo="Ticks"
+                                            Value="15"
+                                            ValueChanged="CustomTDPSlowSlider_ValueChanged"/>
+                                    <Grid Margin="0,6,0,0">
+                                        <TextBlock x:Uid="S_SPPTBoost" Text="SPPT Boost" FontSize="14" Foreground="#FFFFFF" VerticalAlignment="Center" />
+                                        <TextBlock x:Name="CustomTDPFastValue" Text="-- W" FontSize="14" FontWeight="SemiBold" Foreground="#FFFFFF" HorizontalAlignment="Right"/>
                                     </Grid>
-
-                                    <!-- Min TDP -->
-                                    <Grid>
-                                        <TextBlock x:Uid="S_MinTDP" Text="Min TDP" FontSize="14" Foreground="#FFFFFF" VerticalAlignment="Center" />
-                                        <TextBlock x:Name="AutoTDPMinValue" Text="8W" FontSize="14" Foreground="#B9C0CC" HorizontalAlignment="Right"/>
-                                    </Grid>
-                                    <Slider x:Name="AutoTDPMinSlider"
+                                    <Slider x:Name="CustomTDPFastSlider"
                                             Style="{StaticResource ModernSliderStyle}"
-                                            Minimum="4" Maximum="35" StepFrequency="1"
-                                            Value="8"
-                                            ValueChanged="AutoTDPMinSlider_ValueChanged"/>
-
-                                    <!-- Max TDP -->
-                                    <Grid>
-                                        <TextBlock x:Uid="S_MaxTDP" Text="Max TDP" FontSize="14" Foreground="#FFFFFF" VerticalAlignment="Center" />
-                                        <TextBlock x:Name="AutoTDPMaxValue" Text="30W" FontSize="14" Foreground="#B9C0CC" HorizontalAlignment="Right"/>
+                                            Minimum="0" Maximum="10"
+                                            TickFrequency="1"
+                                            SnapsTo="Ticks"
+                                            Value="2"
+                                            ValueChanged="CustomTDPFastSlider_ValueChanged"/>
+                                    <Grid Margin="0,6,0,0">
+                                        <TextBlock x:Uid="S_FPPTBoost" Text="FPPT Boost" FontSize="14" Foreground="#FFFFFF" VerticalAlignment="Center" />
+                                        <TextBlock x:Name="CustomTDPPeakValue" Text="-- W" FontSize="14" FontWeight="SemiBold" Foreground="#FFFFFF" HorizontalAlignment="Right"/>
                                     </Grid>
-                                    <Slider x:Name="AutoTDPMaxSlider"
+                                    <Slider x:Name="CustomTDPPeakSlider"
                                             Style="{StaticResource ModernSliderStyle}"
-                                            Minimum="4" Maximum="35" StepFrequency="1"
-                                            Value="30"
-                                            ValueChanged="AutoTDPMaxSlider_ValueChanged"/>
-
-                                    <!-- Pause when unfocused -->
-                                    <Grid>
-                                        <TextBlock x:Uid="S_PauseWhenGameNotFocused" Text="Pause when game not focused" FontSize="14" Foreground="#FFFFFF"
-                                                   VerticalAlignment="Center" TextWrapping="Wrap" Grid.Column="0" />
-                                        <ToggleSwitch x:Name="AutoTDPPauseWhenUnfocusedToggle"
-                                                      Style="{StaticResource ModernToggleStyle}"
-                                                      Width="52"
-                                                      HorizontalAlignment="Right"
-                                                      IsOn="True"
-                                                      Toggled="AutoTDPPauseWhenUnfocusedToggle_Toggled"/>
-                                    </Grid>
-
-                                    <!-- Fast response -->
-                                    <Grid>
-                                        <StackPanel VerticalAlignment="Center" Margin="0,0,60,0">
-                                            <TextBlock x:Uid="S_FastResponse" Text="Fast response" FontSize="14" Foreground="#FFFFFF" TextWrapping="Wrap" />
-                                            <TextBlock x:Uid="S_JumpToTheEstimatedWattage" Text="Jump to the estimated wattage when FPS is far off target, then fine-tune"
-                                                       FontSize="12" Foreground="#B9C0CC" TextWrapping="Wrap" />
-                                        </StackPanel>
-                                        <ToggleSwitch x:Name="AutoTDPFastResponseToggle"
-                                                      Style="{StaticResource ModernToggleStyle}"
-                                                      Width="52"
-                                                      HorizontalAlignment="Right"
-                                                      IsOn="True"/>
+                                            Minimum="0" Maximum="15"
+                                            TickFrequency="1"
+                                            SnapsTo="Ticks"
+                                            Value="5"
+                                            ValueChanged="CustomTDPPeakSlider_ValueChanged"/>
+                                    <Grid Margin="0,6,0,0">
+                                        <TextBlock x:Uid="CurrentTDPText" x:Name="CurrentTDPText" Text="Limits:" FontSize="13" Foreground="#B9C0CC" />
+                                        <TextBlock x:Name="CurrentTDPValueText" Text="-- W" FontSize="13" Foreground="#B9C0CC" HorizontalAlignment="Right"/>
                                     </Grid>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
 
-                        <!-- OS Power Mode Card -->
-                        <Border Style="{StaticResource CardStyle}">
+                        <!-- AutoTDP (Legion only): adjusts TDP to hit a target FPS. Enabling it forces
+                             TDP Mode to Custom and locks the mode selector until disabled. -->
+                        <Border x:Name="AutoTDPCard" Style="{StaticResource GroupCardStyle}" Visibility="Collapsed">
                             <StackPanel>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                        <TextBlock x:Uid="S_OSPowerMode" Text="OS Power Mode" Style="{StaticResource CardTitleStyle}" />
-                                        <TextBlock x:Uid="S_WindowsPowerSliderSetting" Text="Windows power slider setting"
-                                                   Style="{StaticResource CardCaptionStyle}"
-                                                   TextWrapping="Wrap" />
+                                <ctk:SettingsCard x:Uid="S_AutoTDP" Style="{StaticResource GroupRowStyle}" Header="AutoTDP" Description="Adjusts TDP live to hit a target FPS" Tapped="ToggleRow_Tapped">
+                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE9F5;"/></ctk:SettingsCard.HeaderIcon>
+                                    <ToggleSwitch x:Name="AutoTDPToggle"
+                                                  Style="{StaticResource ModernToggleStyle}"
+                                                  Width="52"
+                                                  Toggled="AutoTDPToggle_Toggled"/>
+                                </ctk:SettingsCard>
+                                <StackPanel x:Name="AutoTDPSettingsPanel"
+                                            Visibility="{Binding ElementName=AutoTDPToggle, Path=IsOn, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <StackPanel Spacing="6" Padding="52,0,16,8">
+                                        <Grid>
+                                            <TextBlock x:Uid="S_TargetFPS" Text="Target FPS" FontSize="14" Foreground="#FFFFFF" VerticalAlignment="Center" />
+                                            <TextBlock x:Uid="AutoTDPTargetFPSValue" x:Name="AutoTDPTargetFPSValue" Text="60 FPS" FontSize="14" FontWeight="SemiBold" Foreground="#FFFFFF" HorizontalAlignment="Right" />
+                                        </Grid>
+                                        <Slider x:Name="AutoTDPTargetFPSSlider"
+                                                Style="{StaticResource ModernSliderStyle}"
+                                                Minimum="30" Maximum="144"
+                                                StepFrequency="5" TickFrequency="15" TickPlacement="Outside" SnapsTo="StepValues"
+                                                Value="60"
+                                                ValueChanged="AutoTDPTargetFPSSlider_ValueChanged"/>
+                                        <Grid>
+                                            <TextBlock x:Uid="S_CurrentFPS" Text="Current FPS" FontSize="13" Foreground="#B9C0CC" VerticalAlignment="Center" />
+                                            <TextBlock x:Uid="AutoTDPCurrentFPSValue" x:Name="AutoTDPCurrentFPSValue" Text="-- FPS" FontSize="13" Foreground="#B9C0CC" HorizontalAlignment="Right" />
+                                        </Grid>
+                                        <Grid Margin="0,6,0,0">
+                                            <TextBlock x:Uid="S_MinTDP" Text="Min TDP" FontSize="14" Foreground="#FFFFFF" VerticalAlignment="Center" />
+                                            <TextBlock x:Name="AutoTDPMinValue" Text="8W" FontSize="14" FontWeight="SemiBold" Foreground="#FFFFFF" HorizontalAlignment="Right"/>
+                                        </Grid>
+                                        <Slider x:Name="AutoTDPMinSlider"
+                                                Style="{StaticResource ModernSliderStyle}"
+                                                Minimum="4" Maximum="35" StepFrequency="1"
+                                                Value="8"
+                                                ValueChanged="AutoTDPMinSlider_ValueChanged"/>
+                                        <Grid Margin="0,6,0,0">
+                                            <TextBlock x:Uid="S_MaxTDP" Text="Max TDP" FontSize="14" Foreground="#FFFFFF" VerticalAlignment="Center" />
+                                            <TextBlock x:Name="AutoTDPMaxValue" Text="30W" FontSize="14" FontWeight="SemiBold" Foreground="#FFFFFF" HorizontalAlignment="Right"/>
+                                        </Grid>
+                                        <Slider x:Name="AutoTDPMaxSlider"
+                                                Style="{StaticResource ModernSliderStyle}"
+                                                Minimum="4" Maximum="35" StepFrequency="1"
+                                                Value="30"
+                                                ValueChanged="AutoTDPMaxSlider_ValueChanged"/>
                                     </StackPanel>
+                                    <Border Style="{StaticResource GroupDividerStyle}"/>
+                                    <ctk:SettingsCard Style="{StaticResource GroupRowStyle}" Tapped="ToggleRow_Tapped">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE769;"/></ctk:SettingsCard.HeaderIcon>
+                                        <ctk:SettingsCard.Header>
+                                            <TextBlock x:Uid="S_PauseWhenGameNotFocused" Text="Pause when game not focused" TextWrapping="Wrap"/>
+                                        </ctk:SettingsCard.Header>
+                                        <ToggleSwitch x:Name="AutoTDPPauseWhenUnfocusedToggle"
+                                                      Style="{StaticResource ModernToggleStyle}"
+                                                      Width="52"
+                                                      IsOn="True"
+                                                      Toggled="AutoTDPPauseWhenUnfocusedToggle_Toggled"/>
+                                    </ctk:SettingsCard>
+                                    <Border Style="{StaticResource GroupDividerStyle}"/>
+                                    <ctk:SettingsCard Style="{StaticResource GroupRowStyle}" Tapped="ToggleRow_Tapped">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE945;"/></ctk:SettingsCard.HeaderIcon>
+                                        <ctk:SettingsCard.Header>
+                                            <TextBlock x:Uid="S_FastResponse" Text="Fast response" TextWrapping="Wrap"/>
+                                        </ctk:SettingsCard.Header>
+                                        <ctk:SettingsCard.Description>
+                                            <TextBlock x:Uid="S_JumpToTheEstimatedWattage" Text="Jump to the estimated wattage when FPS is far off target, then fine-tune" TextWrapping="Wrap"/>
+                                        </ctk:SettingsCard.Description>
+                                        <ToggleSwitch x:Name="AutoTDPFastResponseToggle"
+                                                      Style="{StaticResource ModernToggleStyle}"
+                                                      Width="52"
+                                                      IsOn="True"/>
+                                    </ctk:SettingsCard>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- OS Power Mode -->
+                        <Border Style="{StaticResource GroupCardStyle}">
+                            <StackPanel>
+                                <ctk:SettingsCard Style="{StaticResource GroupRowStyle}">
+                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xEC4A;"/></ctk:SettingsCard.HeaderIcon>
+                                    <ctk:SettingsCard.Header>
+                                        <TextBlock x:Uid="S_OSPowerMode" Text="OS Power Mode"/>
+                                    </ctk:SettingsCard.Header>
+                                    <ctk:SettingsCard.Description>
+                                        <TextBlock x:Uid="S_WindowsPowerSliderSetting" Text="Windows power slider setting" TextWrapping="Wrap"/>
+                                    </ctk:SettingsCard.Description>
                                     <TextBlock x:Uid="OSPowerModeValue" x:Name="OSPowerModeValue"
-                                               Grid.Column="1"
                                                Text="Balanced"
                                                FontSize="14"
                                                Foreground="#4CAF50"
                                                FontWeight="SemiBold"
                                                VerticalAlignment="Center"
-                                               Margin="0,0,0,0"
                                                Visibility="Collapsed" />
-                                </Grid>
+                                </ctk:SettingsCard>
                                 <ctk:Segmented x:Name="OSPowerModeComboBox"
-                                               Margin="0,12,0,0"
+                                               Margin="16,0,16,14"
                                                HorizontalAlignment="Stretch"
                                                SingleSelectionFollowsFocus="False"
                                                SelectionChanged="OSPowerModeComboBox_SelectionChanged">
@@ -1429,46 +1429,44 @@
                             </StackPanel>
                         </Border>
 
-                        <!-- CPU Extras Card (Collapsible) -->
-                        <Border Style="{StaticResource CardStyle}">
+                        <!-- PROCESSOR (collapsible) -->
+                        <TextBlock x:Uid="S_SectionProcessor" Text="Processor" Style="{StaticResource SettingsSectionTitleStyle}"/>
+                        <Border Style="{StaticResource GroupCardStyle}">
                             <StackPanel>
-                                <Grid Background="Transparent" MinHeight="48" Tapped="ExpandHeader_Tapped">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0">
-                                        <TextBlock x:Uid="S_CPUExtras" Text="CPU Extras" Style="{StaticResource CardTitleStyle}" />
-                                        <TextBlock x:Uid="S_CPUBoostEPPAndState" Text="CPU Boost, EPP, and State limits"
-                                                   Style="{StaticResource CardCaptionStyle}" />
-                                    </StackPanel>
-                                    <ToggleButton x:Name="CPUExtrasExpandToggle" MinWidth="44" MinHeight="40"
-                                                  Grid.Column="1"
-                                                  IsChecked="False"
-                                                  VerticalAlignment="Center"
-                                                  Background="Transparent"
-                                                  BorderThickness="0"
-                                                  Padding="8,4"
-                                                  Click="CPUExtrasExpandToggle_Click"
-                                                  UseSystemFocusVisuals="True">
-                                        <FontIcon x:Name="CPUExtrasExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
-                                    </ToggleButton>
-                                </Grid>
-                                <StackPanel x:Name="CPUExtrasContent" Spacing="12" Margin="0,12,0,0" Visibility="Collapsed">
-                                    <!-- CPU Boost -->
-                                    <ctk:SettingsCard x:Uid="S_CPUBoost" Header="CPU Boost" Description="Higher boost clocks" Tapped="ToggleRow_Tapped">
-                                        <ToggleSwitch x:Name="CPUBoostToggle"
-                                        Style="{StaticResource ModernToggleStyle}"
-                                        IsEnabled="False"/>
+                                <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
+                                    <ctk:SettingsCard Style="{StaticResource GroupRowStyle}">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xEEA1;"/></ctk:SettingsCard.HeaderIcon>
+                                        <ctk:SettingsCard.Header>
+                                            <TextBlock x:Uid="S_CPUExtras" Text="CPU Extras"/>
+                                        </ctk:SettingsCard.Header>
+                                        <ctk:SettingsCard.Description>
+                                            <TextBlock x:Uid="S_CPUBoostEPPAndState" Text="CPU Boost, EPP, and State limits" TextWrapping="Wrap"/>
+                                        </ctk:SettingsCard.Description>
+                                        <ToggleButton x:Name="CPUExtrasExpandToggle" MinWidth="44" MinHeight="40"
+                                                      IsChecked="False"
+                                                      Background="Transparent"
+                                                      BorderThickness="0"
+                                                      Padding="8,4"
+                                                      Click="CPUExtrasExpandToggle_Click"
+                                                      UseSystemFocusVisuals="True">
+                                            <FontIcon x:Name="CPUExtrasExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
+                                        </ToggleButton>
                                     </ctk:SettingsCard>
-
-                                    <!-- CPU EPP -->
-                                    <StackPanel>
+                                </Grid>
+                                <StackPanel x:Name="CPUExtrasContent" Visibility="Collapsed" Background="#2F3338">
+                                    <Border Style="{StaticResource GroupDividerStyle}"/>
+                                    <ctk:SettingsCard x:Uid="S_CPUBoost" Style="{StaticResource GroupRowStyle}" Header="CPU Boost" Description="Higher boost clocks" Tapped="ToggleRow_Tapped">
+                                        <ToggleSwitch x:Name="CPUBoostToggle"
+                                                      Style="{StaticResource ModernToggleStyle}"
+                                                      IsEnabled="False"/>
+                                    </ctk:SettingsCard>
+                                    <Border Style="{StaticResource GroupDividerStyle}"/>
+                                    <StackPanel Padding="52,12,16,12" Spacing="4">
                                         <Grid>
                                             <TextBlock x:Uid="S_CPUEPP" Text="CPU EPP" FontSize="14" Foreground="#FFFFFF" />
                                             <TextBlock x:Name="CPUEPPValueText"
                                                        Text="{Binding ElementName=CPUEPPSlider, Path=Value}"
-                                                       Style="{StaticResource CardValueStyle}"/>
+                                                       FontSize="14" FontWeight="SemiBold" Foreground="#FFFFFF" HorizontalAlignment="Right"/>
                                         </Grid>
                                         <Slider x:Name="CPUEPPSlider"
                                                 Style="{StaticResource ModernSliderStyle}"
@@ -1477,30 +1475,29 @@
                                                 SnapsTo="Ticks"
                                                 TickPlacement="BottomRight"
                                                 IsEnabled="False"/>
-                                        <Grid Margin="0,4,0,0">
-                                            <TextBlock x:Uid="S_0PrioritizeCPU" Text="0 = Prioritize CPU" FontSize="13" Foreground="#B9C0CC" />
-                                            <TextBlock x:Uid="S_100PrioritizeGPU" Text="100 = Prioritize GPU" FontSize="13" Foreground="#B9C0CC" HorizontalAlignment="Right" />
+                                        <Grid>
+                                            <TextBlock x:Uid="S_0PrioritizeCPU" Text="0 = Prioritize CPU" FontSize="12" Foreground="#B9C0CC" />
+                                            <TextBlock x:Uid="S_100PrioritizeGPU" Text="100 = Prioritize GPU" FontSize="12" Foreground="#B9C0CC" HorizontalAlignment="Right" />
                                         </Grid>
                                     </StackPanel>
-
-                                    <!-- CPU State -->
-                                    <StackPanel>
+                                    <Border Style="{StaticResource GroupDividerStyle}"/>
+                                    <StackPanel Padding="52,12,16,14">
                                         <TextBlock x:Uid="S_CPUState" Text="CPU State" FontSize="14" Foreground="#FFFFFF" />
                                         <TextBlock x:Uid="S_ProcessorPerformanceLimits" Text="Processor performance limits" FontSize="12" Foreground="#B9C0CC" />
-                                        <Grid Margin="0,8,0,0">
+                                        <Grid Margin="0,8,0,0" ColumnSpacing="12">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
-                                            <StackPanel Grid.Column="0" Margin="0,0,6,0">
-                                                <TextBlock x:Uid="S_Min" Text="Min %" FontSize="13" Foreground="#B9C0CC" Margin="0,0,0,4" />
+                                            <StackPanel>
+                                                <TextBlock x:Uid="S_Min" Text="Min %" FontSize="12" Foreground="#B9C0CC" Margin="0,0,0,4" />
                                                 <ComboBox x:Name="MinCPUStateComboBox"
                                                           Style="{StaticResource ModernComboBoxStyle}"
                                                           SelectionChanged="MinCPUStateComboBox_SelectionChanged"
                                                           IsEnabled="False"/>
                                             </StackPanel>
-                                            <StackPanel Grid.Column="1" Margin="6,0,0,0">
-                                                <TextBlock x:Uid="S_Max" Text="Max %" FontSize="13" Foreground="#B9C0CC" Margin="0,0,0,4" />
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock x:Uid="S_Max" Text="Max %" FontSize="12" Foreground="#B9C0CC" Margin="0,0,0,4" />
                                                 <ComboBox x:Name="MaxCPUStateComboBox"
                                                           Style="{StaticResource ModernComboBoxStyle}"
                                                           SelectionChanged="MaxCPUStateComboBox_SelectionChanged"
@@ -1518,77 +1515,78 @@
                 <!-- GAME TAB -->
                 <ScrollViewer x:Name="GameScrollViewer" VerticalScrollBarVisibility="Auto" Visibility="Collapsed"
                               BringIntoViewOnFocusChange="True">
-                    <StackPanel Padding="16,8,16,16">
+                    <StackPanel Padding="16,0,16,16">
 
                         <!-- Current Game Card -->
-                        <Border Style="{StaticResource CardStyle}">
-                            <StackPanel>
-                                <TextBlock x:Uid="S_CurrentGame" Text="Current Game" Style="{StaticResource CardTitleStyle}" />
-                                <Grid Margin="0,4,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Game Icon -->
+                        <TextBlock x:Uid="S_CurrentGame" Text="Current Game" Style="{StaticResource SettingsSectionTitleStyle}" />
+                        <Border Style="{StaticResource GroupCardStyle}" Padding="16,14,16,14">
+                            <Grid ColumnSpacing="14">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <!-- Game icon (from the executable) over a placeholder tile -->
+                                <Grid Width="48" Height="48">
+                                    <Border x:Name="CurrentGameIconPlaceholder" Background="#45494F" CornerRadius="8">
+                                        <FontIcon Glyph="&#xE7FC;" FontSize="24" Foreground="#B9C0CC"/>
+                                    </Border>
                                     <Image x:Name="CurrentGameIcon"
-                                           Grid.Column="0"
-                                           Width="32" Height="32"
-                                           Margin="0,0,10,0"
+                                           Width="48" Height="48"
                                            Stretch="UniformToFill"
-                                           VerticalAlignment="Center"
                                            Visibility="Collapsed"/>
-                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                        <TextBlock x:Uid="RunningGameText" x:Name="RunningGameText"
-                                                   Text="No game detected"
-                                                   FontSize="16"
-                                                   Foreground="White"
-                                                   TextWrapping="Wrap" />
-                                        <TextBlock x:Name="CurrentGameProfileStatus"
-                                                   Text=""
-                                                   FontSize="12"
-                                                   Foreground="#B9C0CC"
-                                                   Visibility="Collapsed"/>
-                                    </StackPanel>
                                 </Grid>
-                            </StackPanel>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock x:Uid="RunningGameText" x:Name="RunningGameText"
+                                               Text="No game detected"
+                                               FontSize="16"
+                                               FontWeight="SemiBold"
+                                               Foreground="White"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock x:Name="CurrentGameProfileStatus"
+                                               Text=""
+                                               FontSize="12"
+                                               Foreground="#B9C0CC"
+                                               TextWrapping="Wrap"
+                                               Visibility="Collapsed"/>
+                                </StackPanel>
+                            </Grid>
                         </Border>
 
                         <!-- Game Detection Card -->
                         <Border Style="{StaticResource CardStyle}">
                             <StackPanel>
-                                <Grid Background="Transparent" MinHeight="48" Tapped="ExpandHeader_Tapped">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                        <TextBlock x:Uid="S_GameDetection" Text="Game Detection"
-                                                   Style="{StaticResource CardTitleStyle}" />
-                                        <TextBlock x:Uid="S_GamesWithProfilesAlwaysDetect" Text="Games with profiles always detect regardless of settings"
-                                                   Style="{StaticResource CardCaptionStyle}" />
-                                    </StackPanel>
-                                    <ToggleButton x:Name="ProfileDetectionExpandToggle" MinWidth="44" MinHeight="40"
-                                                  Grid.Column="1"
+                                <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
+                                    <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE721;"/></ctk:SettingsCard.HeaderIcon>
+                                        <ctk:SettingsCard.Header>
+                                            <TextBlock x:Uid="S_GameDetection" Text="Game Detection" />
+                                        </ctk:SettingsCard.Header>
+                                        <ctk:SettingsCard.Description>
+                                            <TextBlock x:Uid="S_GamesWithProfilesAlwaysDetect" Text="Games with profiles always detect regardless of settings" />
+                                        </ctk:SettingsCard.Description>
+                                        <ToggleButton x:Name="ProfileDetectionExpandToggle" MinWidth="44" MinHeight="40"
                                                   IsChecked="False"
-                                                  VerticalAlignment="Center"
                                                   Background="Transparent"
                                                   BorderThickness="0"
                                                   Padding="8,4"
                                                   Click="ProfileDetectionExpandToggle_Click">
                                         <FontIcon x:Name="ProfileDetectionExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                     </ToggleButton>
+                                    </ctk:SettingsCard>
                                 </Grid>
 
                                 <StackPanel x:Name="ProfileDetectionContent" Visibility="Collapsed" Margin="0,12,0,0" Spacing="12">
 
                                     <!-- Match Exe Toggle -->
                                     <ctk:SettingsCard x:Uid="S_PreferExecutable" Header="Prefer executable" Description="Use .exe name, fall back to window title if unavailable" Tapped="ToggleRow_Tapped">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE721;"/></ctk:SettingsCard.HeaderIcon>
                                         <ToggleSwitch x:Name="ProfileMatchByExeToggle"
                                         Style="{StaticResource ModernToggleStyle}"/>
                                     </ctk:SettingsCard>
 
                                     <!-- Games Only Toggle -->
                                     <ctk:SettingsCard x:Uid="S_GamesOnly" Header="Games only" Description="Detect apps with FPS (RTSS) or added to Xbox Game Bar" Tapped="ToggleRow_Tapped">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE721;"/></ctk:SettingsCard.HeaderIcon>
                                         <ToggleSwitch x:Name="ProfileGamesOnlyToggle"
                                         Style="{StaticResource ModernToggleStyle}"
                                         IsOn="True"/>
@@ -1602,27 +1600,24 @@
                         <Border Style="{StaticResource CardStyle}">
                             <StackPanel>
                                 <!-- Header with Expand/Collapse -->
-                                <Grid Background="Transparent" MinHeight="48" Tapped="ExpandHeader_Tapped">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                        <TextBlock x:Uid="S_ProfileSettings" Text="Profile Settings" Style="{StaticResource CardTitleStyle}" />
-                                        <TextBlock x:Uid="S_ChooseWhichSettingsAreSaved" Text="Choose which settings are saved in profiles"
-                                                   Style="{StaticResource CardCaptionStyle}"
-                                                   TextWrapping="Wrap" />
-                                    </StackPanel>
-                                    <ToggleButton x:Name="ProfileSettingsExpandToggle" MinWidth="44" MinHeight="40"
-                                                  Grid.Column="1"
+                                <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
+                                    <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE713;"/></ctk:SettingsCard.HeaderIcon>
+                                        <ctk:SettingsCard.Header>
+                                            <TextBlock x:Uid="S_ProfileSettings" Text="Profile Settings" />
+                                        </ctk:SettingsCard.Header>
+                                        <ctk:SettingsCard.Description>
+                                            <TextBlock x:Uid="S_ChooseWhichSettingsAreSaved" Text="Choose which settings are saved in profiles" TextWrapping="Wrap" />
+                                        </ctk:SettingsCard.Description>
+                                        <ToggleButton x:Name="ProfileSettingsExpandToggle" MinWidth="44" MinHeight="40"
                                                   IsChecked="False"
-                                                  VerticalAlignment="Center"
                                                   Background="Transparent"
                                                   BorderThickness="0"
                                                   Padding="8,4"
                                                   Click="ProfileSettingsExpandToggle_Click">
                                         <FontIcon x:Name="ProfileSettingsExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                     </ToggleButton>
+                                    </ctk:SettingsCard>
                                 </Grid>
 
                                 <!-- Collapsible Content -->
@@ -1693,11 +1688,7 @@
                         </Border>
 
                         <!-- Global Profile Section -->
-                        <TextBlock x:Uid="S_GlobalProfile" Text="Global Profile"
-                                   FontSize="16"
-                                   Foreground="#00C8FF"
-                                   FontWeight="SemiBold"
-                                   Margin="0,16,0,8" />
+                        <TextBlock x:Uid="S_GlobalProfile" Text="Global Profile" Style="{StaticResource SettingsSectionTitleStyle}" />
 
                         <!-- Global Profile Card -->
                         <Border Style="{StaticResource CardStyle}">
@@ -1713,7 +1704,7 @@
                                      UpdateLastVisibleSeparator (see GamingWidget.ProfileDisplay.cs) so a
                                      partially-filled profile (only some categories saved) doesn't show a
                                      stray separator flush against the box's bottom edge. -->
-                                <Border x:Name="GlobalProfileSimple" Background="{StaticResource PageBackgroundBrush}" CornerRadius="6" Padding="12,2,12,8">
+                                <Border x:Name="GlobalProfileSimple" Background="#2F3338" CornerRadius="6" Padding="12,2,12,8">
                                     <StackPanel>
                                         <StackPanel x:Name="GlobalProfileTDPModeRow" Visibility="Collapsed">
                                             <Grid Margin="0,8,0,0">
@@ -1814,7 +1805,7 @@
                                 </Border>
 
                                 <!-- AC/DC Mode (Power Source Toggle ON) -->
-                                <Border x:Name="GlobalProfileACDC" Background="{StaticResource PageBackgroundBrush}" CornerRadius="6" Padding="12,2,12,8" Margin="0,8,0,0" Visibility="Collapsed">
+                                <Border x:Name="GlobalProfileACDC" Background="#2F3338" CornerRadius="6" Padding="12,2,12,8" Margin="0,8,0,0" Visibility="Collapsed">
                                     <StackPanel>
                                         <!-- Header. Label column (col0) is a fixed pixel width, not Auto —
                                              an Auto column can be squeezed by the Grid's star-sizing pass
@@ -2011,7 +2002,7 @@
                                          being hidden dynamically by UpdateLastVisibleSeparator (see
                                          GamingWidget.ProfileDisplay.cs), since not every category is
                                          necessarily saved for a given game. -->
-                                    <Border Background="{StaticResource PageBackgroundBrush}" CornerRadius="6" Padding="12,2,12,8" Margin="0,10,0,0">
+                                    <Border Background="#2F3338" CornerRadius="6" Padding="12,2,12,8" Margin="0,10,0,0">
                                         <StackPanel>
                                             <Grid Margin="0,8,0,0">
                                                 <Grid.ColumnDefinitions>
@@ -2200,7 +2191,7 @@
                                          being hidden dynamically by UpdateLastVisibleSeparator (see
                                          GamingWidget.ProfileDisplay.cs), since not every category is
                                          necessarily saved for a given game. -->
-                                    <Border Background="{StaticResource PageBackgroundBrush}" CornerRadius="6" Padding="12,2,12,8" Margin="0,10,0,0">
+                                    <Border Background="#2F3338" CornerRadius="6" Padding="12,2,12,8" Margin="0,10,0,0">
                                         <StackPanel>
                                             <StackPanel x:Name="GameProfileTDPModeRow" Visibility="Collapsed">
                                                 <Grid Margin="0,8,0,0">
@@ -2310,8 +2301,8 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock x:Uid="S_SavedProfiles" Text="Saved Profiles"
-                                       FontSize="16"
-                                       Foreground="#00C8FF"
+                                       FontSize="14"
+                                       Foreground="White"
                                        FontWeight="SemiBold"
                                        VerticalAlignment="Center" />
                             <!--
@@ -2347,21 +2338,17 @@
                         <Border Style="{StaticResource CardStyle}">
                             <StackPanel>
                                 <!-- Header with Expand/Collapse -->
-                                <Grid Background="Transparent" MinHeight="48" Tapped="ExpandHeader_Tapped">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                        <TextBlock x:Uid="S_OSDCustomization" Text="OSD Customization" Style="{StaticResource CardTitleStyle}" />
-                                        <TextBlock x:Uid="S_CustomizeOverlayAppearanceAndContent" Text="Customize overlay appearance and content"
-                                                   Style="{StaticResource CardCaptionStyle}"
-                                                   TextWrapping="Wrap" />
-                                    </StackPanel>
-                                    <ToggleButton x:Name="OSDCustomizeExpandButton" MinWidth="44" MinHeight="40"
-                                                  Grid.Column="1"
+                                <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
+                                    <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE9D9;"/></ctk:SettingsCard.HeaderIcon>
+                                        <ctk:SettingsCard.Header>
+                                            <TextBlock x:Uid="S_OSDCustomization" Text="OSD Customization" />
+                                        </ctk:SettingsCard.Header>
+                                        <ctk:SettingsCard.Description>
+                                            <TextBlock x:Uid="S_CustomizeOverlayAppearanceAndContent" Text="Customize overlay appearance and content" TextWrapping="Wrap" />
+                                        </ctk:SettingsCard.Description>
+                                        <ToggleButton x:Name="OSDCustomizeExpandButton" MinWidth="44" MinHeight="40"
                                                   IsChecked="False"
-                                                  VerticalAlignment="Center"
                                                   Background="Transparent"
                                                   BorderThickness="0"
                                                   Padding="8,4"
@@ -2370,6 +2357,7 @@
                                                   UseSystemFocusVisuals="True">
                                         <FontIcon x:Name="OSDCustomizeExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                     </ToggleButton>
+                                    </ctk:SettingsCard>
                                 </Grid>
 
                                 <!-- Collapsible Content -->
@@ -2377,6 +2365,7 @@
 
                                     <!-- OSD Provider Selection -->
                                     <ctk:SettingsCard x:Uid="S_OSDProvider" Margin="0,0,0,12" Header="OSD Provider" Description="Select overlay source">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE9D9;"/></ctk:SettingsCard.HeaderIcon>
                                         <ComboBox x:Name="OSDProviderComboBox"
                                         Style="{StaticResource ModernComboBoxStyle}"
                                         Width="120"
@@ -2410,6 +2399,7 @@
 
                                     <!-- Style: Modern (calmer type, soft colors, fixed-width numbers) or Classic -->
                                     <ctk:SettingsCard x:Uid="S_ModernStyle" Margin="0,0,0,8" Header="Modern style" Description="Small labels and units, soft colors, steady numbers. Off = classic look." Tapped="ToggleRow_Tapped">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE9D9;"/></ctk:SettingsCard.HeaderIcon>
                                         <ToggleSwitch x:Name="OSDModernStyleToggle"
                                         Style="{StaticResource ModernToggleStyle}"
                                         IsOn="True"
@@ -2418,6 +2408,7 @@
 
                                     <!-- Columns -->
                                     <ctk:SettingsCard x:Uid="S_Columns_2" Margin="0,0,0,8" Header="Columns" Description="Items per row (1 = vertical list)">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE713;"/></ctk:SettingsCard.HeaderIcon>
                                         <ComboBox x:Name="OSDColumnsComboBox"
                                         Style="{StaticResource ModernComboBoxStyle}"
                                         Width="80"
@@ -2594,6 +2585,7 @@
 
                                     <!-- Position Shift Toggle (OLED burn-in protection) -->
                                     <ctk:SettingsCard x:Uid="S_PositionShift" Margin="0,4,0,8" Header="Position Shift" Description="Shifts OSD every minute to prevent burn-in" Tapped="ToggleRow_Tapped">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE9D9;"/></ctk:SettingsCard.HeaderIcon>
                                         <ToggleSwitch x:Name="OSDPositionShiftToggle"
                                         Style="{StaticResource ModernToggleStyle}"
                                         Toggled="OSDPositionShiftToggle_Toggled"/>
@@ -2601,6 +2593,7 @@
 
                                     <!-- Frametime Graph Pinned Toggle -->
                                     <ctk:SettingsCard x:Uid="S_PinFrametimeGraph" Margin="0,4,0,8" Header="Pin Frametime Graph" Description="Always display graph on its own row at bottom" Tapped="ToggleRow_Tapped">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE9D9;"/></ctk:SettingsCard.HeaderIcon>
                                         <ToggleSwitch x:Name="FrametimeGraphPinnedToggle"
                                         Style="{StaticResource ModernToggleStyle}"
                                         Toggled="FrametimeGraphPinnedToggle_Toggled"/>
@@ -2696,22 +2689,17 @@
                         <Border x:Name="HotkeysCard" Style="{StaticResource CardStyle}">
                             <StackPanel>
                                 <!-- Header with Expand/Collapse -->
-                                <Grid Background="Transparent" MinHeight="48" Tapped="ExpandHeader_Tapped">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                        <TextBlock x:Uid="S_Hotkeys" Text="Hotkeys" Style="{StaticResource CardTitleStyle}" />
-                                        <TextBlock x:Uid="HotkeysSummary" x:Name="HotkeysSummary"
-                                                   Text="Map controller combos to keyboard shortcuts"
-                                                   Style="{StaticResource CardCaptionStyle}"
-                                                   TextWrapping="Wrap" />
-                                    </StackPanel>
-                                    <ToggleButton x:Name="HotkeysExpandButton" MinWidth="44" MinHeight="40"
-                                                  Grid.Column="1"
+                                <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
+                                    <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE765;"/></ctk:SettingsCard.HeaderIcon>
+                                        <ctk:SettingsCard.Header>
+                                            <TextBlock x:Uid="S_Hotkeys" Text="Hotkeys" />
+                                        </ctk:SettingsCard.Header>
+                                        <ctk:SettingsCard.Description>
+                                            <TextBlock x:Uid="HotkeysSummary" x:Name="HotkeysSummary" Text="Map controller combos to keyboard shortcuts" TextWrapping="Wrap" />
+                                        </ctk:SettingsCard.Description>
+                                        <ToggleButton x:Name="HotkeysExpandButton" MinWidth="44" MinHeight="40"
                                                   IsChecked="False"
-                                                  VerticalAlignment="Center"
                                                   Background="Transparent"
                                                   BorderThickness="0"
                                                   Padding="8,4"
@@ -2719,6 +2707,7 @@
                                                   UseSystemFocusVisuals="True">
                                         <FontIcon x:Name="HotkeysExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                     </ToggleButton>
+                                    </ctk:SettingsCard>
                                 </Grid>
 
                                 <!-- Collapsible Content -->
@@ -3036,27 +3025,24 @@
                              a GoTweaks-only feature (see its section note below). -->
                         <Border x:Name="PowerAndSleepCard" Style="{StaticResource CardStyle}">
                             <StackPanel>
-                                <Grid Background="Transparent" MinHeight="48" Tapped="ExpandHeader_Tapped">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                        <TextBlock x:Uid="S_PowerSleep" Text="Power &amp; Sleep" Style="{StaticResource CardTitleStyle}" />
-                                        <TextBlock x:Uid="S_PowerButtonBehaviorAndIdle" Text="Power button behavior and idle timers"
-                                                   Style="{StaticResource CardCaptionStyle}"
-                                                   TextWrapping="Wrap" />
-                                    </StackPanel>
-                                    <ToggleButton x:Name="PowerAndSleepExpandButton" MinWidth="44" MinHeight="40"
-                                                  Grid.Column="1"
+                                <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
+                                    <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE7E8;"/></ctk:SettingsCard.HeaderIcon>
+                                        <ctk:SettingsCard.Header>
+                                            <TextBlock x:Uid="S_PowerSleep" Text="Power &amp; Sleep" />
+                                        </ctk:SettingsCard.Header>
+                                        <ctk:SettingsCard.Description>
+                                            <TextBlock x:Uid="S_PowerButtonBehaviorAndIdle" Text="Power button behavior and idle timers" TextWrapping="Wrap" />
+                                        </ctk:SettingsCard.Description>
+                                        <ToggleButton x:Name="PowerAndSleepExpandButton" MinWidth="44" MinHeight="40"
                                                   IsChecked="False"
-                                                  VerticalAlignment="Center"
                                                   Background="Transparent"
                                                   BorderThickness="0"
                                                   Padding="8,4"
                                                   Click="PowerAndSleepExpandButton_Click">
                                         <FontIcon x:Name="PowerAndSleepExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                     </ToggleButton>
+                                    </ctk:SettingsCard>
                                 </Grid>
 
                                 <StackPanel x:Name="PowerAndSleepContent" Visibility="Collapsed" Margin="0,12,0,0">
@@ -3226,23 +3212,20 @@
                                                 VerticalAlignment="Center" />
                                     </Grid>
 
-                                    <muxc:Expander x:Name="PowerButtonInfoExpander"
-                                                   Margin="0,14,0,0"
-                                                   HorizontalAlignment="Stretch"
-                                                   HorizontalContentAlignment="Stretch"
-                                                   IsExpanded="False">
-                                        <muxc:Expander.Header>
-                                            <TextBlock x:Uid="S_Recommendation" Text="Recommendation" FontSize="13" Foreground="#B9C0CC" />
-                                        </muxc:Expander.Header>
-                                        <Border Background="#3D2A1A" CornerRadius="4" Padding="10">
-                                            <StackPanel>
-                                                <TextBlock x:Uid="S_UseHibernateInsteadOfSleep" Foreground="#FFB060" FontWeight="SemiBold" FontSize="13" TextWrapping="Wrap"
+                                    <muxc:InfoBar x:Name="PowerButtonInfoExpander"
+                                                  Margin="0,14,0,0"
+                                                  IsOpen="True"
+                                                  IsClosable="False"
+                                                  Severity="Warning">
+                                        <muxc:InfoBar.Content>
+                                            <StackPanel Margin="0,0,0,12">
+                                                <TextBlock x:Uid="S_UseHibernateInsteadOfSleep" FontWeight="SemiBold" FontSize="13" TextWrapping="Wrap"
                                                            Text="⚠ Use Hibernate instead of Sleep" />
-                                                <TextBlock x:Uid="S_WindowsDefaultSleepModernStandby" Foreground="#DDB890" FontSize="12" TextWrapping="Wrap" Margin="0,4,0,0"
+                                                <TextBlock x:Uid="S_WindowsDefaultSleepModernStandby" FontSize="12" Foreground="#B9C0CC" TextWrapping="Wrap" Margin="0,4,0,0"
                                                            Text="Windows' default Sleep (Modern Standby) sometimes drains the battery from background wake-ups or fails to resume cleanly. Hibernate saves the session to disk and fully powers off, which is closer to how SteamOS suspends and tends to be more reliable - at the cost of a slightly slower resume. Setting the Power Button and Hibernate Timeout options above to Hibernate (and disabling Windows' Sleep timer) is the recommended change." />
                                             </StackPanel>
-                                        </Border>
-                                    </muxc:Expander>
+                                        </muxc:InfoBar.Content>
+                                    </muxc:InfoBar>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
@@ -3251,27 +3234,24 @@
                         <Border Style="{StaticResource CardStyle}">
                             <StackPanel>
                                 <!-- Header with Expand/Collapse -->
-                                <Grid Background="Transparent" MinHeight="48" Tapped="ExpandHeader_Tapped">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                        <TextBlock x:Uid="S_Debug" Text="Debug" Style="{StaticResource CardTitleStyle}" />
-                                        <TextBlock x:Uid="S_TroubleshootingAndDiagnosticTools" Text="Troubleshooting and diagnostic tools"
-                                                   Style="{StaticResource CardCaptionStyle}"
-                                                   TextWrapping="Wrap" />
-                                    </StackPanel>
-                                    <ToggleButton x:Name="DebugExpandButton" MinWidth="44" MinHeight="40"
-                                                  Grid.Column="1"
+                                <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
+                                    <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xEBE8;"/></ctk:SettingsCard.HeaderIcon>
+                                        <ctk:SettingsCard.Header>
+                                            <TextBlock x:Uid="S_Debug" Text="Debug" />
+                                        </ctk:SettingsCard.Header>
+                                        <ctk:SettingsCard.Description>
+                                            <TextBlock x:Uid="S_TroubleshootingAndDiagnosticTools" Text="Troubleshooting and diagnostic tools" TextWrapping="Wrap" />
+                                        </ctk:SettingsCard.Description>
+                                        <ToggleButton x:Name="DebugExpandButton" MinWidth="44" MinHeight="40"
                                                   IsChecked="False"
-                                                  VerticalAlignment="Center"
                                                   Background="Transparent"
                                                   BorderThickness="0"
                                                   Padding="8,4"
                                                   Click="DebugExpandButton_Click">
                                         <FontIcon x:Name="DebugExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                     </ToggleButton>
+                                    </ctk:SettingsCard>
                                 </Grid>
 
                                 <!-- Collapsible Content -->
@@ -3341,27 +3321,24 @@
                         <Border Style="{StaticResource CardStyle}">
                             <StackPanel>
                                 <!-- Header with Expand/Collapse -->
-                                <Grid Background="Transparent" MinHeight="48" Tapped="ExpandHeader_Tapped">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                        <TextBlock x:Uid="S_About" Text="About" Style="{StaticResource CardTitleStyle}" />
-                                        <TextBlock x:Uid="S_VersionAndCredits" Text="Version and credits"
-                                                   Style="{StaticResource CardCaptionStyle}"
-                                                   TextWrapping="Wrap" />
-                                    </StackPanel>
-                                    <ToggleButton x:Name="AboutExpandButton" MinWidth="44" MinHeight="40"
-                                                  Grid.Column="1"
+                                <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
+                                    <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE946;"/></ctk:SettingsCard.HeaderIcon>
+                                        <ctk:SettingsCard.Header>
+                                            <TextBlock x:Uid="S_About" Text="About" />
+                                        </ctk:SettingsCard.Header>
+                                        <ctk:SettingsCard.Description>
+                                            <TextBlock x:Uid="S_VersionAndCredits" Text="Version and credits" TextWrapping="Wrap" />
+                                        </ctk:SettingsCard.Description>
+                                        <ToggleButton x:Name="AboutExpandButton" MinWidth="44" MinHeight="40"
                                                   IsChecked="False"
-                                                  VerticalAlignment="Center"
                                                   Background="Transparent"
                                                   BorderThickness="0"
                                                   Padding="8,4"
                                                   Click="AboutExpandButton_Click">
                                         <FontIcon x:Name="AboutExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                     </ToggleButton>
+                                    </ctk:SettingsCard>
                                 </Grid>
 
                                 <!-- Collapsible Content -->
@@ -3588,7 +3565,7 @@
                                                Foreground="#B9C0CC"
                                                Margin="0,0,0,8" />
 
-                                    <Border Background="{StaticResource PageBackgroundBrush}" CornerRadius="6" Padding="12,2">
+                                    <Border Background="#2F3338" CornerRadius="6" Padding="12,2">
                                         <StackPanel>
                                             <Grid Margin="0,8,0,0">
                                                 <Grid.ColumnDefinitions>
@@ -3679,23 +3656,20 @@
                         </Border>
 
                         <!-- Legion sub-sections: one visible container at a time (LB/RB or tap). -->
-                        <ctk:Segmented x:Name="LegionSectionSelector" Margin="0,12,0,0" HorizontalAlignment="Stretch" SelectionChanged="LegionSectionSelector_SelectionChanged">
-                            <ctk:SegmentedItem x:Uid="LegionSectionController" Content="Controller" IsSelected="True">
-                                <ctk:SegmentedItem.Icon><FontIcon Glyph="&#xE7FC;"/></ctk:SegmentedItem.Icon>
-                            </ctk:SegmentedItem>
-                            <ctk:SegmentedItem x:Uid="LegionSectionVIIPER" Content="VIIPER">
-                                <ctk:SegmentedItem.Icon><FontIcon Glyph="&#xE7F8;"/></ctk:SegmentedItem.Icon>
-                            </ctk:SegmentedItem>
-                            <ctk:SegmentedItem x:Uid="LegionSectionInput" Content="Input">
-                                <ctk:SegmentedItem.Icon><FontIcon Glyph="&#xE765;"/></ctk:SegmentedItem.Icon>
-                            </ctk:SegmentedItem>
-                            <ctk:SegmentedItem x:Uid="LegionSectionLighting" Content="Lighting">
-                                <ctk:SegmentedItem.Icon><FontIcon Glyph="&#xE781;"/></ctk:SegmentedItem.Icon>
-                            </ctk:SegmentedItem>
-                            <ctk:SegmentedItem x:Uid="LegionSectionDevice" Content="Device">
-                                <ctk:SegmentedItem.Icon><FontIcon Glyph="&#xE772;"/></ctk:SegmentedItem.Icon>
-                            </ctk:SegmentedItem>
-                        </ctk:Segmented>
+                        <!-- Same sliding-pill tabs as the main bar, on a subtle track. -->
+                        <Grid Margin="0,12,0,0" Background="#26292D" CornerRadius="22" Padding="2">
+                            <Border x:Name="LegionSectionPill" Background="{StaticResource SystemAccentBrush}" CornerRadius="20"
+                                    Height="40" Width="0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Border.RenderTransform><TranslateTransform x:Name="LegionSectionPillTransform"/></Border.RenderTransform>
+                            </Border>
+                            <StackPanel x:Name="LegionSectionTabs" Orientation="Horizontal" HorizontalAlignment="Left" XYFocusKeyboardNavigation="Disabled">
+                                <RadioButton x:Uid="LegionSectionController" AutomationProperties.Name="Controller" Style="{StaticResource NavRadioButtonStyle}" GroupName="LegionSection" IsChecked="True" Checked="LegionSectionTab_Checked"><FontIcon Glyph="&#xE7FC;" FontSize="16"/></RadioButton>
+                                <RadioButton x:Uid="LegionSectionVIIPER" AutomationProperties.Name="Emulation" Style="{StaticResource NavRadioButtonStyle}" GroupName="LegionSection" Checked="LegionSectionTab_Checked"><FontIcon Glyph="&#xE7F4;" FontSize="16"/></RadioButton>
+                                <RadioButton x:Uid="LegionSectionInput" AutomationProperties.Name="Input" Style="{StaticResource NavRadioButtonStyle}" GroupName="LegionSection" Checked="LegionSectionTab_Checked"><FontIcon Glyph="&#xE765;" FontSize="16"/></RadioButton>
+                                <RadioButton x:Uid="LegionSectionLighting" AutomationProperties.Name="Lighting" Style="{StaticResource NavRadioButtonStyle}" GroupName="LegionSection" Checked="LegionSectionTab_Checked"><FontIcon Glyph="&#xE781;" FontSize="16"/></RadioButton>
+                                <RadioButton x:Uid="LegionSectionDevice" AutomationProperties.Name="Device" Style="{StaticResource NavRadioButtonStyle}" GroupName="LegionSection" Checked="LegionSectionTab_Checked"><FontIcon Glyph="&#xE772;" FontSize="16"/></RadioButton>
+                            </StackPanel>
+                        </Grid>
                         <StackPanel x:Name="LegionControllerSection">
                             <!-- Controller Settings Section (Touchpad & Vibration + Lighting) -->
                             <TextBlock x:Uid="S_ControllerSettings" Text="Controller Settings" Style="{StaticResource SectionHeaderStyle}" />
@@ -3736,11 +3710,11 @@
                                                       XYFocusDown="{x:Bind TouchpadVibrationExpandToggle}"
                                                       Toggled="LegionControllerModeToggle_Toggled"/>
                                     </Grid>
-                                    <TextBlock x:Uid="S_SameSwitchAsLegionSpace" Text="Same switch as Legion Space. The controllers reconnect for a few seconds, and in D-Input the Xbox / Game Bar interface may stop responding to them - use the touchscreen to switch back."
-                                               FontSize="12"
-                                               Foreground="#B9C0CC"
-                                               TextWrapping="Wrap"
-                                               Margin="0,8,0,0" />
+                                    <muxc:InfoBar IsOpen="True" IsClosable="False" Severity="Warning" Margin="0,10,0,0">
+                                        <muxc:InfoBar.Content>
+                                            <TextBlock x:Uid="S_SameSwitchAsLegionSpace" Text="Same switch as Legion Space. The controllers reconnect for a few seconds, and in D-Input the Xbox / Game Bar interface may stop responding to them - use the touchscreen to switch back." FontSize="12" TextWrapping="Wrap" Margin="0,0,0,12" />
+                                        </muxc:InfoBar.Content>
+                                    </muxc:InfoBar>
                                 </StackPanel>
                             </Border>
 
@@ -3748,20 +3722,17 @@
                             <StackPanel x:Name="TouchpadVibrationSection">
                                 <Border Style="{StaticResource CardStyle}">
                                     <StackPanel>
-                                        <Grid Background="Transparent" MinHeight="48" Tapped="ExpandHeader_Tapped">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel Grid.Column="0">
-                                                <TextBlock x:Uid="S_TouchpadVibration" Text="Touchpad &amp; Vibration" Style="{StaticResource CardTitleStyle}" />
-                                                <TextBlock x:Uid="S_TouchpadAndHapticFeedbackSettings" Text="Touchpad and haptic feedback settings"
-                                                           Style="{StaticResource CardCaptionStyle}" />
-                                            </StackPanel>
-                                            <ToggleButton x:Name="TouchpadVibrationExpandToggle" MinWidth="44" MinHeight="40"
-                                                      Grid.Column="1"
+                                        <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
+                                            <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                                <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE877;"/></ctk:SettingsCard.HeaderIcon>
+                                                <ctk:SettingsCard.Header>
+                                                    <TextBlock x:Uid="S_TouchpadVibration" Text="Touchpad &amp; Vibration" />
+                                                </ctk:SettingsCard.Header>
+                                                <ctk:SettingsCard.Description>
+                                                    <TextBlock x:Uid="S_TouchpadAndHapticFeedbackSettings" Text="Touchpad and haptic feedback settings" />
+                                                </ctk:SettingsCard.Description>
+                                                <ToggleButton x:Name="TouchpadVibrationExpandToggle" MinWidth="44" MinHeight="40"
                                                       IsChecked="False"
-                                                      VerticalAlignment="Center"
                                                       Background="Transparent"
                                                       BorderThickness="0"
                                                       Padding="8,4"
@@ -3769,7 +3740,8 @@
                                                       XYFocusUp="{x:Bind LegionNavItem}">
                                             <FontIcon x:Name="TouchpadVibrationExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                         </ToggleButton>
-                                    </Grid>
+                                            </ctk:SettingsCard>
+                                        </Grid>
                                     <StackPanel x:Name="TouchpadVibrationContent" Spacing="12" Margin="0,12,0,0" Visibility="Collapsed">
                                         <!-- Touchpad Toggle -->
                                         <Grid>
@@ -3847,6 +3819,7 @@
                                         <!-- GoTweaks Haptics: standalone per-button LRA clicks (works outside emulation) -->
                                         <Border Height="1" Background="#22FFFFFF" Margin="0,4,0,4"/>
                                         <ctk:SettingsCard x:Uid="S_GoTweaksHaptics" Header="GoTweaks Haptics" Description="Tactile click on inputs, system-wide via the controller motors" Tapped="ToggleRow_Tapped">
+                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE877;"/></ctk:SettingsCard.HeaderIcon>
                                             <ToggleSwitch x:Name="GoTweaksHapticsMasterToggle"
                                             Style="{StaticResource ModernToggleStyle}"
                                             IsOn="False"
@@ -3944,7 +3917,7 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel VerticalAlignment="Center" Margin="0,0,12,0">
-                                            <TextBlock x:Uid="S_EnableVIIPER" Text="Enable VIIPER" Style="{StaticResource CardTitleStyle}" />
+                                            <TextBlock x:Uid="S_EnableVIIPER" Text="Controller emulation (VIIPER)" Style="{StaticResource CardTitleStyle}" />
                                             <TextBlock x:Uid="ControllerEmulationStatusText" x:Name="ControllerEmulationStatusText" Text="Waiting for helper"
                                                        Style="{StaticResource CardCaptionStyle}" TextWrapping="Wrap" />
                                         </StackPanel>
@@ -3955,6 +3928,7 @@
                                     <StackPanel Margin="0,12,0,0"
                                                 Visibility="{x:Bind ControllerEmulationEnabledToggle.IsOn, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
                                         <ctk:SettingsCard x:Uid="S_HideNativeControllerHIDOn" Header="Hide native controller HID on next activation" Description="Requires HidHide. The physical XInput interface can remain visible." Tapped="ToggleRow_Tapped">
+                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xED1A;"/></ctk:SettingsCard.HeaderIcon>
                                             <ToggleSwitch x:Uid="ViiperSuppressPhysicalToggle" x:Name="ViiperSuppressPhysicalToggle"
                                             AutomationProperties.Name="Hide native controller HID on next activation"
                                             Style="{StaticResource ModernToggleStyle}" />
@@ -3962,6 +3936,7 @@
                                     <StackPanel x:Name="ControllerEmulationContent" Visibility="Collapsed" Margin="0,12,0,0">
                                     <StackPanel x:Name="GyroActivationContent" Visibility="Collapsed">
                                         <ctk:SettingsCard x:Uid="S_GyroActivation" Header="Gyro Activation" Description="Always on, hold, or toggle by button">
+                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE809;"/></ctk:SettingsCard.HeaderIcon>
                                             <ComboBox x:Name="ControllerEmulationGyroActivationModeComboBox" Width="180"
                                             Style="{StaticResource ModernComboBoxStyle}"
                                             IsEnabled="False"
@@ -3973,6 +3948,7 @@
                                         </ctk:SettingsCard>
 
                                         <ctk:SettingsCard x:Uid="S_ActivationButton" Margin="0,12,0,0" Header="Activation Button" Description="Button used for hold or toggle activation">
+                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE713;"/></ctk:SettingsCard.HeaderIcon>
                                             <ComboBox x:Name="ControllerEmulationGyroActivationButtonComboBox" Width="180"
                                             Style="{StaticResource ModernComboBoxStyle}"
                                             IsEnabled="False">
@@ -4021,6 +3997,7 @@
 
                                         <!-- 3DOF to 2D Conversion -->
                                         <ctk:SettingsCard x:Uid="S_3DOFTo2DConversion" Margin="0,10,0,0" Header="3DOF to 2D Conversion" Description="Map gyro axes to stick output">
+                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE713;"/></ctk:SettingsCard.HeaderIcon>
                                             <ComboBox x:Name="StickConversionComboBox" Width="180"
                                             Style="{StaticResource ModernComboBoxStyle}" IsEnabled="False">
                                             <ComboBoxItem x:Uid="S_YawLaserPointerFromBack" Content="Yaw (laser pointer from back)" Tag="0" IsSelected="True" />
@@ -4033,6 +4010,7 @@
 
                                         <!-- Orientation -->
                                         <ctk:SettingsCard x:Uid="S_HoldOrientation" Margin="0,10,0,0" Header="Hold Orientation" Description="How you hold the device. Flat = on a table, Handheld = held in front of you (default).">
+                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE713;"/></ctk:SettingsCard.HeaderIcon>
                                             <ComboBox x:Name="StickOrientationV2ComboBox" Width="220"
                                             Style="{StaticResource ModernComboBoxStyle}" IsEnabled="False">
                                             <ComboBoxItem x:Uid="S_FlatParallelToGround" Content="Flat (parallel to ground)" Tag="0" IsSelected="True" />
@@ -4131,6 +4109,7 @@
                                             <!-- Joy-Con Pair: per-half gyro routing (only shown for Joy-Con Pair) -->
                                             <StackPanel x:Name="ViiperJoyconGyroPerHalfPanel" Visibility="Collapsed" Margin="0,12,0,0">
                                                 <ctk:SettingsCard x:Uid="S_PerHalfGyro" Header="Per-half gyro" Description="Each Joy-Con uses its own controller's motion (off = both share the selected source)" Tapped="ToggleRow_Tapped">
+                                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE809;"/></ctk:SettingsCard.HeaderIcon>
                                                     <ToggleSwitch x:Name="ViiperJoyconGyroPerHalfToggle"
                                                     Style="{StaticResource ModernToggleStyle}"
                                                     IsOn="False"/>
@@ -4158,6 +4137,7 @@
                                                  sometimes prefers. Affects DS4 / DualSense / DualSense Edge —
                                                  Switch Pro and Steam Deck builders are unaffected. -->
                                             <ctk:SettingsCard x:Uid="S_AlternateGyroConvention" Margin="0,12,0,0" Header="Alternate gyro convention" Description="Flips gyro polarity for DS4/DualSense or rotates 90&#176; for Steam Deck/Switch Pro. Try this if Steam gyro moves the wrong way." Tapped="ToggleRow_Tapped">
+                                                <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE809;"/></ctk:SettingsCard.HeaderIcon>
                                                 <ToggleSwitch x:Uid="ViiperAlternateGyroConventionToggle" x:Name="ViiperAlternateGyroConventionToggle"
                                                 OnContent="On" OffContent="Off"
                                                 Style="{StaticResource ModernToggleStyle}"
@@ -4297,6 +4277,7 @@
                                                      Off = raw stick passthrough (legacy behavior pre-2152). On = synthesize gyro
                                                      contribution into the chosen stick. Default true. -->
                                                 <ctk:SettingsCard x:Uid="S_EnableGyroStick" Margin="0,0,0,8" Header="Enable gyro → stick" Description="Off = raw stick passthrough; processor short-circuits." Tapped="ToggleRow_Tapped">
+                                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE809;"/></ctk:SettingsCard.HeaderIcon>
                                                     <ToggleSwitch x:Name="ViiperStickGyroEnabledToggle"
                                                     Style="{StaticResource ModernToggleStyle}"/>
                                                 </ctk:SettingsCard>
@@ -4352,6 +4333,7 @@
                                                 <!-- JSL gyro bias calibration. Place device flat and still for ~5s
                                                      after click; helper captures bias and persists it. -->
                                                 <ctk:SettingsCard x:Uid="S_CalibrateGyroStickOutput" Margin="0,12,0,0" Header="Calibrate Gyro (Stick Output)" Description="Place device flat and still for ~5 seconds. Learns gyro bias for stick conversion.">
+                                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE809;"/></ctk:SettingsCard.HeaderIcon>
                                                     <Button x:Uid="ViiperStickGyroCalibrateButton" x:Name="ViiperStickGyroCalibrateButton"
                                                     Content="Calibrate" Style="{StaticResource ModernButtonStyle}"
                                                     Click="ViiperStickGyroCalibrateButton_Click" />
@@ -4457,6 +4439,7 @@
 
                                                 <!-- Stick-touch deactivation. -->
                                                 <ctk:SettingsCard x:Uid="S_StickTouchDeactivation" Margin="0,12,0,0" Header="Stick-touch deactivation" Description="Suppress gyro while you move the physical stick. Useful in shooters where stick = big turns, gyro = fine aim." Tapped="ToggleRow_Tapped">
+                                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE7FC;"/></ctk:SettingsCard.HeaderIcon>
                                                     <ToggleSwitch x:Name="ViiperStickGyroTouchDeactivateToggle"
                                                     OnContent="" OffContent="" MinWidth="0"
                                                     Toggled="ViiperStickGyroTouchDeactivateToggle_Toggled"/>
@@ -4521,6 +4504,7 @@
 
                                                     <!-- Send to joystick -->
                                                     <ctk:SettingsCard x:Uid="S_SendToJoystick_2" Header="Send to joystick" Description="Which emulated stick receives the gyro contribution.">
+                                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE7FC;"/></ctk:SettingsCard.HeaderIcon>
                                                         <ComboBox x:Name="ViiperStickGyroSelectComboBox" Style="{StaticResource ModernComboBoxStyle}" Width="160"
                                                         SelectionChanged="ViiperStickGyroSelectComboBox_SelectionChanged">
                                                         <ComboBoxItem x:Uid="S_Left" Content="Left" Tag="0" />
@@ -4530,6 +4514,7 @@
 
                                                     <!-- 3DOF to 2D conversion -->
                                                     <ctk:SettingsCard x:Uid="S_3DOFTo2DConversion_2" Header="3DOF to 2D conversion" Description="Yaw (default) = laser pointer from back of device: yaw the device → camera pans, roll has no effect. Player/World Space use gravity as the yaw axis (camera pans relative to world up, not device direction).">
+                                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE713;"/></ctk:SettingsCard.HeaderIcon>
                                                         <ComboBox x:Name="ViiperStickGyroConversionComboBox" Style="{StaticResource ModernComboBoxStyle}" Width="220"
                                                         SelectionChanged="ViiperStickGyroConversionComboBox_SelectionChanged">
                                                         <ComboBoxItem x:Uid="S_YawLaserPointer" Content="Yaw (laser pointer)" Tag="0" IsSelected="True" />
@@ -4542,6 +4527,7 @@
 
                                                     <!-- Hold orientation -->
                                                     <ctk:SettingsCard x:Uid="S_HoldOrientation_2" Header="Hold orientation" Description="Flat = on a table; Handheld = held in front of you (default for Legion Go 2).">
+                                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE713;"/></ctk:SettingsCard.HeaderIcon>
                                                         <ComboBox x:Name="ViiperStickGyroOrientationComboBox" Style="{StaticResource ModernComboBoxStyle}" Width="200"
                                                         SelectionChanged="ViiperStickGyroOrientationComboBox_SelectionChanged">
                                                         <ComboBoxItem x:Uid="S_FlatParallelToGround" Content="Flat (parallel to ground)" Tag="0" IsSelected="True" />
@@ -4624,6 +4610,7 @@
 
                                             <!-- Mirror emulated lightbar (DS4 / DualSense Edge) onto Legion stick lights -->
                                             <ctk:SettingsCard x:Uid="S_MirrorEmulatedLightbarToStick" Margin="0,12,0,0" Header="Mirror emulated lightbar to stick lights" Description="DualShock 4 / DualSense Edge only — when on, game-driven LED color overrides the picker color you chose for the Legion Go sticks. Off keeps your saved stick color." Tapped="ToggleRow_Tapped">
+                                                <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE781;"/></ctk:SettingsCard.HeaderIcon>
                                                 <ToggleSwitch x:Name="ViiperMirrorLightbarToStickToggle"
                                                 VerticalAlignment="Center"
                                                 Style="{StaticResource ModernToggleStyle}"
@@ -4648,20 +4635,20 @@
                                             <!-- =============== Sticks & Triggers (PadForge-inspired shaping) =============== -->
                                             <StackPanel x:Name="ViiperStickTriggerSection" Margin="0,16,0,0">
                                                 <Border Height="1" Background="#33FFFFFF" Margin="0,0,0,12"/>
-                                                <Grid Background="Transparent" MinHeight="48" Tapped="ExpandHeader_Tapped">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="*"/>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock x:Uid="S_SticksTriggers" Text="Sticks &amp; Triggers" FontSize="14" FontWeight="SemiBold" Foreground="#B9C0CC" />
-                                                    <ToggleButton x:Name="ViiperStickTriggerExpandButton" MinWidth="44" MinHeight="40"
-                                                                  Grid.Column="1"
+                                                <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
+                                                    <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE7FC;"/></ctk:SettingsCard.HeaderIcon>
+                                                        <ctk:SettingsCard.Header>
+                                                            <TextBlock x:Uid="S_SticksTriggers" Text="Sticks &amp; Triggers" />
+                                                        </ctk:SettingsCard.Header>
+                                                        <ToggleButton x:Name="ViiperStickTriggerExpandButton" MinWidth="44" MinHeight="40"
                                                                   Background="Transparent"
                                                                   BorderBrush="Transparent"
                                                                   Padding="6,2"
                                                                   Click="ViiperStickTriggerExpandButton_Click">
                                                         <FontIcon x:Name="ViiperStickTriggerExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                                     </ToggleButton>
+                                                    </ctk:SettingsCard>
                                                 </Grid>
                                                 <TextBlock x:Uid="S_DeadzoneShapeAntiDeadzoneSensitivity" Text="Deadzone shape, anti-deadzone, sensitivity curves per stick/trigger."
                                                            FontSize="12" Foreground="#B9C0CC" TextWrapping="Wrap" Margin="0,2,0,0" />
@@ -4995,26 +4982,24 @@
                             <!-- Button Remapping Card -->
                             <Border Style="{StaticResource CardStyle}">
                                 <StackPanel>
-                                    <Grid Background="Transparent" MinHeight="48" Tapped="ExpandHeader_Tapped">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0">
-                                            <TextBlock x:Uid="S_ButtonRemapping" Text="Button Remapping" Style="{StaticResource CardTitleStyle}" />
-                                            <TextBlock x:Uid="S_MapButtonsToGamepadKeyboard" Text="Map buttons to gamepad, keyboard, or mouse"
-                                                       Style="{StaticResource CardCaptionStyle}" />
-                                        </StackPanel>
-                                        <ToggleButton x:Name="ButtonRemappingExpandToggle" MinWidth="44" MinHeight="40"
-                                                      Grid.Column="1"
+                                    <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
+                                        <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE8AB;"/></ctk:SettingsCard.HeaderIcon>
+                                            <ctk:SettingsCard.Header>
+                                                <TextBlock x:Uid="S_ButtonRemapping" Text="Button Remapping" />
+                                            </ctk:SettingsCard.Header>
+                                            <ctk:SettingsCard.Description>
+                                                <TextBlock x:Uid="S_MapButtonsToGamepadKeyboard" Text="Map buttons to gamepad, keyboard, or mouse" />
+                                            </ctk:SettingsCard.Description>
+                                            <ToggleButton x:Name="ButtonRemappingExpandToggle" MinWidth="44" MinHeight="40"
                                                       IsChecked="False"
-                                                      VerticalAlignment="Center"
                                                       Background="Transparent"
                                                       BorderThickness="0"
                                                       Padding="8,4"
                                                       Click="ButtonRemappingExpandToggle_Click">
                                             <FontIcon x:Name="ButtonRemappingExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                         </ToggleButton>
+                                        </ctk:SettingsCard>
                                     </Grid>
                                     <StackPanel x:Name="ButtonRemappingContent" Margin="0,12,0,0" Visibility="Collapsed">
                                         <!-- Back Buttons Section -->
@@ -5333,6 +5318,7 @@
                             <!-- Desktop Controls Card -->
                             <Border Style="{StaticResource CardStyle}">
                                 <ctk:SettingsCard x:Uid="S_DesktopControls" Header="Desktop Controls" Description="RS→Mouse, DPAD/LS→Arrows, A→Enter, B→Esc (Ctrl+Shift+D)" Tapped="ToggleRow_Tapped">
+                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE962;"/></ctk:SettingsCard.HeaderIcon>
                                     <ToggleSwitch x:Name="LegionDesktopControlsToggle"
                                     Style="{StaticResource ModernToggleStyle}"
                                     IsOn="False"/>
@@ -5342,22 +5328,21 @@
                             <!-- Deadzones Card -->
                             <Border Style="{StaticResource CardStyle}">
                                 <StackPanel>
-                                    <Grid Background="Transparent" MinHeight="48" Tapped="ExpandHeader_Tapped">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock x:Uid="S_Deadzones" Text="Deadzones" Style="{StaticResource CardTitleStyle}" Grid.Column="0" />
-                                        <ToggleButton x:Name="StickDeadzonesExpandToggle" MinWidth="44" MinHeight="40"
-                                                      Grid.Column="1"
+                                    <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
+                                        <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE7FC;"/></ctk:SettingsCard.HeaderIcon>
+                                            <ctk:SettingsCard.Header>
+                                                <TextBlock x:Uid="S_Deadzones" Text="Deadzones" />
+                                            </ctk:SettingsCard.Header>
+                                            <ToggleButton x:Name="StickDeadzonesExpandToggle" MinWidth="44" MinHeight="40"
                                                       IsChecked="False"
-                                                      VerticalAlignment="Center"
                                                       Background="Transparent"
                                                       BorderThickness="0"
                                                       Padding="8,4"
                                                       Click="StickDeadzonesExpandToggle_Click">
                                             <FontIcon x:Name="StickDeadzonesExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                         </ToggleButton>
+                                        </ctk:SettingsCard>
                                     </Grid>
                                     <StackPanel x:Name="StickDeadzonesContent" Spacing="12" Margin="0,12,0,0" Visibility="Collapsed">
                                         <!-- Stick Deadzones Section -->
@@ -5476,22 +5461,21 @@
                             <!-- Gyro Settings Card -->
                             <Border Style="{StaticResource CardStyle}">
                                 <StackPanel>
-                                    <Grid Background="Transparent" MinHeight="48" Tapped="ExpandHeader_Tapped">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock x:Uid="S_GyroSettings" Text="Gyro Settings" Style="{StaticResource CardTitleStyle}" Grid.Column="0" />
-                                        <ToggleButton x:Name="GyroSettingsExpandToggle" MinWidth="44" MinHeight="40"
-                                                      Grid.Column="1"
+                                    <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
+                                        <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE809;"/></ctk:SettingsCard.HeaderIcon>
+                                            <ctk:SettingsCard.Header>
+                                                <TextBlock x:Uid="S_GyroSettings" Text="Gyro Settings" />
+                                            </ctk:SettingsCard.Header>
+                                            <ToggleButton x:Name="GyroSettingsExpandToggle" MinWidth="44" MinHeight="40"
                                                       IsChecked="False"
-                                                      VerticalAlignment="Center"
                                                       Background="Transparent"
                                                       BorderThickness="0"
                                                       Padding="8,4"
                                                       Click="GyroSettingsExpandToggle_Click">
                                             <FontIcon x:Name="GyroSettingsExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                         </ToggleButton>
+                                        </ctk:SettingsCard>
                                     </Grid>
                                     <StackPanel x:Name="GyroSettingsContent" Spacing="12" Margin="0,12,0,0" Visibility="Collapsed">
                                         <!-- Gyro Target -->
@@ -5704,26 +5688,24 @@
                             <!-- Special Remapping Card -->
                             <Border Style="{StaticResource CardStyle}">
                                 <StackPanel>
-                                    <Grid Background="Transparent" MinHeight="48" Tapped="ExpandHeader_Tapped">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0">
-                                            <TextBlock x:Uid="S_SpecialRemapping" Text="Special Remapping" Style="{StaticResource CardTitleStyle}" />
-                                            <TextBlock x:Uid="S_MapLegionLRButtons" Text="Map Legion L/R buttons and scroll wheel to custom actions"
-                                                       Style="{StaticResource CardCaptionStyle}" />
-                                        </StackPanel>
-                                        <ToggleButton x:Name="SpecialRemappingExpandButton" MinWidth="44" MinHeight="40"
-                                                      Grid.Column="1"
+                                    <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
+                                        <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE8AB;"/></ctk:SettingsCard.HeaderIcon>
+                                            <ctk:SettingsCard.Header>
+                                                <TextBlock x:Uid="S_SpecialRemapping" Text="Special Remapping" />
+                                            </ctk:SettingsCard.Header>
+                                            <ctk:SettingsCard.Description>
+                                                <TextBlock x:Uid="S_MapLegionLRButtons" Text="Map Legion L/R buttons and scroll wheel to custom actions" />
+                                            </ctk:SettingsCard.Description>
+                                            <ToggleButton x:Name="SpecialRemappingExpandButton" MinWidth="44" MinHeight="40"
                                                       IsChecked="False"
-                                                      VerticalAlignment="Center"
                                                       Background="Transparent"
                                                       BorderThickness="0"
                                                       Padding="8,4"
                                                       Click="SpecialRemappingExpandButton_Click">
                                             <FontIcon x:Name="SpecialRemappingExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                         </ToggleButton>
+                                        </ctk:SettingsCard>
                                     </Grid>
 
                                     <StackPanel x:Name="SpecialRemappingContent" Visibility="Collapsed" Margin="0,12,0,0">
@@ -5978,6 +5960,7 @@
                             <Border Style="{StaticResource CardStyle}">
                                 <StackPanel Spacing="12">
                                     <ctk:SettingsCard x:Uid="S_BrightnessGesture" Header="Brightness Gesture" Description="Hold the trigger button below and tilt the axis to fade display brightness. A quick tap of the trigger still behaves normally." Tapped="ToggleRow_Tapped">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE706;"/></ctk:SettingsCard.HeaderIcon>
                                         <ToggleSwitch x:Name="BrightnessGestureEnabledToggle"
                                         Style="{StaticResource ModernToggleStyle}"
                                         IsOn="False"/>
@@ -6053,26 +6036,24 @@
                             <!-- Lighting Card -->
                             <Border Style="{StaticResource CardStyle}">
                                 <StackPanel>
-                                    <Grid Background="Transparent" MinHeight="48" Tapped="ExpandHeader_Tapped">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0">
-                                            <TextBlock x:Uid="S_Lighting" Text="Lighting" Style="{StaticResource CardTitleStyle}" />
-                                            <TextBlock x:Uid="S_ControllerRGBAndPowerButton" Text="Controller RGB and power button lighting"
-                                                       Style="{StaticResource CardCaptionStyle}" />
-                                        </StackPanel>
-                                        <ToggleButton x:Name="LightingExpandToggle" MinWidth="44" MinHeight="40"
-                                                      Grid.Column="1"
+                                    <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
+                                        <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE781;"/></ctk:SettingsCard.HeaderIcon>
+                                            <ctk:SettingsCard.Header>
+                                                <TextBlock x:Uid="S_Lighting" Text="Lighting" />
+                                            </ctk:SettingsCard.Header>
+                                            <ctk:SettingsCard.Description>
+                                                <TextBlock x:Uid="S_ControllerRGBAndPowerButton" Text="Controller RGB and power button lighting" />
+                                            </ctk:SettingsCard.Description>
+                                            <ToggleButton x:Name="LightingExpandToggle" MinWidth="44" MinHeight="40"
                                                       IsChecked="False"
-                                                      VerticalAlignment="Center"
                                                       Background="Transparent"
                                                       BorderThickness="0"
                                                       Padding="8,4"
                                                       Click="LightingExpandToggle_Click">
                                             <FontIcon x:Name="LightingExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                         </ToggleButton>
+                                        </ctk:SettingsCard>
                                     </Grid>
                                     <StackPanel x:Name="LightingContent" Spacing="12" Margin="0,12,0,0" Visibility="Collapsed">
                                         <!-- Light Mode -->
@@ -6193,6 +6174,7 @@
                             <!-- Fan Full Speed Card -->
                             <Border Style="{StaticResource CardStyle}">
                                 <ctk:SettingsCard x:Uid="S_FanFullSpeed" Header="Fan Full Speed" Description="Override fan curve for maximum cooling" Tapped="ToggleRow_Tapped">
+                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE9CA;"/></ctk:SettingsCard.HeaderIcon>
                                     <ToggleSwitch x:Name="LegionFanFullSpeedToggle"
                                     Style="{StaticResource ModernToggleStyle}"
                                     IsOn="False"/>
@@ -6405,6 +6387,7 @@
                             <!-- Battery Charge Limit Card -->
                             <Border Style="{StaticResource CardStyle}">
                                 <ctk:SettingsCard x:Uid="S_ChargeLimit80" Header="Charge Limit (80%)" Description="Limit battery charge to extend lifespan" Tapped="ToggleRow_Tapped">
+                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xEA95;"/></ctk:SettingsCard.HeaderIcon>
                                     <ToggleSwitch x:Name="LegionChargeLimitToggle"
                                     Style="{StaticResource ModernToggleStyle}"
                                     IsOn="False"/>
@@ -6415,6 +6398,7 @@
                             <TextBlock x:Uid="S_GameBar" Text="Game Bar" Style="{StaticResource SectionHeaderStyle}" />
                             <Border Style="{StaticResource CardStyle}">
                                 <ctk:SettingsCard x:Uid="S_ShowGoTweaksFirst" Header="Show GoTweaks first" Description="Takes Legion Space's spot left of Home. Game Bar closes to apply; open it again." Tapped="ToggleRow_Tapped">
+                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE7FC;"/></ctk:SettingsCard.HeaderIcon>
                                     <ToggleSwitch x:Name="GameBarFirstSlotToggle"
                                     Style="{StaticResource ModernToggleStyle}"
                                     IsOn="False"/>
@@ -6427,26 +6411,24 @@
                             <TextBlock x:Uid="S_DriverUpdates" Text="Driver Updates" Style="{StaticResource SectionHeaderStyle}" />
                             <Border x:Name="DriverUpdatesCard" Style="{StaticResource CardStyle}">
                                 <StackPanel>
-                                    <Grid Background="Transparent" MinHeight="48" Tapped="ExpandHeader_Tapped">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                            <TextBlock x:Uid="S_LenovoDriverUpdates" Text="Lenovo Driver Updates" Style="{StaticResource CardTitleStyle}" />
-                                            <TextBlock x:Uid="S_CheckLenovoSDriverPage" Text="Check Lenovo's driver page for this machine type"
-                                                       Style="{StaticResource CardCaptionStyle}" />
-                                        </StackPanel>
-                                        <ToggleButton x:Name="DriverUpdatesExpandToggle" MinWidth="44" MinHeight="40"
-                                                      Grid.Column="1"
+                                    <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
+                                        <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE896;"/></ctk:SettingsCard.HeaderIcon>
+                                            <ctk:SettingsCard.Header>
+                                                <TextBlock x:Uid="S_LenovoDriverUpdates" Text="Lenovo Driver Updates" />
+                                            </ctk:SettingsCard.Header>
+                                            <ctk:SettingsCard.Description>
+                                                <TextBlock x:Uid="S_CheckLenovoSDriverPage" Text="Check Lenovo's driver page for this machine type" />
+                                            </ctk:SettingsCard.Description>
+                                            <ToggleButton x:Name="DriverUpdatesExpandToggle" MinWidth="44" MinHeight="40"
                                                       IsChecked="True"
-                                                      VerticalAlignment="Center"
                                                       Background="Transparent"
                                                       BorderThickness="0"
                                                       Padding="8,4"
                                                       Click="DriverUpdatesExpandToggle_Click">
                                             <FontIcon x:Name="DriverUpdatesExpandIcon" Glyph="&#xE70E;" FontSize="13"/>
                                         </ToggleButton>
+                                        </ctk:SettingsCard>
                                     </Grid>
                                     <StackPanel x:Name="DriverUpdatesContent" Spacing="10" Margin="0,12,0,0">
                                         <!-- Machine info: two rows of label:value -->
@@ -6606,6 +6588,7 @@
 
                                     <!-- Fan Curve Toggle -->
                                     <ctk:SettingsCard x:Uid="S_FanCurve_2" Margin="0,16,0,0" Header="Fan Curve" Description="Software-controlled fan curve based on CPU temperature" Tapped="ToggleRow_Tapped">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE9CA;"/></ctk:SettingsCard.HeaderIcon>
                                         <ToggleSwitch x:Name="GPDFanCurveToggle"
                                         Style="{StaticResource ModernToggleStyle}"
                                         IsOn="False"
@@ -6777,26 +6760,24 @@
 
                             <Border Style="{StaticResource CardStyle}">
                                 <StackPanel>
-                                    <Grid Background="Transparent" MinHeight="48" Tapped="ExpandHeader_Tapped">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0">
-                                            <TextBlock x:Uid="S_ButtonRemapping" Text="Button Remapping" Style="{StaticResource CardTitleStyle}" />
-                                            <TextBlock x:Uid="S_RemapControllerButtonsToKeyboard" Text="Remap controller buttons to keyboard or mouse"
-                                                       Style="{StaticResource CardCaptionStyle}" />
-                                        </StackPanel>
-                                        <ToggleButton x:Name="GPDButtonRemapExpandToggle" MinWidth="44" MinHeight="40"
-                                                      Grid.Column="1"
+                                    <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
+                                        <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE8AB;"/></ctk:SettingsCard.HeaderIcon>
+                                            <ctk:SettingsCard.Header>
+                                                <TextBlock x:Uid="S_ButtonRemapping" Text="Button Remapping" />
+                                            </ctk:SettingsCard.Header>
+                                            <ctk:SettingsCard.Description>
+                                                <TextBlock x:Uid="S_RemapControllerButtonsToKeyboard" Text="Remap controller buttons to keyboard or mouse" />
+                                            </ctk:SettingsCard.Description>
+                                            <ToggleButton x:Name="GPDButtonRemapExpandToggle" MinWidth="44" MinHeight="40"
                                                       IsChecked="False"
-                                                      VerticalAlignment="Center"
                                                       Background="Transparent"
                                                       BorderThickness="0"
                                                       Padding="8,4"
                                                       Click="GPDButtonRemapExpandToggle_Click">
                                             <FontIcon x:Name="GPDButtonRemapExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                         </ToggleButton>
+                                        </ctk:SettingsCard>
                                     </Grid>
 
                                     <StackPanel x:Name="GPDButtonRemapContent" Spacing="8" Margin="0,12,0,0" Visibility="Collapsed">
@@ -7120,62 +7101,43 @@
 
                 <!-- Connection Status Banner - placed last for z-order (renders on top) -->
                 <!-- Visible by default with Loading... so user sees immediate feedback before code runs -->
-                <Border x:Name="ConnectionStatusBanner"
-                        Background="#3366CC"
-                        Padding="8,4"
-                        VerticalAlignment="Top"
-                        Visibility="Visible"
-                        CornerRadius="0"
-                        Margin="0,0,0,0">
-                    <TextBlock x:Uid="ConnectionStatusText" x:Name="ConnectionStatusText"
-                               Text="Loading..."
-                               Foreground="White"
-                               FontSize="13"
-                               HorizontalAlignment="Center" />
-                </Border>
+                <muxc:InfoBar x:Name="ConnectionStatusBanner"
+                              VerticalAlignment="Top"
+                              Margin="12,4,12,0"
+                              IsOpen="True"
+                              IsClosable="False"
+                              Severity="Informational"
+                              Visibility="Visible">
+                    <muxc:InfoBar.Content>
+                        <TextBlock x:Uid="ConnectionStatusText" x:Name="ConnectionStatusText" Text="Loading..." FontSize="13" Margin="0,0,0,12" TextWrapping="Wrap"/>
+                    </muxc:InfoBar.Content>
+                </muxc:InfoBar>
 
                 <!-- Update Available Banner - appears below connection banner when update is found -->
-                <Border x:Name="UpdateAvailableBanner"
-                        Background="#2D7D2D"
-                        Padding="8,6"
-                        VerticalAlignment="Top"
-                        Visibility="Collapsed"
-                        CornerRadius="0"
-                        Margin="0,24,0,0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock x:Uid="UpdateAvailableText" x:Name="UpdateAvailableText"
-                                   Text="Update Available: v0.0.0"
-                                   Foreground="White"
-                                   FontSize="13"
-                                   VerticalAlignment="Center"
-                                   Grid.Column="0"
-                                   Margin="8,0,0,0" />
-                        <Button MinHeight="40" MinWidth="40" x:Uid="UpdateBannerButton" x:Name="UpdateBannerButton"
-                                Content="Update"
-                                Grid.Column="1"
-                                Padding="12,2"
-                                FontSize="12"
-                                Background="#3D9D3D"
-                                Foreground="White"
-                                Margin="8,0,0,0"
-                                Click="UpdateBannerButton_Click" />
-                        <Button MinHeight="40" MinWidth="40" x:Name="DismissUpdateBannerButton"
-                                Content="&#xE711;"
-                                FontFamily="Segoe MDL2 Assets"
-                                Grid.Column="2"
-                                Padding="6,2"
-                                FontSize="12"
-                                Background="Transparent"
-                                Foreground="#AAFFAA"
-                                Margin="4,0,4,0"
-                                Click="DismissUpdateBannerButton_Click"/>
-                    </Grid>
-                </Border>
+                <muxc:InfoBar x:Name="UpdateAvailableBanner"
+                              VerticalAlignment="Top"
+                              Margin="12,64,12,0"
+                              IsOpen="True"
+                              IsClosable="False"
+                              Severity="Success"
+                              Visibility="Collapsed">
+                    <muxc:InfoBar.Content>
+                        <Grid Margin="0,0,0,10" ColumnSpacing="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Uid="UpdateAvailableText" x:Name="UpdateAvailableText" Text="Update Available: v0.0.0" FontSize="13" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                            <Button x:Uid="UpdateBannerButton" x:Name="UpdateBannerButton" Grid.Column="1" Content="Update" MinHeight="40"
+                                    Style="{ThemeResource AccentButtonStyle}" Click="UpdateBannerButton_Click"/>
+                            <Button x:Name="DismissUpdateBannerButton" Grid.Column="2" MinWidth="40" MinHeight="40" Background="Transparent" BorderThickness="0"
+                                    AutomationProperties.Name="Dismiss" Click="DismissUpdateBannerButton_Click">
+                                <FontIcon Glyph="&#xE711;" FontSize="12"/>
+                            </Button>
+                        </Grid>
+                    </muxc:InfoBar.Content>
+                </muxc:InfoBar>
 
             </Grid>
             </Grid> <!-- End Content Area Grid.Row="1" -->

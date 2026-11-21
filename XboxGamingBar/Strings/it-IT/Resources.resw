@@ -20,7 +20,7 @@
   <data name="CommandHintSelect.Text" xml:space="preserve"><value>Seleziona</value></data>
   <data name="CommandHintTabs.Text" xml:space="preserve"><value>Schede</value></data>
   <data name="ConnectionStatusText.Text" xml:space="preserve"><value>Caricamento...</value></data>
-  <data name="ControllerEmulationEnabledToggle.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Attiva VIIPER</value></data>
+  <data name="ControllerEmulationEnabledToggle.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Emulazione controller (VIIPER)</value></data>
   <data name="ControllerEmulationStatusText.Text" xml:space="preserve"><value>In attesa dell'helper</value></data>
   <data name="CurrentTDPText.Text" xml:space="preserve"><value>Limiti:</value></data>
   <data name="CurrentTempPrefixLabel.Text" xml:space="preserve"><value>Temp. CPU: </value></data>
@@ -87,10 +87,11 @@
   <data name="LegionNavItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Legion</value></data>
   <data name="LegionRCommandApplyButton.Content" xml:space="preserve"><value>Applica</value></data>
   <data name="LegionRCommandTextBox.PlaceholderText" xml:space="preserve"><value>es. C:\percorso\app.exe -arg1</value></data>
-  <data name="LegionSectionController.Content" xml:space="preserve"><value>Controller</value></data>
-  <data name="LegionSectionDevice.Content" xml:space="preserve"><value>Dispositivo</value></data>
-  <data name="LegionSectionInput.Content" xml:space="preserve"><value>Input</value></data>
-  <data name="LegionSectionLighting.Content" xml:space="preserve"><value>Luci</value></data>
+  <data name="LegionSectionVIIPER.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Emulazione</value></data>
+  <data name="LegionSectionController.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Controller</value></data>
+  <data name="LegionSectionDevice.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Dispositivo</value></data>
+  <data name="LegionSectionInput.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Input</value></data>
+  <data name="LegionSectionLighting.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Luci</value></data>
   <data name="LoadLosslessProfilesButton.Content" xml:space="preserve"><value>Carica profili</value></data>
   <data name="LosslessProfileSelector.Header" xml:space="preserve"><value>Profilo</value></data>
   <data name="LosslessProfilesStatus.Text" xml:space="preserve"><value>Carica i profili per modificare le impostazioni di scaling.</value></data>
@@ -264,7 +265,7 @@
   <data name="S_Efficiency.Content" xml:space="preserve"><value>Efficienza</value></data>
   <data name="S_EnableGyroStick.Description" xml:space="preserve"><value>Off = stick originale senza elaborazione.</value></data>
   <data name="S_EnableGyroStick.Header" xml:space="preserve"><value>Attiva giroscopio → stick</value></data>
-  <data name="S_EnableVIIPER.Text" xml:space="preserve"><value>Attiva VIIPER</value></data>
+  <data name="S_EnableVIIPER.Text" xml:space="preserve"><value>Emulazione controller (VIIPER)</value></data>
   <data name="S_FPPTBoost.Text" xml:space="preserve"><value>Boost FPPT</value></data>
   <data name="S_FPSLimit.Text" xml:space="preserve"><value>Limite FPS</value></data>
   <data name="S_FaceButtons.Text" xml:space="preserve"><value>Tasti frontali</value></data>
@@ -769,4 +770,10 @@ Attuale: {1}</value></data>
   <data name="CodeF_29" xml:space="preserve"><value>Selezionato: {0}
 Tocca un altro riquadro per scambiarli, o tocca di nuovo per mostrarlo o nasconderlo</value></data>
   <data name="CodeF_30" xml:space="preserve"><value>{0} selezionate</value></data>
+  <data name="S_QuickDriverUpdatesView.Content" xml:space="preserve"><value>Vedi</value></data>
+  <data name="S_QuickGoTweaksInstall.Content" xml:space="preserve"><value>Installa</value></data>
+  <data name="S_SectionProfile.Text" xml:space="preserve"><value>Profilo</value></data>
+  <data name="S_SectionOverlay.Text" xml:space="preserve"><value>Overlay</value></data>
+  <data name="S_SectionPower.Text" xml:space="preserve"><value>Potenza</value></data>
+  <data name="S_SectionProcessor.Text" xml:space="preserve"><value>Processore</value></data>
 </root>

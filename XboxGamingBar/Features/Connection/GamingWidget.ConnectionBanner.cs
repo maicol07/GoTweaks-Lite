@@ -60,31 +60,31 @@ namespace XboxGamingBar
             switch (state)
             {
                 case BannerState.Disconnected:
-                    ConnectionStatusBanner.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 204, 51, 51)); // #CC3333
+                    ConnectionStatusBanner.Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error;
                     ConnectionStatusText.Text = LocalizedString("Code_NotConnectedToHelper", "Not connected to helper");
                     break;
                 case BannerState.Syncing:
-                    ConnectionStatusBanner.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 51, 102, 204)); // #3366CC
+                    ConnectionStatusBanner.Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Informational;
                     ConnectionStatusText.Text = LocalizedString("Code_Syncing", "Syncing...");
                     break;
                 case BannerState.Reconnecting:
-                    ConnectionStatusBanner.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 204, 102, 51)); // #CC6633
+                    ConnectionStatusBanner.Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Warning;
                     ConnectionStatusText.Text = LocalizedString("Code_Reconnecting", "Reconnecting...");
                     break;
                 case BannerState.Launching:
-                    ConnectionStatusBanner.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 51, 102, 204)); // #3366CC
+                    ConnectionStatusBanner.Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Informational;
                     ConnectionStatusText.Text = LocalizedString("Code_LaunchingHelper", "Launching helper...");
                     break;
                 case BannerState.Loading:
-                    ConnectionStatusBanner.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 51, 102, 204)); // #3366CC
+                    ConnectionStatusBanner.Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Informational;
                     ConnectionStatusText.Text = LocalizedString("Code_Loading", "Loading...");
                     break;
                 case BannerState.InitialSetup:
-                    ConnectionStatusBanner.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 102, 51, 153)); // #663399 Purple
+                    ConnectionStatusBanner.Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Informational;
                     ConnectionStatusText.Text = LocalizedString("Code_InitialSetupInProgressPleaseWait", "Initial setup in progress - please wait...");
                     break;
                 case BannerState.Upgrading:
-                    ConnectionStatusBanner.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 51, 153, 102)); // #339966 Green
+                    ConnectionStatusBanner.Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success;
                     ConnectionStatusText.Text = LocalizedString("Code_UpgradingHelper", "Upgrading helper...");
                     break;
             }

@@ -1053,6 +1053,14 @@ namespace XboxGamingBar
             InitPerformanceTabFocusChain();
             this.Loaded += (s, args) => SchedulePerformanceFocusChainRebuild();
 
+            // Sliding accent pill behind the checked tab (main bar and Legion sub-sections).
+            new PillTabIndicator(MainNavPanel, MainNavPill, MainNavPillTransform);
+            new PillTabIndicator(LegionSectionTabs, LegionSectionPill, LegionSectionPillTransform);
+
+            // The game icon can have transparent areas: hide the placeholder tile behind it.
+            CurrentGameIcon.RegisterPropertyChangedCallback(UIElement.VisibilityProperty, (s, dp) =>
+                CurrentGameIconPlaceholder.Visibility = CurrentGameIcon.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible);
+
             var propertiesTimer = Stopwatch.StartNew();
             // Headless: the master TDP slider was removed (Legion-only build). The property stays
             // as the Function.TDP wire channel + the helper's master-TDP value cache, but no longer
