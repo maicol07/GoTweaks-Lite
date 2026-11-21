@@ -71,7 +71,6 @@
   <data name="GlobalProfileOverlayLevelText.Text" xml:space="preserve"><value>Off</value></data>
   <data name="GlobalProfilePowerModeText.Text" xml:space="preserve"><value>Balanced</value></data>
   <data name="GlobalProfileTDPModeText.Text" xml:space="preserve"><value>Balanced</value></data>
-  <data name="GoTweaksHapticsPulseValue.Text" xml:space="preserve"><value>10 ms</value></data>
   <data name="GyroBiasStatusText.Text" xml:space="preserve"><value>Not calibrated</value></data>
   <data name="HelperStatusIndicator.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve"><value>Helper Status</value></data>
   <data name="HelperStatusText.Text" xml:space="preserve"><value>Disconnected</value></data>
@@ -154,7 +153,6 @@
   <data name="S_45Minutes.Content" xml:space="preserve"><value>45 minutes</value></data>
   <data name="S_5Min.Content" xml:space="preserve"><value>5 min</value></data>
   <data name="S_5Minutes.Content" xml:space="preserve"><value>5 minutes</value></data>
-  <data name="S_ABXYButtons.Text" xml:space="preserve"><value>ABXY buttons</value></data>
   <data name="S_AC.Text" xml:space="preserve"><value>AC</value></data>
   <data name="S_AMDAdrenalineOverlay.Text" xml:space="preserve"><value>AMD Adrenaline Overlay</value></data>
   <data name="S_About.Text" xml:space="preserve"><value>About</value></data>
@@ -180,17 +178,15 @@
   <data name="S_AutoTDP.Description" xml:space="preserve"><value>Adjusts TDP live to hit a target FPS</value></data>
   <data name="S_AutoTDP.Header" xml:space="preserve"><value>AutoTDP</value></data>
   <data name="S_Axial.Content" xml:space="preserve"><value>Axial</value></data>
-  <data name="S_Axis.Text" xml:space="preserve"><value>Axis</value></data>
   <data name="S_Back.Content" xml:space="preserve"><value>Back</value></data>
   <data name="S_BackButtons.Text" xml:space="preserve"><value>Back Buttons</value></data>
-  <data name="S_BackButtonsPaddles.Text" xml:space="preserve"><value>Back buttons / paddles</value></data>
   <data name="S_BackPaddles.Text" xml:space="preserve"><value>Back Paddles</value></data>
   <data name="S_Balanced.Content" xml:space="preserve"><value>Balanced</value></data>
   <data name="S_Basic.Content" xml:space="preserve"><value>Basic</value></data>
   <data name="S_Battery.Text" xml:space="preserve"><value>Battery</value></data>
   <data name="S_Brightness.Text" xml:space="preserve"><value>Brightness</value></data>
-  <data name="S_BrightnessGesture.Description" xml:space="preserve"><value>Hold the trigger button below and tilt the axis to fade display brightness. A quick tap of the trigger still behaves normally.</value></data>
-  <data name="S_BrightnessGesture.Header" xml:space="preserve"><value>Brightness Gesture</value></data>
+  <data name="S_BrightnessDown.Content" xml:space="preserve"><value>Brightness Down (-5%)</value></data>
+  <data name="S_BrightnessUp.Content" xml:space="preserve"><value>Brightness Up (+5%)</value></data>
   <data name="S_Button.Text" xml:space="preserve"><value>Button</value></data>
   <data name="S_ButtonRemapping.Text" xml:space="preserve"><value>Button Remapping</value></data>
   <data name="S_CPUBoost.Description" xml:space="preserve"><value>Higher boost clocks</value></data>
@@ -209,7 +205,6 @@
   <data name="S_CheckForUpdatesAutomaticallyOn.Text" xml:space="preserve"><value>Check for updates automatically on start</value></data>
   <data name="S_CheckLenovoSDriverPage.Text" xml:space="preserve"><value>Check Lenovo's driver page for this machine type</value></data>
   <data name="S_ChooseWhichSettingsAreSaved.Text" xml:space="preserve"><value>Choose which settings are saved in profiles</value></data>
-  <data name="S_ClickOnReleaseToo.Text" xml:space="preserve"><value>Click on release too</value></data>
   <data name="S_Colors.Text" xml:space="preserve"><value>Colors</value></data>
   <data name="S_Columns.Text" xml:space="preserve"><value>Columns:</value></data>
   <data name="S_ColumnsItemSelectionAndOrder.Text" xml:space="preserve"><value>Columns, item selection and order are used by Custom.</value></data>
@@ -236,7 +231,6 @@
   <data name="S_DPadLeft.Content" xml:space="preserve"><value>D-Pad Left</value></data>
   <data name="S_DPadRight.Content" xml:space="preserve"><value>D-Pad Right</value></data>
   <data name="S_DPadUp.Content" xml:space="preserve"><value>D-Pad Up</value></data>
-  <data name="S_DPadUpDown.Content" xml:space="preserve"><value>D-Pad (Up/Down)</value></data>
   <data name="S_DeadZoneTrigger.Text" xml:space="preserve"><value>Dead Zone</value></data>
   <data name="S_Deadzone.Text" xml:space="preserve"><value>Deadzone</value></data>
   <data name="S_DeadzoneShape.Text" xml:space="preserve"><value>Deadzone shape</value></data>
@@ -251,7 +245,6 @@
   <data name="S_Desktop.Text" xml:space="preserve"><value>Desktop</value></data>
   <data name="S_DesktopControls.Description" xml:space="preserve"><value>RS→Mouse, DPAD/LS→Arrows, A→Enter, B→Esc (Ctrl+Shift+D)</value></data>
   <data name="S_DesktopControls.Header" xml:space="preserve"><value>Desktop Controls</value></data>
-  <data name="S_Desktop_2.Content" xml:space="preserve"><value>Desktop</value></data>
   <data name="S_Detailed.Content" xml:space="preserve"><value>Detailed</value></data>
   <data name="S_Disabled.Content" xml:space="preserve"><value>Disabled</value></data>
   <data name="S_DoNothing.Content" xml:space="preserve"><value>Do nothing</value></data>
@@ -287,7 +280,6 @@
   <data name="S_FocusGoTweaksLite.Content" xml:space="preserve"><value>Focus GoTweaks Lite</value></data>
   <data name="S_ForkAuthor.Text" xml:space="preserve"><value>Fork Author</value></data>
   <data name="S_FrontButtons.Text" xml:space="preserve"><value>Front Buttons</value></data>
-  <data name="S_FrontButtonsDPadStart.Text" xml:space="preserve"><value>Front buttons (d-pad, start, bumpers)</value></data>
   <data name="S_Full.Content" xml:space="preserve"><value>Full</value></data>
   <data name="S_FullPress.Text" xml:space="preserve"><value>Full Press</value></data>
   <data name="S_GameBar.Text" xml:space="preserve"><value>Game Bar</value></data>
@@ -297,8 +289,6 @@
   <data name="S_GamesWithProfilesAlwaysDetect.Text" xml:space="preserve"><value>Games with profiles always detect regardless of settings</value></data>
   <data name="S_GlobalProfile.Text" xml:space="preserve"><value>Global Profile</value></data>
   <data name="S_GoTweaksFeatureNotAWindows.Text" xml:space="preserve"><value>GoTweaks feature - not a Windows setting, since Windows has no built-in idle-to-hibernate timer</value></data>
-  <data name="S_GoTweaksHaptics.Description" xml:space="preserve"><value>Tactile click on inputs, system-wide via the controller motors</value></data>
-  <data name="S_GoTweaksHaptics.Header" xml:space="preserve"><value>GoTweaks Haptics</value></data>
   <data name="S_GrayRawYellowShapedMove.Text" xml:space="preserve"><value>Gray = raw, yellow = shaped. Move the sticks/triggers to verify the curve.</value></data>
   <data name="S_GuideModeButton.Text" xml:space="preserve"><value>Guide/Mode button</value></data>
   <data name="S_GyroActivation.Description" xml:space="preserve"><value>Always on, hold, or toggle by button</value></data>
@@ -427,7 +417,6 @@
   <data name="S_OverlayLevel.Text" xml:space="preserve"><value>Overlay Level</value></data>
   <data name="S_PREFERENCES.Text" xml:space="preserve"><value>PREFERENCES</value></data>
   <data name="S_Page.Text" xml:space="preserve"><value>Page</value></data>
-  <data name="S_Page_2.Content" xml:space="preserve"><value>Page</value></data>
   <data name="S_PauseWhenGameNotFocused.Text" xml:space="preserve"><value>Pause when game not focused</value></data>
   <data name="S_PerHalfGyro.Description" xml:space="preserve"><value>Each Joy-Con uses its own controller's motion (off = both share the selected source)</value></data>
   <data name="S_PerHalfGyro.Header" xml:space="preserve"><value>Per-half gyro</value></data>
@@ -452,7 +441,6 @@
   <data name="S_PreferExecutable.Header" xml:space="preserve"><value>Prefer executable</value></data>
   <data name="S_ProcessorPerformanceLimits.Text" xml:space="preserve"><value>Processor performance limits</value></data>
   <data name="S_ProfileSettings.Text" xml:space="preserve"><value>Profile Settings</value></data>
-  <data name="S_PulseLength.Text" xml:space="preserve"><value>Pulse Length</value></data>
   <data name="S_Quiet.Content" xml:space="preserve"><value>Quiet</value></data>
   <data name="S_ROGAlly.Content" xml:space="preserve"><value>ROG Ally</value></data>
   <data name="S_RS.Text" xml:space="preserve"><value>RS</value></data>
@@ -485,7 +473,6 @@
   <data name="S_Screenshot.Content" xml:space="preserve"><value>Screenshot</value></data>
   <data name="S_Scroll.Text" xml:space="preserve"><value>Scroll:</value></data>
   <data name="S_ScrollClick.Text" xml:space="preserve"><value>Scroll Click:</value></data>
-  <data name="S_ScrollClick_2.Content" xml:space="preserve"><value>Scroll Click</value></data>
   <data name="S_SelectMetricsGroupedIntoBattery.Text" xml:space="preserve"><value>Select Metrics (grouped into Battery, CPU, GPU and Memory cells)</value></data>
   <data name="S_SendToJoystick.Text" xml:space="preserve"><value>Send to Joystick</value></data>
   <data name="S_SendToJoystick_2.Description" xml:space="preserve"><value>Which emulated stick receives the gyro contribution.</value></data>
@@ -541,7 +528,6 @@
   <data name="S_TextSize.Text" xml:space="preserve"><value>Text Size</value></data>
   <data name="S_TheAMDOverlayIsControlled.Text" xml:space="preserve"><value>The AMD overlay is controlled through Adrenaline software. Use Ctrl+Shift+O to toggle and Ctrl+Shift+X to cycle overlay levels.</value></data>
   <data name="S_ThisCurveIsAppliedThrough.Text" xml:space="preserve"><value>• This curve is applied through Lenovo WMI while TDP Mode is Custom, with firmware-enforced floors&#x0a;• Quiet, Balanced and Performance use the firmware's own fan curves&#x0a;• Axis labels (10°C–100°C) are how the curve is stored; firmware may map temps differently</value></data>
-  <data name="S_ThisGestureWasMeantTo.Text" xml:space="preserve"><value>This gesture was meant to work exactly like on SteamOS - hold Legion R and tilt the left stick. On Windows, holding Legion L or R for more than about 5 seconds is hardcoded in the controller's own firmware to toggle that grip's connection off and on (a real Legion Space feature) - not something GoTweaks, or any app, can override. None of the trigger options below have this limitation.</value></data>
   <data name="S_TightenGainAtFullRamp.Text" xml:space="preserve"><value>Tighten gain (× at full ramp)</value></data>
   <data name="S_TightenThresholdS0Off.Text" xml:space="preserve"><value>Tighten threshold (°/s, 0 = off)</value></data>
   <data name="S_Toggle.Content" xml:space="preserve"><value>Toggle</value></data>
@@ -553,9 +539,7 @@
   <data name="S_TouchpadEnabled.Text" xml:space="preserve"><value>Touchpad Enabled</value></data>
   <data name="S_TouchpadHaptics.Text" xml:space="preserve"><value>Touchpad Haptics</value></data>
   <data name="S_TouchpadVibration.Text" xml:space="preserve"><value>Touchpad &amp; Vibration</value></data>
-  <data name="S_Trigger.Text" xml:space="preserve"><value>Trigger</value></data>
   <data name="S_TriggerTravel.Text" xml:space="preserve"><value>Trigger Travel</value></data>
-  <data name="S_TriggersLTRT.Text" xml:space="preserve"><value>Triggers (LT / RT)</value></data>
   <data name="S_TroubleshootingAndDiagnosticTools.Text" xml:space="preserve"><value>Troubleshooting and diagnostic tools</value></data>
   <data name="S_TurnOffScreenAfter.Text" xml:space="preserve"><value>Turn off screen after</value></data>
   <data name="S_Up.Text" xml:space="preserve"><value>Up</value></data>
@@ -574,7 +558,6 @@
   <data name="S_ViewX.Text" xml:space="preserve"><value>View + X</value></data>
   <data name="S_ViewY.Text" xml:space="preserve"><value>View + Y</value></data>
   <data name="S_VirtualDevice.Text" xml:space="preserve"><value>Virtual device</value></data>
-  <data name="S_WhyNotLegionRLeft.Text" xml:space="preserve"><value>Why not Legion R + left stick, like SteamOS?</value></data>
   <data name="S_WindowsDefaultSleepModernStandby.Text" xml:space="preserve"><value>Windows' default Sleep (Modern Standby) sometimes drains the battery from background wake-ups or fails to resume cleanly. Hibernate saves the session to disk and fully powers off, which is closer to how SteamOS suspends and tends to be more reliable - at the cost of a slightly slower resume. Setting the Power Button and Hibernate Timeout options above to Hibernate (and disabling Windows' Sleep timer) is the recommended change.</value></data>
   <data name="S_WindowsOwnSleepTimerCan.Text" xml:space="preserve"><value>Windows' own Sleep timer can still fire first</value></data>
   <data name="S_WindowsPowerSliderSetting.Text" xml:space="preserve"><value>Windows power slider setting</value></data>

@@ -178,7 +178,9 @@ namespace XboxGamingBar
         OpenKeyboard = 7,
         CtrlAltDel = 8,
         TaskManager = 9,
-        FocusGoTweaks = 10
+        FocusGoTweaks = 10,
+        BrightnessUp = 11,
+        BrightnessDown = 12
     }
 
     /// <summary>
@@ -2560,9 +2562,8 @@ namespace XboxGamingBar
                 await widget.CenterWindowAsync();
                 Logger.Info("widget.CenterWindowAsync() completed.");
 
-                Logger.Info("Registering widget event handlers (RequestedThemeChanged, SettingsClicked, VisibleChanged, GameBarDisplayModeChanged)...");
+                Logger.Info("Registering widget event handlers (RequestedThemeChanged, VisibleChanged, GameBarDisplayModeChanged)...");
                 widget.RequestedThemeChanged += GamingWidget_RequestedThemeChanged;
-                widget.SettingsClicked += GamingWidget_SettingsClicked;
                 widget.VisibleChanged += GamingWidget_VisibleChanged;
                 widget.GameBarDisplayModeChanged += GamingWidget_GameBarDisplayModeChanged;
                 Logger.Info("Widget event handlers registered.");
