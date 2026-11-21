@@ -1475,18 +1475,16 @@
                         </Border>
 
                         <!-- Game Detection Card -->
-                        <Border Style="{StaticResource CardStyle}">
-                            <StackPanel>
-                                <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
-                                    <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
-                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE721;"/></ctk:SettingsCard.HeaderIcon>
-                                        <ctk:SettingsCard.Header>
-                                            <TextBlock x:Uid="S_GameDetection" Text="Game Detection" />
-                                        </ctk:SettingsCard.Header>
-                                        <ctk:SettingsCard.Description>
-                                            <TextBlock x:Uid="S_GamesWithProfilesAlwaysDetect" Text="Games with profiles always detect regardless of settings" />
-                                        </ctk:SettingsCard.Description>
-                                        <ToggleButton x:Name="ProfileDetectionExpandToggle" MinWidth="44" MinHeight="40"
+                        <ctk:SettingsExpander Style="{StaticResource GroupExpanderStyle}" Tag="ProfileDetectionExpandToggle" Expanded="LegacyExpander_Toggled" Collapsed="LegacyExpander_Toggled">
+                            <ctk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE721;"/></ctk:SettingsExpander.HeaderIcon>
+                            <ctk:SettingsExpander.Header>
+                                <TextBlock x:Uid="S_GameDetection" Text="Game Detection" />
+                            </ctk:SettingsExpander.Header>
+                            <ctk:SettingsExpander.Description>
+                                <TextBlock x:Uid="S_GamesWithProfilesAlwaysDetect" Text="Games with profiles always detect regardless of settings" />
+                            </ctk:SettingsExpander.Description>
+                            <!-- Legacy expand button: hidden, its Click handler still shows/hides the content. -->
+                            <ToggleButton Visibility="Collapsed" x:Name="ProfileDetectionExpandToggle" MinWidth="44" MinHeight="40"
                                                   IsChecked="False"
                                                   Background="Transparent"
                                                   BorderThickness="0"
@@ -1494,10 +1492,9 @@
                                                   Click="ProfileDetectionExpandToggle_Click">
                                         <FontIcon x:Name="ProfileDetectionExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                     </ToggleButton>
-                                    </ctk:SettingsCard>
-                                </Grid>
-
-                                <StackPanel x:Name="ProfileDetectionContent" Visibility="Collapsed" Margin="0,12,0,0" Spacing="12">
+                            <ctk:SettingsExpander.ItemsHeader>
+                                <Border Padding="16,4,16,14">
+                                    <StackPanel x:Name="ProfileDetectionContent" Visibility="Collapsed" Margin="0,12,0,0" Spacing="12">
 
                                     <!-- Match Exe Toggle -->
                                     <ctk:SettingsCard x:Uid="S_PreferExecutable" Header="Prefer executable" Description="Use .exe name, fall back to window title if unavailable" Tapped="ToggleRow_Tapped">
@@ -1515,23 +1512,21 @@
                                     </ctk:SettingsCard>
 
                                 </StackPanel>
-                            </StackPanel>
-                        </Border>
+                                </Border>
+                            </ctk:SettingsExpander.ItemsHeader>
+                        </ctk:SettingsExpander>
 
                         <!-- Profile Settings Card (Collapsible) -->
-                        <Border Style="{StaticResource CardStyle}">
-                            <StackPanel>
-                                <!-- Header with Expand/Collapse -->
-                                <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
-                                    <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
-                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE713;"/></ctk:SettingsCard.HeaderIcon>
-                                        <ctk:SettingsCard.Header>
-                                            <TextBlock x:Uid="S_ProfileSettings" Text="Profile Settings" />
-                                        </ctk:SettingsCard.Header>
-                                        <ctk:SettingsCard.Description>
-                                            <TextBlock x:Uid="S_ChooseWhichSettingsAreSaved" Text="Choose which settings are saved in profiles" TextWrapping="Wrap" />
-                                        </ctk:SettingsCard.Description>
-                                        <ToggleButton x:Name="ProfileSettingsExpandToggle" MinWidth="44" MinHeight="40"
+                        <ctk:SettingsExpander Style="{StaticResource GroupExpanderStyle}" Tag="ProfileSettingsExpandToggle" Expanded="LegacyExpander_Toggled" Collapsed="LegacyExpander_Toggled">
+                            <ctk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE713;"/></ctk:SettingsExpander.HeaderIcon>
+                            <ctk:SettingsExpander.Header>
+                                <TextBlock x:Uid="S_ProfileSettings" Text="Profile Settings" />
+                            </ctk:SettingsExpander.Header>
+                            <ctk:SettingsExpander.Description>
+                                <TextBlock x:Uid="S_ChooseWhichSettingsAreSaved" Text="Choose which settings are saved in profiles" TextWrapping="Wrap" />
+                            </ctk:SettingsExpander.Description>
+                            <!-- Legacy expand button: hidden, its Click handler still shows/hides the content. -->
+                            <ToggleButton Visibility="Collapsed" x:Name="ProfileSettingsExpandToggle" MinWidth="44" MinHeight="40"
                                                   IsChecked="False"
                                                   Background="Transparent"
                                                   BorderThickness="0"
@@ -1539,11 +1534,9 @@
                                                   Click="ProfileSettingsExpandToggle_Click">
                                         <FontIcon x:Name="ProfileSettingsExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                     </ToggleButton>
-                                    </ctk:SettingsCard>
-                                </Grid>
-
-                                <!-- Collapsible Content -->
-                                <StackPanel x:Name="ProfileSettingsContent" Visibility="Collapsed" Margin="0,12,0,0">
+                            <ctk:SettingsExpander.ItemsHeader>
+                                <Border Padding="16,4,16,14">
+                                    <StackPanel x:Name="ProfileSettingsContent" Visibility="Collapsed" Margin="0,12,0,0">
                                     <CheckBox x:Uid="ProfileSaveTDPCheckBox" x:Name="ProfileSaveTDPCheckBox"
                                               Content="TDP Power Limit"
                                               IsChecked="True"
@@ -1606,8 +1599,9 @@
                                               Checked="ProfileSettingsCheckBox_Changed"
                                               Unchecked="ProfileSettingsCheckBox_Changed" />
                                 </StackPanel>
-                            </StackPanel>
-                        </Border>
+                                </Border>
+                            </ctk:SettingsExpander.ItemsHeader>
+                        </ctk:SettingsExpander>
 
                         <!-- Global Profile Section -->
                         <TextBlock x:Uid="S_GlobalProfile" Text="Global Profile" Style="{StaticResource SettingsSectionTitleStyle}" />
@@ -2257,19 +2251,16 @@
                     <StackPanel Padding="16,8,16,16">
 
                         <!-- OSD Customization Card (Collapsible) -->
-                        <Border Style="{StaticResource CardStyle}">
-                            <StackPanel>
-                                <!-- Header with Expand/Collapse -->
-                                <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
-                                    <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
-                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE9D9;"/></ctk:SettingsCard.HeaderIcon>
-                                        <ctk:SettingsCard.Header>
-                                            <TextBlock x:Uid="S_OSDCustomization" Text="OSD Customization" />
-                                        </ctk:SettingsCard.Header>
-                                        <ctk:SettingsCard.Description>
-                                            <TextBlock x:Uid="S_CustomizeOverlayAppearanceAndContent" Text="Customize overlay appearance and content" TextWrapping="Wrap" />
-                                        </ctk:SettingsCard.Description>
-                                        <ToggleButton x:Name="OSDCustomizeExpandButton" MinWidth="44" MinHeight="40"
+                        <ctk:SettingsExpander Style="{StaticResource GroupExpanderStyle}" Tag="OSDCustomizeExpandButton" Expanded="LegacyExpander_Toggled" Collapsed="LegacyExpander_Toggled">
+                            <ctk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE9D9;"/></ctk:SettingsExpander.HeaderIcon>
+                            <ctk:SettingsExpander.Header>
+                                <TextBlock x:Uid="S_OSDCustomization" Text="OSD Customization" />
+                            </ctk:SettingsExpander.Header>
+                            <ctk:SettingsExpander.Description>
+                                <TextBlock x:Uid="S_CustomizeOverlayAppearanceAndContent" Text="Customize overlay appearance and content" TextWrapping="Wrap" />
+                            </ctk:SettingsExpander.Description>
+                            <!-- Legacy expand button: hidden, its Click handler still shows/hides the content. -->
+                            <ToggleButton Visibility="Collapsed" x:Name="OSDCustomizeExpandButton" MinWidth="44" MinHeight="40"
                                                   IsChecked="False"
                                                   Background="Transparent"
                                                   BorderThickness="0"
@@ -2279,11 +2270,9 @@
                                                   UseSystemFocusVisuals="True">
                                         <FontIcon x:Name="OSDCustomizeExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                     </ToggleButton>
-                                    </ctk:SettingsCard>
-                                </Grid>
-
-                                <!-- Collapsible Content -->
-                                <StackPanel x:Name="OSDCustomizeContent" Visibility="Collapsed" Margin="0,12,0,0">
+                            <ctk:SettingsExpander.ItemsHeader>
+                                <Border Padding="16,4,16,14">
+                                    <StackPanel x:Name="OSDCustomizeContent" Visibility="Collapsed" Margin="0,12,0,0">
 
                                     <!-- OSD Provider Selection -->
                                     <ctk:SettingsCard x:Uid="S_OSDProvider" Margin="0,0,0,12" Header="OSD Provider" Description="Select overlay source">
@@ -2604,23 +2593,21 @@
                                                    TextWrapping="Wrap" />
                                     </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
-                        </Border>
+                                </Border>
+                            </ctk:SettingsExpander.ItemsHeader>
+                        </ctk:SettingsExpander>
 
                         <!-- Hotkeys Card (Collapsible) - Xbox Controller Button Combos -->
-                        <Border x:Name="HotkeysCard" Style="{StaticResource CardStyle}">
-                            <StackPanel>
-                                <!-- Header with Expand/Collapse -->
-                                <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
-                                    <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
-                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE765;"/></ctk:SettingsCard.HeaderIcon>
-                                        <ctk:SettingsCard.Header>
-                                            <TextBlock x:Uid="S_Hotkeys" Text="Hotkeys" />
-                                        </ctk:SettingsCard.Header>
-                                        <ctk:SettingsCard.Description>
-                                            <TextBlock x:Uid="HotkeysSummary" x:Name="HotkeysSummary" Text="Map controller combos to keyboard shortcuts" TextWrapping="Wrap" />
-                                        </ctk:SettingsCard.Description>
-                                        <ToggleButton x:Name="HotkeysExpandButton" MinWidth="44" MinHeight="40"
+                        <ctk:SettingsExpander x:Name="HotkeysCard" Style="{StaticResource GroupExpanderStyle}" Tag="HotkeysExpandButton" Expanded="LegacyExpander_Toggled" Collapsed="LegacyExpander_Toggled">
+                            <ctk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE765;"/></ctk:SettingsExpander.HeaderIcon>
+                            <ctk:SettingsExpander.Header>
+                                <TextBlock x:Uid="S_Hotkeys" Text="Hotkeys" />
+                            </ctk:SettingsExpander.Header>
+                            <ctk:SettingsExpander.Description>
+                                <TextBlock x:Uid="HotkeysSummary" x:Name="HotkeysSummary" Text="Map controller combos to keyboard shortcuts" TextWrapping="Wrap" />
+                            </ctk:SettingsExpander.Description>
+                            <!-- Legacy expand button: hidden, its Click handler still shows/hides the content. -->
+                            <ToggleButton Visibility="Collapsed" x:Name="HotkeysExpandButton" MinWidth="44" MinHeight="40"
                                                   IsChecked="False"
                                                   Background="Transparent"
                                                   BorderThickness="0"
@@ -2629,11 +2616,9 @@
                                                   UseSystemFocusVisuals="True">
                                         <FontIcon x:Name="HotkeysExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                     </ToggleButton>
-                                    </ctk:SettingsCard>
-                                </Grid>
-
-                                <!-- Collapsible Content -->
-                                <StackPanel x:Name="HotkeysContent" Visibility="Collapsed" Margin="0,12,0,0">
+                            <ctk:SettingsExpander.ItemsHeader>
+                                <Border Padding="16,4,16,14">
+                                    <StackPanel x:Name="HotkeysContent" Visibility="Collapsed" Margin="0,12,0,0">
                                     <!-- Menu+A Row -->
                                     <StackPanel Margin="0,0,0,8">
                                         <Grid>
@@ -2937,26 +2922,25 @@
                                                TextWrapping="Wrap"
                                                Margin="0,12,0,0" />
                                 </StackPanel>
-                            </StackPanel>
-                        </Border>
+                                </Border>
+                            </ctk:SettingsExpander.ItemsHeader>
+                        </ctk:SettingsExpander>
 
                         <!-- Power & Sleep Card (Collapsible): power button behavior + screen/hibernate
                              idle timers, merged under one expandable card matching Windows' own
                              "Power & sleep" settings grouping. Power Button + Display Timeout are
                              pulled directly from the active Windows power plan; Hibernate Timeout is
                              a GoTweaks-only feature (see its section note below). -->
-                        <Border x:Name="PowerAndSleepCard" Style="{StaticResource CardStyle}">
-                            <StackPanel>
-                                <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
-                                    <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
-                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE7E8;"/></ctk:SettingsCard.HeaderIcon>
-                                        <ctk:SettingsCard.Header>
-                                            <TextBlock x:Uid="S_PowerSleep" Text="Power &amp; Sleep" />
-                                        </ctk:SettingsCard.Header>
-                                        <ctk:SettingsCard.Description>
-                                            <TextBlock x:Uid="S_PowerButtonBehaviorAndIdle" Text="Power button behavior and idle timers" TextWrapping="Wrap" />
-                                        </ctk:SettingsCard.Description>
-                                        <ToggleButton x:Name="PowerAndSleepExpandButton" MinWidth="44" MinHeight="40"
+                        <ctk:SettingsExpander x:Name="PowerAndSleepCard" Style="{StaticResource GroupExpanderStyle}" Tag="PowerAndSleepExpandButton" Expanded="LegacyExpander_Toggled" Collapsed="LegacyExpander_Toggled">
+                            <ctk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE7E8;"/></ctk:SettingsExpander.HeaderIcon>
+                            <ctk:SettingsExpander.Header>
+                                <TextBlock x:Uid="S_PowerSleep" Text="Power &amp; Sleep" />
+                            </ctk:SettingsExpander.Header>
+                            <ctk:SettingsExpander.Description>
+                                <TextBlock x:Uid="S_PowerButtonBehaviorAndIdle" Text="Power button behavior and idle timers" TextWrapping="Wrap" />
+                            </ctk:SettingsExpander.Description>
+                            <!-- Legacy expand button: hidden, its Click handler still shows/hides the content. -->
+                            <ToggleButton Visibility="Collapsed" x:Name="PowerAndSleepExpandButton" MinWidth="44" MinHeight="40"
                                                   IsChecked="False"
                                                   Background="Transparent"
                                                   BorderThickness="0"
@@ -2964,10 +2948,9 @@
                                                   Click="PowerAndSleepExpandButton_Click">
                                         <FontIcon x:Name="PowerAndSleepExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                     </ToggleButton>
-                                    </ctk:SettingsCard>
-                                </Grid>
-
-                                <StackPanel x:Name="PowerAndSleepContent" Visibility="Collapsed" Margin="0,12,0,0">
+                            <ctk:SettingsExpander.ItemsHeader>
+                                <Border Padding="16,4,16,14">
+                                    <StackPanel x:Name="PowerAndSleepContent" Visibility="Collapsed" Margin="0,12,0,0">
 
                                     <TextBlock x:Uid="S_PowerButton" Text="Power button" FontSize="14" FontWeight="SemiBold" Foreground="#B9C0CC" />
 
@@ -3111,28 +3094,16 @@
                                          timeout is ever reached. This one-off button zeroes Windows'
                                          Sleep-after timeout for both AC and DC so the GoTweaks
                                          Hibernate timer above is the only idle-power action left. -->
-                                    <Grid Margin="0,10,0,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,12,0">
-                                            <TextBlock x:Uid="S_WindowsOwnSleepTimerCan" Text="Windows' own Sleep timer can still fire first"
-                                                       FontSize="12" Foreground="#B9C0CC" TextWrapping="Wrap" />
-                                            <TextBlock x:Name="DisableSleepTimersStatusText"
-                                                       Text=""
-                                                       FontSize="12"
-                                                       FontWeight="SemiBold"
-                                                       Foreground="#6CCB5F"
-                                                       Margin="0,2,0,0"/>
-                                        </StackPanel>
-                                        <Button x:Uid="DisableSleepTimersButton" x:Name="DisableSleepTimersButton"
-                                                Grid.Column="1"
-                                                Content="Disable Sleep Timer (AC+DC)"
-                                                Style="{StaticResource ModernButtonStyle}"
-                                                Click="DisableSleepTimersButton_Click"
-                                                VerticalAlignment="Center" />
-                                    </Grid>
+                                    <ctk:SettingsCard>
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE713;"/></ctk:SettingsCard.HeaderIcon>
+                                        <ctk:SettingsCard.Header>
+                                            <TextBlock x:Uid="S_WindowsOwnSleepTimerCan" Text="Windows' own Sleep timer can still fire first" TextWrapping="Wrap" />
+                                        </ctk:SettingsCard.Header>
+                                        <ctk:SettingsCard.Description>
+                                            <TextBlock x:Name="DisableSleepTimersStatusText" Text=""/>
+                                        </ctk:SettingsCard.Description>
+                                        <Button x:Uid="DisableSleepTimersButton" x:Name="DisableSleepTimersButton" Content="Disable Sleep Timer (AC+DC)" Style="{StaticResource ModernButtonStyle}" Click="DisableSleepTimersButton_Click" VerticalAlignment="Center" />
+                                    </ctk:SettingsCard>
 
                                     <muxc:InfoBar x:Name="PowerButtonInfoExpander"
                                                   Margin="0,14,0,0"
@@ -3149,23 +3120,21 @@
                                         </muxc:InfoBar.Content>
                                     </muxc:InfoBar>
                                 </StackPanel>
-                            </StackPanel>
-                        </Border>
+                                </Border>
+                            </ctk:SettingsExpander.ItemsHeader>
+                        </ctk:SettingsExpander>
 
                         <!-- Debug Card (Collapsible) -->
-                        <Border Style="{StaticResource CardStyle}">
-                            <StackPanel>
-                                <!-- Header with Expand/Collapse -->
-                                <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
-                                    <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
-                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xEBE8;"/></ctk:SettingsCard.HeaderIcon>
-                                        <ctk:SettingsCard.Header>
-                                            <TextBlock x:Uid="S_Debug" Text="Debug" />
-                                        </ctk:SettingsCard.Header>
-                                        <ctk:SettingsCard.Description>
-                                            <TextBlock x:Uid="S_TroubleshootingAndDiagnosticTools" Text="Troubleshooting and diagnostic tools" TextWrapping="Wrap" />
-                                        </ctk:SettingsCard.Description>
-                                        <ToggleButton x:Name="DebugExpandButton" MinWidth="44" MinHeight="40"
+                        <ctk:SettingsExpander Style="{StaticResource GroupExpanderStyle}" Tag="DebugExpandButton" Expanded="LegacyExpander_Toggled" Collapsed="LegacyExpander_Toggled">
+                            <ctk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xEBE8;"/></ctk:SettingsExpander.HeaderIcon>
+                            <ctk:SettingsExpander.Header>
+                                <TextBlock x:Uid="S_Debug" Text="Debug" />
+                            </ctk:SettingsExpander.Header>
+                            <ctk:SettingsExpander.Description>
+                                <TextBlock x:Uid="S_TroubleshootingAndDiagnosticTools" Text="Troubleshooting and diagnostic tools" TextWrapping="Wrap" />
+                            </ctk:SettingsExpander.Description>
+                            <!-- Legacy expand button: hidden, its Click handler still shows/hides the content. -->
+                            <ToggleButton Visibility="Collapsed" x:Name="DebugExpandButton" MinWidth="44" MinHeight="40"
                                                   IsChecked="False"
                                                   Background="Transparent"
                                                   BorderThickness="0"
@@ -3173,11 +3142,9 @@
                                                   Click="DebugExpandButton_Click">
                                         <FontIcon x:Name="DebugExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                     </ToggleButton>
-                                    </ctk:SettingsCard>
-                                </Grid>
-
-                                <!-- Collapsible Content -->
-                                <StackPanel x:Name="DebugContent" Visibility="Collapsed" Margin="0,12,0,0">
+                            <ctk:SettingsExpander.ItemsHeader>
+                                <Border Padding="16,4,16,14">
+                                    <StackPanel x:Name="DebugContent" Visibility="Collapsed" Margin="0,12,0,0">
                                     <!-- Restart Helper / Kill GoTweaks Buttons (side by side) -->
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -3236,23 +3203,21 @@
                                             Style="{StaticResource StandaloneButtonStyle}"
                                             Click="PrepareForUninstallButton_Click" />
                                 </StackPanel>
-                            </StackPanel>
-                        </Border>
+                                </Border>
+                            </ctk:SettingsExpander.ItemsHeader>
+                        </ctk:SettingsExpander>
 
                         <!-- About Card (Collapsible) -->
-                        <Border Style="{StaticResource CardStyle}">
-                            <StackPanel>
-                                <!-- Header with Expand/Collapse -->
-                                <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
-                                    <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
-                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE946;"/></ctk:SettingsCard.HeaderIcon>
-                                        <ctk:SettingsCard.Header>
-                                            <TextBlock x:Uid="S_About" Text="About" />
-                                        </ctk:SettingsCard.Header>
-                                        <ctk:SettingsCard.Description>
-                                            <TextBlock x:Uid="S_VersionAndCredits" Text="Version and credits" TextWrapping="Wrap" />
-                                        </ctk:SettingsCard.Description>
-                                        <ToggleButton x:Name="AboutExpandButton" MinWidth="44" MinHeight="40"
+                        <ctk:SettingsExpander Style="{StaticResource GroupExpanderStyle}" Tag="AboutExpandButton" Expanded="LegacyExpander_Toggled" Collapsed="LegacyExpander_Toggled">
+                            <ctk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE946;"/></ctk:SettingsExpander.HeaderIcon>
+                            <ctk:SettingsExpander.Header>
+                                <TextBlock x:Uid="S_About" Text="About" />
+                            </ctk:SettingsExpander.Header>
+                            <ctk:SettingsExpander.Description>
+                                <TextBlock x:Uid="S_VersionAndCredits" Text="Version and credits" TextWrapping="Wrap" />
+                            </ctk:SettingsExpander.Description>
+                            <!-- Legacy expand button: hidden, its Click handler still shows/hides the content. -->
+                            <ToggleButton Visibility="Collapsed" x:Name="AboutExpandButton" MinWidth="44" MinHeight="40"
                                                   IsChecked="False"
                                                   Background="Transparent"
                                                   BorderThickness="0"
@@ -3260,11 +3225,9 @@
                                                   Click="AboutExpandButton_Click">
                                         <FontIcon x:Name="AboutExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                     </ToggleButton>
-                                    </ctk:SettingsCard>
-                                </Grid>
-
-                                <!-- Collapsible Content -->
-                                <StackPanel x:Name="AboutContent" Visibility="Collapsed" Margin="0,12,0,0">
+                            <ctk:SettingsExpander.ItemsHeader>
+                                <Border Padding="16,4,16,14">
+                                    <StackPanel x:Name="AboutContent" Visibility="Collapsed" Margin="0,12,0,0">
                                     <!-- Updates - everything update-related lives here, at the top. -->
                                     <Button x:Uid="CheckForUpdateButton" x:Name="CheckForUpdateButton"
                                             Content="Check for Update"
@@ -3372,8 +3335,9 @@
                                                    HorizontalAlignment="Right" />
                                     </Grid>
                                 </StackPanel>
-                            </StackPanel>
-                        </Border>
+                                </Border>
+                            </ctk:SettingsExpander.ItemsHeader>
+                        </ctk:SettingsExpander>
 
                     </StackPanel>
                 </ScrollViewer>
@@ -3605,62 +3569,53 @@
 
                             <Border Style="{StaticResource CardStyle}">
                                 <StackPanel Spacing="8">
-                                    <TextBlock x:Uid="S_LegionSpaceService" Text="Legion Space service" Style="{StaticResource CardTitleStyle}" />
-                                    <TextBlock x:Uid="DAServiceStatusText" x:Name="DAServiceStatusText" Text="Checking service status"
-                                               Style="{StaticResource CardCaptionStyle}" TextWrapping="Wrap" />
-                                    <Button x:Uid="ToggleDAServiceButton" x:Name="ToggleDAServiceButton" Content="Refresh"
-                                            Style="{StaticResource ModernButtonStyle}" Click="ToggleDAServiceButton_Click" />
+                                    <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE912;"/></ctk:SettingsCard.HeaderIcon>
+                                        <ctk:SettingsCard.Header>
+                                            <TextBlock x:Uid="S_LegionSpaceService" Text="Legion Space service" />
+                                        </ctk:SettingsCard.Header>
+                                        <ctk:SettingsCard.Description>
+                                            <TextBlock x:Uid="DAServiceStatusText" x:Name="DAServiceStatusText" Text="Checking service status" TextWrapping="Wrap" />
+                                        </ctk:SettingsCard.Description>
+                                        <Button x:Uid="ToggleDAServiceButton" x:Name="ToggleDAServiceButton" Content="Refresh" Style="{StaticResource ModernButtonStyle}" Click="ToggleDAServiceButton_Click" />
+                                    </ctk:SettingsCard>
+                                    
                                 </StackPanel>
                             </Border>
 
                             <!-- Controller Mode Card: Legion Space style X-Input / D-Input switch. Only shown
                                  once the helper reports a controller that supports it (see
                                  UpdateLegionControllerModeUI). Switch off = X-Input, on = D-Input. -->
-                            <Border x:Name="LegionControllerModeCard" Style="{StaticResource CardStyle}" Visibility="Collapsed">
-                                <StackPanel>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,12,0">
-                                            <TextBlock x:Uid="S_DInputMode" Text="D-Input mode" Style="{StaticResource CardTitleStyle}" />
-                                            <TextBlock x:Uid="LegionControllerModeStatusText" x:Name="LegionControllerModeStatusText"
-                                                       Text="Controllers not detected"
-                                                       Style="{StaticResource CardCaptionStyle}"
-                                                       TextWrapping="Wrap" />
-                                        </StackPanel>
-                                        <ToggleSwitch x:Name="LegionControllerModeToggle"
-                                                      Grid.Column="1"
-                                                      Style="{StaticResource ModernToggleStyle}"
-                                                      IsOn="False"
-                                                      IsEnabled="False"
-                                                      XYFocusUp="{x:Bind LegionNavItem}"
-                                                      XYFocusDown="{x:Bind TouchpadVibrationExpandToggle}"
-                                                      Toggled="LegionControllerModeToggle_Toggled"/>
-                                    </Grid>
-                                    <muxc:InfoBar IsOpen="True" IsClosable="False" Severity="Warning" Margin="0,10,0,0">
+                            <StackPanel x:Name="LegionControllerModeCard" Visibility="Collapsed" Spacing="4" Margin="0,0,0,6">
+                                <ctk:SettingsCard Style="{StaticResource RowCardStyle}" Tapped="ToggleRow_Tapped">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE7FC;"/></ctk:SettingsCard.HeaderIcon>
+                                        <ctk:SettingsCard.Header>
+                                            <TextBlock x:Uid="S_DInputMode" Text="D-Input mode" />
+                                        </ctk:SettingsCard.Header>
+                                        <ctk:SettingsCard.Description>
+                                            <TextBlock x:Uid="LegionControllerModeStatusText" x:Name="LegionControllerModeStatusText" Text="Controllers not detected" TextWrapping="Wrap" />
+                                        </ctk:SettingsCard.Description>
+                                        <ToggleSwitch x:Name="LegionControllerModeToggle" Style="{StaticResource ModernToggleStyle}" IsOn="False" IsEnabled="False" XYFocusUp="{x:Bind LegionNavItem}" Toggled="LegionControllerModeToggle_Toggled"/>
+                                    </ctk:SettingsCard>
+                                <muxc:InfoBar IsOpen="True" IsClosable="False" Severity="Warning" Margin="0,10,0,0">
                                         <muxc:InfoBar.Content>
                                             <TextBlock x:Uid="S_SameSwitchAsLegionSpace" Text="Same switch as Legion Space. The controllers reconnect for a few seconds, and in D-Input the Xbox / Game Bar interface may stop responding to them - use the touchscreen to switch back." FontSize="12" TextWrapping="Wrap" Margin="0,0,0,12" />
                                         </muxc:InfoBar.Content>
                                     </muxc:InfoBar>
-                                </StackPanel>
-                            </Border>
+                            </StackPanel>
 
                             <!-- Touchpad & Vibration Card (hidden on devices without HID touchpad support) -->
                             <StackPanel x:Name="TouchpadVibrationSection">
-                                <Border Style="{StaticResource CardStyle}">
-                                    <StackPanel>
-                                        <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
-                                            <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
-                                                <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE877;"/></ctk:SettingsCard.HeaderIcon>
-                                                <ctk:SettingsCard.Header>
-                                                    <TextBlock x:Uid="S_TouchpadVibration" Text="Touchpad &amp; Vibration" />
-                                                </ctk:SettingsCard.Header>
-                                                <ctk:SettingsCard.Description>
-                                                    <TextBlock x:Uid="S_TouchpadAndHapticFeedbackSettings" Text="Touchpad and haptic feedback settings" />
-                                                </ctk:SettingsCard.Description>
-                                                <ToggleButton x:Name="TouchpadVibrationExpandToggle" MinWidth="44" MinHeight="40"
+                                <ctk:SettingsExpander Style="{StaticResource GroupExpanderStyle}" Tag="TouchpadVibrationExpandToggle" Expanded="LegacyExpander_Toggled" Collapsed="LegacyExpander_Toggled">
+                                    <ctk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE877;"/></ctk:SettingsExpander.HeaderIcon>
+                                    <ctk:SettingsExpander.Header>
+                                        <TextBlock x:Uid="S_TouchpadVibration" Text="Touchpad &amp; Vibration" />
+                                    </ctk:SettingsExpander.Header>
+                                    <ctk:SettingsExpander.Description>
+                                        <TextBlock x:Uid="S_TouchpadAndHapticFeedbackSettings" Text="Touchpad and haptic feedback settings" />
+                                    </ctk:SettingsExpander.Description>
+                                    <!-- Legacy expand button: hidden, its Click handler still shows/hides the content. -->
+                                    <ToggleButton Visibility="Collapsed" x:Name="TouchpadVibrationExpandToggle" MinWidth="44" MinHeight="40"
                                                       IsChecked="False"
                                                       Background="Transparent"
                                                       BorderThickness="0"
@@ -3669,9 +3624,9 @@
                                                       XYFocusUp="{x:Bind LegionNavItem}">
                                             <FontIcon x:Name="TouchpadVibrationExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                         </ToggleButton>
-                                            </ctk:SettingsCard>
-                                        </Grid>
-                                    <StackPanel x:Name="TouchpadVibrationContent" Spacing="12" Margin="0,12,0,0" Visibility="Collapsed">
+                                    <ctk:SettingsExpander.ItemsHeader>
+                                        <Border Padding="16,4,16,14">
+                                            <StackPanel x:Name="TouchpadVibrationContent" Spacing="12" Margin="0,12,0,0" Visibility="Collapsed">
                                         <!-- Touchpad Toggle -->
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -3832,28 +3787,25 @@
                                             </Grid>
                                         </StackPanel>
                                         </StackPanel>
-                                    </StackPanel>
-                                </Border>
+                                        </Border>
+                                    </ctk:SettingsExpander.ItemsHeader>
+                                </ctk:SettingsExpander>
                             </StackPanel>
 
                         </StackPanel>
                         <StackPanel x:Name="LegionViiperSection" Visibility="Collapsed">
                             <Border x:Name="ControllerEmulationCard" Style="{StaticResource CardStyle}">
                                 <StackPanel>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel VerticalAlignment="Center" Margin="0,0,12,0">
-                                            <TextBlock x:Uid="S_EnableVIIPER" Text="Controller emulation (VIIPER)" Style="{StaticResource CardTitleStyle}" />
-                                            <TextBlock x:Uid="ControllerEmulationStatusText" x:Name="ControllerEmulationStatusText" Text="Waiting for helper"
-                                                       Style="{StaticResource CardCaptionStyle}" TextWrapping="Wrap" />
-                                        </StackPanel>
-                                        <ToggleSwitch x:Uid="ControllerEmulationEnabledToggle" x:Name="ControllerEmulationEnabledToggle" Grid.Column="1"
-                                                      AutomationProperties.Name="Enable VIIPER"
-                                                      Style="{StaticResource ModernToggleStyle}" IsEnabled="False" />
-                                    </Grid>
+                                    <ctk:SettingsCard Tapped="ToggleRow_Tapped">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE7F4;"/></ctk:SettingsCard.HeaderIcon>
+                                        <ctk:SettingsCard.Header>
+                                            <TextBlock x:Uid="S_EnableVIIPER" Text="Controller emulation (VIIPER)" />
+                                        </ctk:SettingsCard.Header>
+                                        <ctk:SettingsCard.Description>
+                                            <TextBlock x:Uid="ControllerEmulationStatusText" x:Name="ControllerEmulationStatusText" Text="Waiting for helper" TextWrapping="Wrap" />
+                                        </ctk:SettingsCard.Description>
+                                        <ToggleSwitch x:Uid="ControllerEmulationEnabledToggle" x:Name="ControllerEmulationEnabledToggle" AutomationProperties.Name="Enable VIIPER" Style="{StaticResource ModernToggleStyle}" IsEnabled="False" />
+                                    </ctk:SettingsCard>
                                     <StackPanel Margin="0,12,0,0"
                                                 Visibility="{x:Bind ControllerEmulationEnabledToggle.IsOn, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
                                         <ctk:SettingsCard x:Uid="S_HideNativeControllerHIDOn" Header="Hide native controller HID on next activation" Description="Requires HidHide. The physical XInput interface can remain visible." Tapped="ToggleRow_Tapped">
@@ -4909,18 +4861,16 @@
                             <TextBlock x:Uid="S_ControllerRemapping" Text="Controller Remapping" Style="{StaticResource SectionHeaderStyle}" />
 
                             <!-- Button Remapping Card -->
-                            <Border Style="{StaticResource CardStyle}">
-                                <StackPanel>
-                                    <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
-                                        <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
-                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE8AB;"/></ctk:SettingsCard.HeaderIcon>
-                                            <ctk:SettingsCard.Header>
-                                                <TextBlock x:Uid="S_ButtonRemapping" Text="Button Remapping" />
-                                            </ctk:SettingsCard.Header>
-                                            <ctk:SettingsCard.Description>
-                                                <TextBlock x:Uid="S_MapButtonsToGamepadKeyboard" Text="Map buttons to gamepad, keyboard, or mouse" />
-                                            </ctk:SettingsCard.Description>
-                                            <ToggleButton x:Name="ButtonRemappingExpandToggle" MinWidth="44" MinHeight="40"
+                            <ctk:SettingsExpander Style="{StaticResource GroupExpanderStyle}" Tag="ButtonRemappingExpandToggle" Expanded="LegacyExpander_Toggled" Collapsed="LegacyExpander_Toggled">
+                                <ctk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE8AB;"/></ctk:SettingsExpander.HeaderIcon>
+                                <ctk:SettingsExpander.Header>
+                                    <TextBlock x:Uid="S_ButtonRemapping" Text="Button Remapping" />
+                                </ctk:SettingsExpander.Header>
+                                <ctk:SettingsExpander.Description>
+                                    <TextBlock x:Uid="S_MapButtonsToGamepadKeyboard" Text="Map buttons to gamepad, keyboard, or mouse" />
+                                </ctk:SettingsExpander.Description>
+                                <!-- Legacy expand button: hidden, its Click handler still shows/hides the content. -->
+                                <ToggleButton Visibility="Collapsed" x:Name="ButtonRemappingExpandToggle" MinWidth="44" MinHeight="40"
                                                       IsChecked="False"
                                                       Background="Transparent"
                                                       BorderThickness="0"
@@ -4928,9 +4878,9 @@
                                                       Click="ButtonRemappingExpandToggle_Click">
                                             <FontIcon x:Name="ButtonRemappingExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                         </ToggleButton>
-                                        </ctk:SettingsCard>
-                                    </Grid>
-                                    <StackPanel x:Name="ButtonRemappingContent" Margin="0,12,0,0" Visibility="Collapsed">
+                                <ctk:SettingsExpander.ItemsHeader>
+                                    <Border Padding="16,4,16,14">
+                                        <StackPanel x:Name="ButtonRemappingContent" Margin="0,12,0,0" Visibility="Collapsed">
                                         <!-- Back Buttons Section -->
                                         <TextBlock x:Uid="S_BackButtons" Text="Back Buttons" FontSize="13" Foreground="#B9C0CC" Margin="0,0,0,8" />
 
@@ -5241,29 +5191,28 @@
                                         </StackPanel>
                                     </StackPanel>
                                     </StackPanel>
-                                </StackPanel>
-                            </Border>
+                                    </Border>
+                                </ctk:SettingsExpander.ItemsHeader>
+                            </ctk:SettingsExpander>
 
                             <!-- Desktop Controls Card -->
-                            <Border Style="{StaticResource CardStyle}">
-                                <ctk:SettingsCard x:Uid="S_DesktopControls" Header="Desktop Controls" Description="RS→Mouse, DPAD/LS→Arrows, A→Enter, B→Esc (Ctrl+Shift+D)" Tapped="ToggleRow_Tapped">
+                            <StackPanel Spacing="4" Margin="0,0,0,6">
+                                <ctk:SettingsCard Style="{StaticResource RowCardStyle}" x:Uid="S_DesktopControls" Header="Desktop Controls" Description="RS→Mouse, DPAD/LS→Arrows, A→Enter, B→Esc (Ctrl+Shift+D)" Tapped="ToggleRow_Tapped">
                                     <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE962;"/></ctk:SettingsCard.HeaderIcon>
                                     <ToggleSwitch x:Name="LegionDesktopControlsToggle"
                                     Style="{StaticResource ModernToggleStyle}"
                                     IsOn="False"/>
                                 </ctk:SettingsCard>
-                            </Border>
+                            </StackPanel>
 
                             <!-- Deadzones Card -->
-                            <Border Style="{StaticResource CardStyle}">
-                                <StackPanel>
-                                    <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
-                                        <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
-                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE7FC;"/></ctk:SettingsCard.HeaderIcon>
-                                            <ctk:SettingsCard.Header>
-                                                <TextBlock x:Uid="S_Deadzones" Text="Deadzones" />
-                                            </ctk:SettingsCard.Header>
-                                            <ToggleButton x:Name="StickDeadzonesExpandToggle" MinWidth="44" MinHeight="40"
+                            <ctk:SettingsExpander Style="{StaticResource GroupExpanderStyle}" Tag="StickDeadzonesExpandToggle" Expanded="LegacyExpander_Toggled" Collapsed="LegacyExpander_Toggled">
+                                <ctk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE7FC;"/></ctk:SettingsExpander.HeaderIcon>
+                                <ctk:SettingsExpander.Header>
+                                    <TextBlock x:Uid="S_Deadzones" Text="Deadzones" />
+                                </ctk:SettingsExpander.Header>
+                                <!-- Legacy expand button: hidden, its Click handler still shows/hides the content. -->
+                                <ToggleButton Visibility="Collapsed" x:Name="StickDeadzonesExpandToggle" MinWidth="44" MinHeight="40"
                                                       IsChecked="False"
                                                       Background="Transparent"
                                                       BorderThickness="0"
@@ -5271,9 +5220,9 @@
                                                       Click="StickDeadzonesExpandToggle_Click">
                                             <FontIcon x:Name="StickDeadzonesExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                         </ToggleButton>
-                                        </ctk:SettingsCard>
-                                    </Grid>
-                                    <StackPanel x:Name="StickDeadzonesContent" Spacing="12" Margin="0,12,0,0" Visibility="Collapsed">
+                                <ctk:SettingsExpander.ItemsHeader>
+                                    <Border Padding="16,4,16,14">
+                                        <StackPanel x:Name="StickDeadzonesContent" Spacing="12" Margin="0,12,0,0" Visibility="Collapsed">
                                         <!-- Stick Deadzones Section -->
                                         <TextBlock x:Uid="S_StickDeadzones" Text="Stick Deadzones" FontSize="13" Foreground="#B9C0CC" Margin="0,0,0,4" />
 
@@ -5382,21 +5331,20 @@
                                             </StackPanel>
                                         </StackPanel>
                                     </StackPanel>
-                                </StackPanel>
-                            </Border>
+                                    </Border>
+                                </ctk:SettingsExpander.ItemsHeader>
+                            </ctk:SettingsExpander>
 
                             <!-- Gyro Settings Section (hidden on devices without HID gyro support) -->
                             <StackPanel x:Name="GyroSection">
                             <!-- Gyro Settings Card -->
-                            <Border Style="{StaticResource CardStyle}">
-                                <StackPanel>
-                                    <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
-                                        <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
-                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE809;"/></ctk:SettingsCard.HeaderIcon>
-                                            <ctk:SettingsCard.Header>
-                                                <TextBlock x:Uid="S_GyroSettings" Text="Gyro Settings" />
-                                            </ctk:SettingsCard.Header>
-                                            <ToggleButton x:Name="GyroSettingsExpandToggle" MinWidth="44" MinHeight="40"
+                            <ctk:SettingsExpander Style="{StaticResource GroupExpanderStyle}" Tag="GyroSettingsExpandToggle" Expanded="LegacyExpander_Toggled" Collapsed="LegacyExpander_Toggled">
+                                <ctk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE809;"/></ctk:SettingsExpander.HeaderIcon>
+                                <ctk:SettingsExpander.Header>
+                                    <TextBlock x:Uid="S_GyroSettings" Text="Gyro Settings" />
+                                </ctk:SettingsExpander.Header>
+                                <!-- Legacy expand button: hidden, its Click handler still shows/hides the content. -->
+                                <ToggleButton Visibility="Collapsed" x:Name="GyroSettingsExpandToggle" MinWidth="44" MinHeight="40"
                                                       IsChecked="False"
                                                       Background="Transparent"
                                                       BorderThickness="0"
@@ -5404,9 +5352,9 @@
                                                       Click="GyroSettingsExpandToggle_Click">
                                             <FontIcon x:Name="GyroSettingsExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                         </ToggleButton>
-                                        </ctk:SettingsCard>
-                                    </Grid>
-                                    <StackPanel x:Name="GyroSettingsContent" Spacing="12" Margin="0,12,0,0" Visibility="Collapsed">
+                                <ctk:SettingsExpander.ItemsHeader>
+                                    <Border Padding="16,4,16,14">
+                                        <StackPanel x:Name="GyroSettingsContent" Spacing="12" Margin="0,12,0,0" Visibility="Collapsed">
                                         <!-- Gyro Target -->
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -5564,18 +5512,24 @@
                                                    Margin="0,6,0,0" />
                                     </StackPanel>
                                     </StackPanel>
-                                </StackPanel>
-                            </Border>
+                                    </Border>
+                                </ctk:SettingsExpander.ItemsHeader>
+                            </ctk:SettingsExpander>
                             </StackPanel>
                             <!-- End Gyro Section -->
 
                             <!-- Joystick as Mouse Card -->
                             <Border Style="{StaticResource CardStyle}">
                                 <StackPanel Spacing="12">
-                                    <TextBlock x:Uid="S_JoystickAsMouse" Text="Joystick as Mouse" Style="{StaticResource CardTitleStyle}" />
-                                    <TextBlock x:Uid="S_UseAJoystickToControl" Text="Use a joystick to control mouse cursor"
-                                               Style="{StaticResource CardCaptionStyle}" />
-
+                                    <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                        <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE962;"/></ctk:SettingsCard.HeaderIcon>
+                                        <ctk:SettingsCard.Header>
+                                            <TextBlock x:Uid="S_JoystickAsMouse" Text="Joystick as Mouse" />
+                                        </ctk:SettingsCard.Header>
+                                        <ctk:SettingsCard.Description>
+                                            <TextBlock x:Uid="S_UseAJoystickToControl" Text="Use a joystick to control mouse cursor" />
+                                        </ctk:SettingsCard.Description>
+                                    </ctk:SettingsCard>
                                     <!-- Mode Selection -->
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -5615,18 +5569,16 @@
                             <!-- End Controller Remapping Section -->
 
                             <!-- Special Remapping Card -->
-                            <Border Style="{StaticResource CardStyle}">
-                                <StackPanel>
-                                    <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
-                                        <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
-                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE8AB;"/></ctk:SettingsCard.HeaderIcon>
-                                            <ctk:SettingsCard.Header>
-                                                <TextBlock x:Uid="S_SpecialRemapping" Text="Special Remapping" />
-                                            </ctk:SettingsCard.Header>
-                                            <ctk:SettingsCard.Description>
-                                                <TextBlock x:Uid="S_MapLegionLRButtons" Text="Map Legion L/R buttons and scroll wheel to custom actions" />
-                                            </ctk:SettingsCard.Description>
-                                            <ToggleButton x:Name="SpecialRemappingExpandButton" MinWidth="44" MinHeight="40"
+                            <ctk:SettingsExpander Style="{StaticResource GroupExpanderStyle}" Tag="SpecialRemappingExpandButton" Expanded="LegacyExpander_Toggled" Collapsed="LegacyExpander_Toggled">
+                                <ctk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE8AB;"/></ctk:SettingsExpander.HeaderIcon>
+                                <ctk:SettingsExpander.Header>
+                                    <TextBlock x:Uid="S_SpecialRemapping" Text="Special Remapping" />
+                                </ctk:SettingsExpander.Header>
+                                <ctk:SettingsExpander.Description>
+                                    <TextBlock x:Uid="S_MapLegionLRButtons" Text="Map Legion L/R buttons and scroll wheel to custom actions" />
+                                </ctk:SettingsExpander.Description>
+                                <!-- Legacy expand button: hidden, its Click handler still shows/hides the content. -->
+                                <ToggleButton Visibility="Collapsed" x:Name="SpecialRemappingExpandButton" MinWidth="44" MinHeight="40"
                                                       IsChecked="False"
                                                       Background="Transparent"
                                                       BorderThickness="0"
@@ -5634,10 +5586,9 @@
                                                       Click="SpecialRemappingExpandButton_Click">
                                             <FontIcon x:Name="SpecialRemappingExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                         </ToggleButton>
-                                        </ctk:SettingsCard>
-                                    </Grid>
-
-                                    <StackPanel x:Name="SpecialRemappingContent" Visibility="Collapsed" Margin="0,12,0,0">
+                                <ctk:SettingsExpander.ItemsHeader>
+                                    <Border Padding="16,4,16,14">
+                                        <StackPanel x:Name="SpecialRemappingContent" Visibility="Collapsed" Margin="0,12,0,0">
                                         <!-- Legion Buttons Section -->
                                         <TextBlock x:Uid="S_LEGIONBUTTONS" Text="LEGION BUTTONS" FontSize="12" FontWeight="SemiBold" Foreground="#B9C0CC" Margin="0,0,0,8" />
 
@@ -5882,8 +5833,9 @@
                                                        Margin="0,8,0,0"/>
                                         </StackPanel>
                                     </StackPanel>
-                                </StackPanel>
-                            </Border>
+                                    </Border>
+                                </ctk:SettingsExpander.ItemsHeader>
+                            </ctk:SettingsExpander>
 
                             <!-- Brightness Gesture Card -->
                             <Border Style="{StaticResource CardStyle}">
@@ -5963,18 +5915,16 @@
                             <!-- No dedicated header - grouped under "Controller Settings" above, with Touchpad & Vibration -->
                             <StackPanel x:Name="LightingSection">
                             <!-- Lighting Card -->
-                            <Border Style="{StaticResource CardStyle}">
-                                <StackPanel>
-                                    <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
-                                        <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
-                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE781;"/></ctk:SettingsCard.HeaderIcon>
-                                            <ctk:SettingsCard.Header>
-                                                <TextBlock x:Uid="S_Lighting" Text="Lighting" />
-                                            </ctk:SettingsCard.Header>
-                                            <ctk:SettingsCard.Description>
-                                                <TextBlock x:Uid="S_ControllerRGBAndPowerButton" Text="Controller RGB and power button lighting" />
-                                            </ctk:SettingsCard.Description>
-                                            <ToggleButton x:Name="LightingExpandToggle" MinWidth="44" MinHeight="40"
+                            <ctk:SettingsExpander Style="{StaticResource GroupExpanderStyle}" Tag="LightingExpandToggle" Expanded="LegacyExpander_Toggled" Collapsed="LegacyExpander_Toggled">
+                                <ctk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE781;"/></ctk:SettingsExpander.HeaderIcon>
+                                <ctk:SettingsExpander.Header>
+                                    <TextBlock x:Uid="S_Lighting" Text="Lighting" />
+                                </ctk:SettingsExpander.Header>
+                                <ctk:SettingsExpander.Description>
+                                    <TextBlock x:Uid="S_ControllerRGBAndPowerButton" Text="Controller RGB and power button lighting" />
+                                </ctk:SettingsExpander.Description>
+                                <!-- Legacy expand button: hidden, its Click handler still shows/hides the content. -->
+                                <ToggleButton Visibility="Collapsed" x:Name="LightingExpandToggle" MinWidth="44" MinHeight="40"
                                                       IsChecked="False"
                                                       Background="Transparent"
                                                       BorderThickness="0"
@@ -5982,9 +5932,9 @@
                                                       Click="LightingExpandToggle_Click">
                                             <FontIcon x:Name="LightingExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                         </ToggleButton>
-                                        </ctk:SettingsCard>
-                                    </Grid>
-                                    <StackPanel x:Name="LightingContent" Spacing="12" Margin="0,12,0,0" Visibility="Collapsed">
+                                <ctk:SettingsExpander.ItemsHeader>
+                                    <Border Padding="16,4,16,14">
+                                        <StackPanel x:Name="LightingContent" Spacing="12" Margin="0,12,0,0" Visibility="Collapsed">
                                         <!-- Light Mode -->
                                         <StackPanel>
                                             <TextBlock x:Uid="S_LightMode" Text="Light Mode" FontSize="14" Foreground="#B9C0CC" Margin="0,0,0,4" />
@@ -6087,8 +6037,9 @@
                                         </Grid>
 
                                     </StackPanel>
-                                </StackPanel>
-                            </Border>
+                                    </Border>
+                                </ctk:SettingsExpander.ItemsHeader>
+                            </ctk:SettingsExpander>
                             </StackPanel>
                         </StackPanel>
                         <StackPanel x:Name="LegionDeviceSection" Visibility="Collapsed">
@@ -6101,14 +6052,14 @@
                                  sliders were likewise moved to the Performance tab. One source of truth. -->
 
                             <!-- Fan Full Speed Card -->
-                            <Border Style="{StaticResource CardStyle}">
-                                <ctk:SettingsCard x:Uid="S_FanFullSpeed" Header="Fan Full Speed" Description="Override fan curve for maximum cooling" Tapped="ToggleRow_Tapped">
+                            <StackPanel Spacing="4" Margin="0,0,0,6">
+                                <ctk:SettingsCard Style="{StaticResource RowCardStyle}" x:Uid="S_FanFullSpeed" Header="Fan Full Speed" Description="Override fan curve for maximum cooling" Tapped="ToggleRow_Tapped">
                                     <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE9CA;"/></ctk:SettingsCard.HeaderIcon>
                                     <ToggleSwitch x:Name="LegionFanFullSpeedToggle"
                                     Style="{StaticResource ModernToggleStyle}"
                                     IsOn="False"/>
                                 </ctk:SettingsCard>
-                            </Border>
+                            </StackPanel>
 
                             <!-- Fan Curve Graph Card -->
                             <Border x:Name="LegionFanCurveCard" Style="{StaticResource CardStyle}">
@@ -6314,42 +6265,40 @@
                             <TextBlock x:Uid="S_Battery" Text="Battery" Style="{StaticResource SectionHeaderStyle}" />
 
                             <!-- Battery Charge Limit Card -->
-                            <Border Style="{StaticResource CardStyle}">
-                                <ctk:SettingsCard x:Uid="S_ChargeLimit80" Header="Charge Limit (80%)" Description="Limit battery charge to extend lifespan" Tapped="ToggleRow_Tapped">
+                            <StackPanel Spacing="4" Margin="0,0,0,6">
+                                <ctk:SettingsCard Style="{StaticResource RowCardStyle}" x:Uid="S_ChargeLimit80" Header="Charge Limit (80%)" Description="Limit battery charge to extend lifespan" Tapped="ToggleRow_Tapped">
                                     <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xEA95;"/></ctk:SettingsCard.HeaderIcon>
                                     <ToggleSwitch x:Name="LegionChargeLimitToggle"
                                     Style="{StaticResource ModernToggleStyle}"
                                     IsOn="False"/>
                                 </ctk:SettingsCard>
-                            </Border>
+                            </StackPanel>
 
                             <!-- Game Bar Section: put GoTweaks in the device-maker slot left of Home -->
                             <TextBlock x:Uid="S_GameBar" Text="Game Bar" Style="{StaticResource SectionHeaderStyle}" />
-                            <Border Style="{StaticResource CardStyle}">
-                                <ctk:SettingsCard x:Uid="S_ShowGoTweaksFirst" Header="Show GoTweaks first" Description="Takes Legion Space's spot left of Home. Game Bar closes to apply; open it again." Tapped="ToggleRow_Tapped">
+                            <StackPanel Spacing="4" Margin="0,0,0,6">
+                                <ctk:SettingsCard Style="{StaticResource RowCardStyle}" x:Uid="S_ShowGoTweaksFirst" Header="Show GoTweaks first" Description="Takes Legion Space's spot left of Home. Game Bar closes to apply; open it again." Tapped="ToggleRow_Tapped">
                                     <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE7FC;"/></ctk:SettingsCard.HeaderIcon>
                                     <ToggleSwitch x:Name="GameBarFirstSlotToggle"
                                     Style="{StaticResource ModernToggleStyle}"
                                     IsOn="False"/>
                                 </ctk:SettingsCard>
-                            </Border>
+                            </StackPanel>
 
                             <!-- Driver Updates Card (Lenovo): machine type + installed BIOS +
                                  direct link to the correct Lenovo downloads page, with a
                                  best-effort live driver list fetched from pcsupport.lenovo.com -->
                             <TextBlock x:Uid="S_DriverUpdates" Text="Driver Updates" Style="{StaticResource SectionHeaderStyle}" />
-                            <Border x:Name="DriverUpdatesCard" Style="{StaticResource CardStyle}">
-                                <StackPanel>
-                                    <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
-                                        <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
-                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE896;"/></ctk:SettingsCard.HeaderIcon>
-                                            <ctk:SettingsCard.Header>
-                                                <TextBlock x:Uid="S_LenovoDriverUpdates" Text="Lenovo Driver Updates" />
-                                            </ctk:SettingsCard.Header>
-                                            <ctk:SettingsCard.Description>
-                                                <TextBlock x:Uid="S_CheckLenovoSDriverPage" Text="Check Lenovo's driver page for this machine type" />
-                                            </ctk:SettingsCard.Description>
-                                            <ToggleButton x:Name="DriverUpdatesExpandToggle" MinWidth="44" MinHeight="40"
+                            <ctk:SettingsExpander x:Name="DriverUpdatesCard" Style="{StaticResource GroupExpanderStyle}" Tag="DriverUpdatesExpandToggle" Expanded="LegacyExpander_Toggled" Collapsed="LegacyExpander_Toggled">
+                                <ctk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE896;"/></ctk:SettingsExpander.HeaderIcon>
+                                <ctk:SettingsExpander.Header>
+                                    <TextBlock x:Uid="S_LenovoDriverUpdates" Text="Lenovo Driver Updates" />
+                                </ctk:SettingsExpander.Header>
+                                <ctk:SettingsExpander.Description>
+                                    <TextBlock x:Uid="S_CheckLenovoSDriverPage" Text="Check Lenovo's driver page for this machine type" />
+                                </ctk:SettingsExpander.Description>
+                                <!-- Legacy expand button: hidden, its Click handler still shows/hides the content. -->
+                                <ToggleButton Visibility="Collapsed" x:Name="DriverUpdatesExpandToggle" MinWidth="44" MinHeight="40"
                                                       IsChecked="True"
                                                       Background="Transparent"
                                                       BorderThickness="0"
@@ -6357,9 +6306,9 @@
                                                       Click="DriverUpdatesExpandToggle_Click">
                                             <FontIcon x:Name="DriverUpdatesExpandIcon" Glyph="&#xE70E;" FontSize="13"/>
                                         </ToggleButton>
-                                        </ctk:SettingsCard>
-                                    </Grid>
-                                    <StackPanel x:Name="DriverUpdatesContent" Spacing="10" Margin="0,12,0,0">
+                                <ctk:SettingsExpander.ItemsHeader>
+                                    <Border Padding="16,4,16,14">
+                                        <StackPanel x:Name="DriverUpdatesContent" Spacing="10" Margin="0,12,0,0">
                                         <!-- Machine info: two rows of label:value -->
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -6478,8 +6427,9 @@
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
                                     </StackPanel>
-                                </StackPanel>
-                            </Border>
+                                    </Border>
+                                </ctk:SettingsExpander.ItemsHeader>
+                            </ctk:SettingsExpander>
 
                         </StackPanel>
                     </StackPanel>
@@ -6493,13 +6443,16 @@
                         <!-- Device Status Card -->
                         <Border Style="{StaticResource CardStyle}">
                             <StackPanel>
-                                <TextBlock x:Uid="GPDDeviceNameText" x:Name="GPDDeviceNameText" Text="GPD Device" Style="{StaticResource CardTitleStyle}" />
-                                <TextBlock x:Uid="GPDConnectionStatusText" x:Name="GPDConnectionStatusText"
-                                           Text="Detecting..."
-                                           FontSize="14"
-                                           Foreground="#B9C0CC"
-                                           Margin="0,4,0,0" />
-                            </StackPanel>
+                                <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
+                                    <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE7F8;"/></ctk:SettingsCard.HeaderIcon>
+                                    <ctk:SettingsCard.Header>
+                                        <TextBlock x:Uid="GPDDeviceNameText" x:Name="GPDDeviceNameText" Text="GPD Device" />
+                                    </ctk:SettingsCard.Header>
+                                    <ctk:SettingsCard.Description>
+                                        <TextBlock x:Uid="GPDConnectionStatusText" x:Name="GPDConnectionStatusText" Text="Detecting..." />
+                                    </ctk:SettingsCard.Description>
+                                </ctk:SettingsCard>
+                                </StackPanel>
                         </Border>
 
                         <!-- Fan Control Card (Win 5 specific) -->
@@ -6528,24 +6481,16 @@
                                     <!-- Manual Fan Controls (visible when curve OFF) -->
                                     <StackPanel x:Name="GPDManualFanContent">
                                         <!-- Fan Mode Toggle -->
-                                        <Grid Margin="0,16,0,0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel Grid.Column="0">
-                                                <TextBlock x:Uid="S_FanMode" Text="Fan Mode" Foreground="#FFFFFF" FontSize="14" />
-                                                <TextBlock x:Uid="GPDFanModeText" x:Name="GPDFanModeText"
-                                                           Text="Auto"
-                                                           FontSize="13"
-                                                           Foreground="#B9C0CC" />
-                                            </StackPanel>
-                                            <ToggleSwitch x:Name="GPDFanModeToggle"
-                                                          Grid.Column="1"
-                                                          Style="{StaticResource ModernToggleStyle}"
-                                                          IsOn="False"
-                                                          Toggled="GPDFanModeToggle_Toggled"/>
-                                        </Grid>
+                                        <ctk:SettingsCard Tapped="ToggleRow_Tapped">
+                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE7FC;"/></ctk:SettingsCard.HeaderIcon>
+                                            <ctk:SettingsCard.Header>
+                                                <TextBlock x:Uid="S_FanMode" Text="Fan Mode" />
+                                            </ctk:SettingsCard.Header>
+                                            <ctk:SettingsCard.Description>
+                                                <TextBlock x:Uid="GPDFanModeText" x:Name="GPDFanModeText" Text="Auto" />
+                                            </ctk:SettingsCard.Description>
+                                            <ToggleSwitch x:Name="GPDFanModeToggle" Style="{StaticResource ModernToggleStyle}" IsOn="False" Toggled="GPDFanModeToggle_Toggled"/>
+                                        </ctk:SettingsCard>
 
                                         <!-- Fan Speed Slider (visible only in manual mode) -->
                                         <StackPanel x:Name="GPDFanSpeedSection" Margin="0,16,0,0" Visibility="Collapsed">
@@ -6687,18 +6632,16 @@
                         <StackPanel x:Name="GPDButtonRemapSection" Visibility="Collapsed">
                             <TextBlock x:Uid="S_ButtonRemapping" Text="Button Remapping" Style="{StaticResource SectionHeaderStyle}" />
 
-                            <Border Style="{StaticResource CardStyle}">
-                                <StackPanel>
-                                    <Grid Background="Transparent" Tapped="ExpandHeader_Tapped">
-                                        <ctk:SettingsCard Style="{StaticResource HeaderRowStyle}">
-                                            <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE8AB;"/></ctk:SettingsCard.HeaderIcon>
-                                            <ctk:SettingsCard.Header>
-                                                <TextBlock x:Uid="S_ButtonRemapping" Text="Button Remapping" />
-                                            </ctk:SettingsCard.Header>
-                                            <ctk:SettingsCard.Description>
-                                                <TextBlock x:Uid="S_RemapControllerButtonsToKeyboard" Text="Remap controller buttons to keyboard or mouse" />
-                                            </ctk:SettingsCard.Description>
-                                            <ToggleButton x:Name="GPDButtonRemapExpandToggle" MinWidth="44" MinHeight="40"
+                            <ctk:SettingsExpander Style="{StaticResource GroupExpanderStyle}" Tag="GPDButtonRemapExpandToggle" Expanded="LegacyExpander_Toggled" Collapsed="LegacyExpander_Toggled">
+                                <ctk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE8AB;"/></ctk:SettingsExpander.HeaderIcon>
+                                <ctk:SettingsExpander.Header>
+                                    <TextBlock x:Uid="S_ButtonRemapping" Text="Button Remapping" />
+                                </ctk:SettingsExpander.Header>
+                                <ctk:SettingsExpander.Description>
+                                    <TextBlock x:Uid="S_RemapControllerButtonsToKeyboard" Text="Remap controller buttons to keyboard or mouse" />
+                                </ctk:SettingsExpander.Description>
+                                <!-- Legacy expand button: hidden, its Click handler still shows/hides the content. -->
+                                <ToggleButton Visibility="Collapsed" x:Name="GPDButtonRemapExpandToggle" MinWidth="44" MinHeight="40"
                                                       IsChecked="False"
                                                       Background="Transparent"
                                                       BorderThickness="0"
@@ -6706,10 +6649,9 @@
                                                       Click="GPDButtonRemapExpandToggle_Click">
                                             <FontIcon x:Name="GPDButtonRemapExpandIcon" Glyph="&#xE70D;" FontSize="13"/>
                                         </ToggleButton>
-                                        </ctk:SettingsCard>
-                                    </Grid>
-
-                                    <StackPanel x:Name="GPDButtonRemapContent" Spacing="8" Margin="0,12,0,0" Visibility="Collapsed">
+                                <ctk:SettingsExpander.ItemsHeader>
+                                    <Border Padding="16,4,16,14">
+                                        <StackPanel x:Name="GPDButtonRemapContent" Spacing="8" Margin="0,12,0,0" Visibility="Collapsed">
 
                                         <!-- Face Buttons -->
                                         <TextBlock x:Uid="S_FaceButtons" Text="Face Buttons" Foreground="#FFFFFF" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,4" />
@@ -7021,8 +6963,9 @@
                                                     Click="GPDRestoreDefaultsButton_Click" />
                                         </Grid>
                                     </StackPanel>
-                                </StackPanel>
-                            </Border>
+                                    </Border>
+                                </ctk:SettingsExpander.ItemsHeader>
+                            </ctk:SettingsExpander>
                         </StackPanel>
 
                     </StackPanel>
