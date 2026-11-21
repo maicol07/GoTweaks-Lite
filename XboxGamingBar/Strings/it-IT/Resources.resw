@@ -10,7 +10,7 @@
   <data name="ACProfilePowerModeText.Text" xml:space="preserve"><value>Bilanciato</value></data>
   <data name="ACProfileTDPModeText.Text" xml:space="preserve"><value>Bilanciato</value></data>
   <data name="ActiveProfileText.Text" xml:space="preserve"><value>Impostazioni globali</value></data>
-  <data name="AddCustomShortcutButton.Content" xml:space="preserve"><value>Aggiungi riquadro scorciatoia</value></data>
+  <data name="AddCustomShortcutButton.Content" xml:space="preserve"><value>Aggiungi riquadro</value></data>
   <data name="AutoTDPCurrentFPSValue.Text" xml:space="preserve"><value>-- FPS</value></data>
   <data name="AutoTDPTargetFPSValue.Text" xml:space="preserve"><value>60 FPS</value></data>
   <data name="CalibrateGyroBiasButton.Content" xml:space="preserve"><value>Calibra bias giroscopio</value></data>
@@ -32,15 +32,15 @@
   <data name="DCProfilePowerModeText.Text" xml:space="preserve"><value>Bilanciato</value></data>
   <data name="DCProfileTDPModeText.Text" xml:space="preserve"><value>Bilanciato</value></data>
   <data name="DetectedGameText.Text" xml:space="preserve"><value>Nessun gioco rilevato</value></data>
-  <data name="DisableSleepTimersButton.Content" xml:space="preserve"><value>Disattiva timer di sospensione (AC+DC)</value></data>
+  <data name="DisableSleepTimersButton.Content" xml:space="preserve"><value>No sospensione (AC+DC)</value></data>
   <data name="DriverUpdatesCheckButton.Content" xml:space="preserve"><value>Cerca aggiornamenti</value></data>
-  <data name="DriverUpdatesHideBannerCheckbox.Content" xml:space="preserve"><value>Nascondi il banner degli aggiornamenti driver nella scheda Rapide</value></data>
+  <data name="DriverUpdatesHideBannerCheckbox.Content" xml:space="preserve"><value>Nascondi avviso driver in Rapide</value></data>
   <data name="DriverUpdatesOpenPageButton.Content" xml:space="preserve"><value>Apri la pagina driver Lenovo</value></data>
   <data name="DriverUpdatesShowUtilitiesCheckbox.Content" xml:space="preserve"><value>Mostra utilità e diagnostica</value></data>
   <data name="DriverUpdatesStatusText.Text" xml:space="preserve"><value>Premi Cerca aggiornamenti per interrogare Lenovo.</value></data>
   <data name="DriverUpdatesUpdateAllButton.Content" xml:space="preserve"><value>Aggiorna tutto</value></data>
   <data name="DriverUpdatesUpdateOnStartCheckbox.Content" xml:space="preserve"><value>Cerca aggiornamenti driver all'avvio</value></data>
-  <data name="ExportAllDataButton.Content" xml:space="preserve"><value>Esporta tutti i dati</value></data>
+  <data name="ExportAllDataButton.Content" xml:space="preserve"><value>Esporta dati</value></data>
   <data name="ExportLogsButton.Content" xml:space="preserve"><value>Esporta log</value></data>
   <data name="FanRPMLabel.Text" xml:space="preserve"><value>-- RPM</value></data>
   <data name="GPDApplyMappingsButton.Content" xml:space="preserve"><value>Applica mappature</value></data>
@@ -48,7 +48,7 @@
   <data name="GPDDeviceNameText.Text" xml:space="preserve"><value>Dispositivo GPD</value></data>
   <data name="GPDFanModeText.Text" xml:space="preserve"><value>Auto</value></data>
   <data name="GPDFanRPMText.Text" xml:space="preserve"><value>-- RPM</value></data>
-  <data name="GPDRestoreDefaultsButton.Content" xml:space="preserve"><value>Ripristina predefiniti</value></data>
+  <data name="GPDRestoreDefaultsButton.Content" xml:space="preserve"><value>Predefiniti</value></data>
   <data name="GameACProfileCPUBoostText.Text" xml:space="preserve"><value>Off</value></data>
   <data name="GameACProfileFPSLimitText.Text" xml:space="preserve"><value>Off</value></data>
   <data name="GameACProfileOverlayLevelText.Text" xml:space="preserve"><value>Off</value></data>
@@ -76,9 +76,9 @@
   <data name="HelperStatusIndicator.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve"><value>Stato helper</value></data>
   <data name="HelperStatusText.Text" xml:space="preserve"><value>Disconnesso</value></data>
   <data name="HotkeysSummary.Text" xml:space="preserve"><value>Associa combinazioni del controller a scorciatoie da tastiera</value></data>
-  <data name="ImportAllDataButton.Content" xml:space="preserve"><value>Importa tutti i dati</value></data>
+  <data name="ImportAllDataButton.Content" xml:space="preserve"><value>Importa dati</value></data>
   <data name="KillGoTweaksButton.Content" xml:space="preserve"><value>Chiudi GoTweaks Lite</value></data>
-  <data name="LegionCalibrateGyroButton.Content" xml:space="preserve"><value>Calibra giroscopio</value></data>
+  <data name="LegionCalibrateGyroButton.Content" xml:space="preserve"><value>Calibra giro</value></data>
   <data name="LegionCalibrateGyroStatus.Text" xml:space="preserve"><value>Tieni fermi i controller e premi il pulsante: il bias viene acquisito dal firmware del controller.</value></data>
   <data name="LegionControllerModeStatusText.Text" xml:space="preserve"><value>Controller non rilevati</value></data>
   <data name="LegionDeviceNameText.Text" xml:space="preserve"><value>Controller Legion Go</value></data>
@@ -94,20 +94,20 @@
   <data name="LegionSectionLighting.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Luci</value></data>
   <data name="LoadLosslessProfilesButton.Content" xml:space="preserve"><value>Carica profili</value></data>
   <data name="LosslessProfileSelector.Header" xml:space="preserve"><value>Profilo</value></data>
-  <data name="LosslessProfilesStatus.Text" xml:space="preserve"><value>Carica i profili per modificare le impostazioni di scaling.</value></data>
+  <data name="LosslessProfilesStatus.Text" xml:space="preserve"><value>Carica i profili per modificare lo scaling.</value></data>
   <data name="MetricCheck_BatteryDrain.Content" xml:space="preserve"><value>Consumo batteria</value></data>
   <data name="MetricCheck_BatteryLevel.Content" xml:space="preserve"><value>Livello batteria</value></data>
-  <data name="MetricCheck_CPUTemp.Content" xml:space="preserve"><value>Temperatura CPU</value></data>
+  <data name="MetricCheck_CPUTemp.Content" xml:space="preserve"><value>Temp. CPU</value></data>
   <data name="MetricCheck_CPUUsage.Content" xml:space="preserve"><value>Utilizzo CPU</value></data>
   <data name="MetricCheck_CPUWattage.Content" xml:space="preserve"><value>Potenza CPU</value></data>
-  <data name="MetricCheck_GPUTemp.Content" xml:space="preserve"><value>Temperatura GPU</value></data>
+  <data name="MetricCheck_GPUTemp.Content" xml:space="preserve"><value>Temp. GPU</value></data>
   <data name="MetricCheck_GPUUsage.Content" xml:space="preserve"><value>Utilizzo GPU</value></data>
   <data name="MetricCheck_GPUWattage.Content" xml:space="preserve"><value>Potenza GPU</value></data>
-  <data name="MetricCheck_MemoryUsage.Content" xml:space="preserve"><value>Utilizzo memoria</value></data>
+  <data name="MetricCheck_MemoryUsage.Content" xml:space="preserve"><value>Uso memoria</value></data>
   <data name="MetricCheck_TimeRemaining.Content" xml:space="preserve"><value>Tempo rimanente</value></data>
   <data name="MetricCheck_VRAMUsage.Content" xml:space="preserve"><value>VRAM usata</value></data>
   <data name="MetricsSelectionCount.Text" xml:space="preserve"><value>0 selezionate</value></data>
-  <data name="OSDCustomTagsTextBox.PlaceholderText" xml:space="preserve"><value>Inserisci tag RTSS personalizzati...</value></data>
+  <data name="OSDCustomTagsTextBox.PlaceholderText" xml:space="preserve"><value>Tag RTSS personalizzati...</value></data>
   <data name="OSDLabelColorDefaultCheckBox.Content" xml:space="preserve"><value>Predefinito</value></data>
   <data name="OSDPresetComboBox.Header" xml:space="preserve"><value>Preset</value></data>
   <data name="OSDTextColorDynamicCheckBox.Content" xml:space="preserve"><value>Dinamico</value></data>
@@ -115,18 +115,18 @@
   <data name="PerformanceNavItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Prestazioni</value></data>
   <data name="PerformanceOverlayPresetComboBox.Header" xml:space="preserve"><value>Preset overlay (RTSS)</value></data>
   <data name="PowerSourceProfileScopeText.Text" xml:space="preserve"><value>Ambito: profili globali. Divisione AC/DC: disattivata. Attiva il profilo per gioco per impostarlo per ogni gioco.</value></data>
-  <data name="PrepareForUninstallButton.Content" xml:space="preserve"><value>Prepara la disinstallazione</value></data>
+  <data name="PrepareForUninstallButton.Content" xml:space="preserve"><value>Prepara disinstallazione</value></data>
   <data name="ProfileSaveCPUBoostCheckBox.Content" xml:space="preserve"><value>CPU Boost</value></data>
   <data name="ProfileSaveCPUEPPCheckBox.Content" xml:space="preserve"><value>CPU EPP</value></data>
   <data name="ProfileSaveCPUStateCheckBox.Content" xml:space="preserve"><value>Stato CPU</value></data>
   <data name="ProfileSaveFPSLimitCheckBox.Content" xml:space="preserve"><value>Limite FPS</value></data>
-  <data name="ProfileSaveOSPowerModeCheckBox.Content" xml:space="preserve"><value>Modalità alimentazione di Windows</value></data>
+  <data name="ProfileSaveOSPowerModeCheckBox.Content" xml:space="preserve"><value>Alimentazione Windows</value></data>
   <data name="ProfileSaveOverlayLevelCheckBox.Content" xml:space="preserve"><value>Livello overlay</value></data>
-  <data name="ProfileSaveTDPCheckBox.Content" xml:space="preserve"><value>Limite di potenza TDP</value></data>
+  <data name="ProfileSaveTDPCheckBox.Content" xml:space="preserve"><value>Limite TDP</value></data>
   <data name="ProfilesNavItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Profili</value></data>
   <data name="QuickDriverUpdatesTitleText.Text" xml:space="preserve"><value>Aggiornamenti driver disponibili</value></data>
   <data name="QuickGoTweaksSubtitleText.Text" xml:space="preserve"><value>Tocca per installare</value></data>
-  <data name="QuickGoTweaksTitleText.Text" xml:space="preserve"><value>Aggiornamento di GoTweaks Lite disponibile</value></data>
+  <data name="QuickGoTweaksTitleText.Text" xml:space="preserve"><value>Aggiornamento GoTweaks Lite</value></data>
   <data name="QuickNavItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Rapide</value></data>
   <data name="QuickSettingsCustomizeButton.Content" xml:space="preserve"><value>Personalizza</value></data>
   <data name="ResetGyroBiasButton.Content" xml:space="preserve"><value>Reimposta</value></data>
@@ -146,7 +146,7 @@
   <data name="S_2Minutes.Content" xml:space="preserve"><value>2 minuti</value></data>
   <data name="S_30Min.Content" xml:space="preserve"><value>30 min</value></data>
   <data name="S_30Minutes.Content" xml:space="preserve"><value>30 minuti</value></data>
-  <data name="S_3DOFTo2DConversion.Description" xml:space="preserve"><value>Mappa gli assi del giroscopio sull'uscita dello stick</value></data>
+  <data name="S_3DOFTo2DConversion.Description" xml:space="preserve"><value>Assi del giroscopio sullo stick</value></data>
   <data name="S_3DOFTo2DConversion.Header" xml:space="preserve"><value>Conversione 3DOF in 2D</value></data>
   <data name="S_3DOFTo2DConversion_2.Description" xml:space="preserve"><value>Imbardata (predefinito) = puntatore laser dal retro del dispositivo: ruotando il dispositivo la visuale si sposta, il rollio non ha effetto. Spazio giocatore/mondo usano la gravità come asse di imbardata (la visuale si sposta rispetto all'alto del mondo, non alla direzione del dispositivo).</value></data>
   <data name="S_3DOFTo2DConversion_2.Header" xml:space="preserve"><value>Conversione 3DOF in 2D</value></data>
@@ -165,19 +165,19 @@
   <data name="S_ActivationMode.Text" xml:space="preserve"><value>Modalità di attivazione</value></data>
   <data name="S_ActiveBackendVIIPERUSBIPChanges.Text" xml:space="preserve"><value>Backend attivo: VIIPER (USBIP). Le modifiche hanno effetto subito (hot-swap).</value></data>
   <data name="S_AddCustomRTSSTagsE.Text" xml:space="preserve"><value>Aggiungi tag RTSS personalizzati (es. &lt;FR&gt; per gli FPS)</value></data>
-  <data name="S_AddCustomShortcut.Text" xml:space="preserve"><value>Aggiungi scorciatoia personalizzata</value></data>
+  <data name="S_AddCustomShortcut.Text" xml:space="preserve"><value>Nuova scorciatoia</value></data>
   <data name="S_AdvancedGyroStickOptions.Text" xml:space="preserve"><value>Opzioni avanzate giroscopio → stick</value></data>
   <data name="S_Aggressive.Content" xml:space="preserve"><value>Aggressiva</value></data>
   <data name="S_AltF4.Content" xml:space="preserve"><value>Alt+F4</value></data>
   <data name="S_AltTab.Content" xml:space="preserve"><value>Alt+Tab</value></data>
   <data name="S_AlternateGyroConvention.Description" xml:space="preserve"><value>Inverte la polarità del giroscopio per DS4/DualSense o ruota di 90&#176; per Steam Deck/Switch Pro. Provala se in Steam il giroscopio si muove al contrario.</value></data>
-  <data name="S_AlternateGyroConvention.Header" xml:space="preserve"><value>Convenzione giroscopio alternativa</value></data>
-  <data name="S_AlwaysOn.Content" xml:space="preserve"><value>Sempre attivo</value></data>
+  <data name="S_AlternateGyroConvention.Header" xml:space="preserve"><value>Convenzione giroscopio alt.</value></data>
+  <data name="S_AlwaysOn.Content" xml:space="preserve"><value>Sempre</value></data>
   <data name="S_AntiDeadzone.Text" xml:space="preserve"><value>Anti-deadzone</value></data>
   <data name="S_AntiDeadzoneOfStick.Text" xml:space="preserve"><value>Anti-deadzone (% dello stick)</value></data>
   <data name="S_AntiDeadzoneX.Text" xml:space="preserve"><value>Anti-deadzone X</value></data>
   <data name="S_AntiDeadzoneY.Text" xml:space="preserve"><value>Anti-deadzone Y</value></data>
-  <data name="S_AutoTDP.Description" xml:space="preserve"><value>Regola il TDP in tempo reale per raggiungere gli FPS obiettivo</value></data>
+  <data name="S_AutoTDP.Description" xml:space="preserve"><value>Regola il TDP per raggiungere gli FPS obiettivo</value></data>
   <data name="S_AutoTDP.Header" xml:space="preserve"><value>AutoTDP</value></data>
   <data name="S_Axial.Content" xml:space="preserve"><value>Assiale</value></data>
   <data name="S_Axis.Text" xml:space="preserve"><value>Asse</value></data>
@@ -193,7 +193,7 @@
   <data name="S_BrightnessGesture.Header" xml:space="preserve"><value>Gesto luminosità</value></data>
   <data name="S_Button.Text" xml:space="preserve"><value>Tasto</value></data>
   <data name="S_ButtonRemapping.Text" xml:space="preserve"><value>Rimappatura tasti</value></data>
-  <data name="S_CPUBoost.Description" xml:space="preserve"><value>Frequenze boost più alte</value></data>
+  <data name="S_CPUBoost.Description" xml:space="preserve"><value>Frequenze boost maggiori</value></data>
   <data name="S_CPUBoost.Header" xml:space="preserve"><value>CPU Boost</value></data>
   <data name="S_CPUBoostEPPAndState.Text" xml:space="preserve"><value>CPU Boost, EPP e limiti di stato</value></data>
   <data name="S_CPUBoost_2.Text" xml:space="preserve"><value>CPU Boost</value></data>
@@ -204,7 +204,7 @@
   <data name="S_CPUTemp_2.Text" xml:space="preserve"><value>Temp. CPU: </value></data>
   <data name="S_CalibrateGyroStickOutput.Description" xml:space="preserve"><value>Appoggia il dispositivo fermo per circa 5 secondi. Misura il bias del giroscopio per la conversione in stick.</value></data>
   <data name="S_CalibrateGyroStickOutput.Header" xml:space="preserve"><value>Calibra giroscopio (uscita stick)</value></data>
-  <data name="S_ChargeLimit80.Description" xml:space="preserve"><value>Limita la carica della batteria per allungarne la vita</value></data>
+  <data name="S_ChargeLimit80.Description" xml:space="preserve"><value>Limita la carica per allungare la vita della batteria</value></data>
   <data name="S_ChargeLimit80.Header" xml:space="preserve"><value>Limite di carica (80%)</value></data>
   <data name="S_CheckForUpdatesAutomaticallyOn.Text" xml:space="preserve"><value>Cerca aggiornamenti automaticamente all'avvio</value></data>
   <data name="S_CheckLenovoSDriverPage.Text" xml:space="preserve"><value>Controlla la pagina driver Lenovo per questo tipo di macchina</value></data>
@@ -224,11 +224,11 @@
   <data name="S_CurrentFPS.Text" xml:space="preserve"><value>FPS attuali</value></data>
   <data name="S_CurrentGame.Text" xml:space="preserve"><value>Gioco corrente</value></data>
   <data name="S_CurrentProfile.Text" xml:space="preserve"><value>Profilo attivo</value></data>
-  <data name="S_Custom.Content" xml:space="preserve"><value>Personalizzato</value></data>
-  <data name="S_CustomPowerLimits.Text" xml:space="preserve"><value>Limiti di potenza personalizzati</value></data>
+  <data name="S_Custom.Content" xml:space="preserve"><value>Person.</value></data>
+  <data name="S_CustomPowerLimits.Text" xml:space="preserve"><value>Limiti di potenza</value></data>
   <data name="S_CustomRTSSTags.Text" xml:space="preserve"><value>Tag RTSS personalizzati</value></data>
   <data name="S_CustomizeOverlayAppearanceAndContent.Text" xml:space="preserve"><value>Personalizza aspetto e contenuto dell'overlay</value></data>
-  <data name="S_CustomizeTiles.Text" xml:space="preserve"><value>Personalizza riquadri</value></data>
+  <data name="S_CustomizeTiles.Text" xml:space="preserve"><value>Personalizza</value></data>
   <data name="S_DC.Text" xml:space="preserve"><value>DC</value></data>
   <data name="S_DInputMode.Text" xml:space="preserve"><value>Modalità D-Input</value></data>
   <data name="S_DPad.Text" xml:space="preserve"><value>D-Pad</value></data>
@@ -254,10 +254,10 @@
   <data name="S_Desktop_2.Content" xml:space="preserve"><value>Desktop</value></data>
   <data name="S_Detailed.Content" xml:space="preserve"><value>Dettagliato</value></data>
   <data name="S_Disabled.Content" xml:space="preserve"><value>Disattivata</value></data>
-  <data name="S_DoNothing.Content" xml:space="preserve"><value>Non fare nulla</value></data>
+  <data name="S_DoNothing.Content" xml:space="preserve"><value>Niente</value></data>
   <data name="S_Done.Content" xml:space="preserve"><value>Fine</value></data>
   <data name="S_Down.Text" xml:space="preserve"><value>Giù</value></data>
-  <data name="S_DriverUpdates.Text" xml:space="preserve"><value>Aggiornamenti driver</value></data>
+  <data name="S_DriverUpdates.Text" xml:space="preserve"><value>Driver</value></data>
   <data name="S_DualSense.Content" xml:space="preserve"><value>DualSense</value></data>
   <data name="S_DualSenseEdge.Content" xml:space="preserve"><value>DualSense Edge</value></data>
   <data name="S_DualShock4.Content" xml:space="preserve"><value>DualShock 4</value></data>
@@ -274,7 +274,7 @@
   <data name="S_FanCurve.Text" xml:space="preserve"><value>Curva ventola</value></data>
   <data name="S_FanCurve_2.Description" xml:space="preserve"><value>Curva della ventola via software in base alla temperatura della CPU</value></data>
   <data name="S_FanCurve_2.Header" xml:space="preserve"><value>Curva ventola</value></data>
-  <data name="S_FanFullSpeed.Description" xml:space="preserve"><value>Ignora la curva della ventola per il raffreddamento massimo</value></data>
+  <data name="S_FanFullSpeed.Description" xml:space="preserve"><value>Ignora la curva per il massimo raffreddamento</value></data>
   <data name="S_FanFullSpeed.Header" xml:space="preserve"><value>Ventola al massimo</value></data>
   <data name="S_FanMode.Text" xml:space="preserve"><value>Modalità ventola</value></data>
   <data name="S_FanSettings.Text" xml:space="preserve"><value>Impostazioni ventola</value></data>
@@ -284,12 +284,12 @@
   <data name="S_FastResponse.Text" xml:space="preserve"><value>Risposta rapida</value></data>
   <data name="S_Firmware.Text" xml:space="preserve"><value>Firmware</value></data>
   <data name="S_FlatParallelToGround.Content" xml:space="preserve"><value>Piatto (parallelo al suolo)</value></data>
-  <data name="S_FocusGoTweaksLite.Content" xml:space="preserve"><value>Porta in primo piano GoTweaks Lite</value></data>
+  <data name="S_FocusGoTweaksLite.Content" xml:space="preserve"><value>Mostra GoTweaks Lite</value></data>
   <data name="S_ForkAuthor.Text" xml:space="preserve"><value>Autore del fork</value></data>
   <data name="S_FrontButtons.Text" xml:space="preserve"><value>Tasti frontali</value></data>
   <data name="S_FrontButtonsDPadStart.Text" xml:space="preserve"><value>Tasti frontali (d-pad, start, dorsali)</value></data>
   <data name="S_Full.Content" xml:space="preserve"><value>Completo</value></data>
-  <data name="S_FullPress.Text" xml:space="preserve"><value>Pressione completa</value></data>
+  <data name="S_FullPress.Text" xml:space="preserve"><value>Pressione max</value></data>
   <data name="S_GameBar.Text" xml:space="preserve"><value>Game Bar</value></data>
   <data name="S_GameDetection.Text" xml:space="preserve"><value>Rilevamento giochi</value></data>
   <data name="S_GamesOnly.Description" xml:space="preserve"><value>Rileva le app con FPS (RTSS) o aggiunte alla Xbox Game Bar</value></data>
@@ -306,7 +306,7 @@
   <data name="S_GyroSettings.Text" xml:space="preserve"><value>Impostazioni giroscopio</value></data>
   <data name="S_GyroSource.Text" xml:space="preserve"><value>Sorgente giroscopio</value></data>
   <data name="S_HairTriggers.Text" xml:space="preserve"><value>Grilletti a scatto</value></data>
-  <data name="S_HandheldDeviceIMU.Content" xml:space="preserve"><value>Dispositivo (IMU integrata)</value></data>
+  <data name="S_HandheldDeviceIMU.Content" xml:space="preserve"><value>Dispositivo (IMU)</value></data>
   <data name="S_HandheldHeldInFront.Content" xml:space="preserve"><value>In mano (davanti a te)</value></data>
   <data name="S_Hibernate.Content" xml:space="preserve"><value>Iberna</value></data>
   <data name="S_HibernateAfter.Text" xml:space="preserve"><value>Iberna dopo</value></data>
@@ -316,9 +316,9 @@
   <data name="S_Hold.Content" xml:space="preserve"><value>Tieni premuto</value></data>
   <data name="S_HoldOffAfterReleaseMs.Text" xml:space="preserve"><value>Attesa dopo il rilascio (ms)</value></data>
   <data name="S_HoldOrientation.Description" xml:space="preserve"><value>Come tieni il dispositivo. Piatto = su un tavolo, In mano = tenuto davanti a te (predefinito).</value></data>
-  <data name="S_HoldOrientation.Header" xml:space="preserve"><value>Orientamento di presa</value></data>
+  <data name="S_HoldOrientation.Header" xml:space="preserve"><value>Orientamento</value></data>
   <data name="S_HoldOrientation_2.Description" xml:space="preserve"><value>Piatto = su un tavolo; In mano = tenuto davanti a te (predefinito per Legion Go 2).</value></data>
-  <data name="S_HoldOrientation_2.Header" xml:space="preserve"><value>Orientamento di presa</value></data>
+  <data name="S_HoldOrientation_2.Header" xml:space="preserve"><value>Orientamento</value></data>
   <data name="S_Hotkeys.Text" xml:space="preserve"><value>Scorciatoie</value></data>
   <data name="S_HotkeysWorkWhenTheWidget.Text" xml:space="preserve"><value>Le scorciatoie funzionano quando il widget è in esecuzione, anche se non è visibile.</value></data>
   <data name="S_IMUAxisMapping.Text" xml:space="preserve"><value>Mappatura assi IMU</value></data>
@@ -341,7 +341,7 @@
   <data name="S_JoyConRight.Content" xml:space="preserve"><value>Joy-Con (destro)</value></data>
   <data name="S_JoystickAsMouse.Text" xml:space="preserve"><value>Joystick come mouse</value></data>
   <data name="S_JumpToTheEstimatedWattage.Text" xml:space="preserve"><value>Salta al wattaggio stimato quando gli FPS sono lontani dall'obiettivo, poi affina</value></data>
-  <data name="S_KeyboardShortcut.Content" xml:space="preserve"><value>Scorciatoia da tastiera</value></data>
+  <data name="S_KeyboardShortcut.Content" xml:space="preserve"><value>Scorciatoia</value></data>
   <data name="S_LEGIONBUTTONS.Text" xml:space="preserve"><value>TASTI LEGION</value></data>
   <data name="S_LS.Text" xml:space="preserve"><value>LS</value></data>
   <data name="S_LSLeft.Text" xml:space="preserve"><value>LS sinistra</value></data>
@@ -369,26 +369,26 @@
   <data name="S_LegionL.Text" xml:space="preserve"><value>Legion L:</value></data>
   <data name="S_LegionR.Text" xml:space="preserve"><value>Legion R:</value></data>
   <data name="S_LegionSpaceService.Text" xml:space="preserve"><value>Servizio Legion Space</value></data>
-  <data name="S_LenovoDriverUpdates.Text" xml:space="preserve"><value>Aggiornamenti driver Lenovo</value></data>
+  <data name="S_LenovoDriverUpdates.Text" xml:space="preserve"><value>Driver Lenovo</value></data>
   <data name="S_LightColor.Text" xml:space="preserve"><value>Colore luce</value></data>
   <data name="S_LightMode.Text" xml:space="preserve"><value>Modalità luce</value></data>
   <data name="S_Lighting.Text" xml:space="preserve"><value>Luci</value></data>
   <data name="S_Linear.Content" xml:space="preserve"><value>Lineare</value></data>
   <data name="S_LinearFlat.Content" xml:space="preserve"><value>Lineare (piatta)</value></data>
-  <data name="S_LiveGyroReadings.Text" xml:space="preserve"><value>Letture giroscopio in tempo reale</value></data>
-  <data name="S_LivePreview.Text" xml:space="preserve"><value>Anteprima dal vivo</value></data>
+  <data name="S_LiveGyroReadings.Text" xml:space="preserve"><value>Giroscopio dal vivo</value></data>
+  <data name="S_LivePreview.Text" xml:space="preserve"><value>Anteprima</value></data>
   <data name="S_LosslessScaling.Text" xml:space="preserve"><value>Lossless Scaling</value></data>
   <data name="S_LtChipotle.Text" xml:space="preserve"><value>LtChipotle</value></data>
   <data name="S_M1SideGripL.Content" xml:space="preserve"><value>M1 (impugnatura L)</value></data>
   <data name="S_M2SideGripR.Content" xml:space="preserve"><value>M2 (impugnatura R)</value></data>
-  <data name="S_M3BackRLower.Content" xml:space="preserve"><value>M3 (posteriore R basso)</value></data>
+  <data name="S_M3BackRLower.Content" xml:space="preserve"><value>M3 (post. R basso)</value></data>
   <data name="S_MSIClaw.Content" xml:space="preserve"><value>MSI Claw</value></data>
   <data name="S_MachineType.Text" xml:space="preserve"><value>Tipo di macchina</value></data>
   <data name="S_MapButtonsToGamepadKeyboard.Text" xml:space="preserve"><value>Associa i tasti a gamepad, tastiera o mouse</value></data>
   <data name="S_MapLegionLRButtons.Text" xml:space="preserve"><value>Associa i tasti Legion L/R e la rotella ad azioni personalizzate</value></data>
   <data name="S_Mapping.Text" xml:space="preserve"><value>Mappatura</value></data>
   <data name="S_Max.Text" xml:space="preserve"><value>Max %</value></data>
-  <data name="S_MaxCooling.Content" xml:space="preserve"><value>Raffreddamento massimo</value></data>
+  <data name="S_MaxCooling.Content" xml:space="preserve"><value>Massimo</value></data>
   <data name="S_MaxTDP.Text" xml:space="preserve"><value>TDP massimo</value></data>
   <data name="S_Medium.Content" xml:space="preserve"><value>Medio</value></data>
   <data name="S_Menu.Text" xml:space="preserve"><value>Menu + ↑</value></data>
@@ -398,7 +398,7 @@
   <data name="S_Min.Text" xml:space="preserve"><value>Min %</value></data>
   <data name="S_MinTDP.Text" xml:space="preserve"><value>TDP minimo</value></data>
   <data name="S_MirrorEmulatedLightbarToStick.Description" xml:space="preserve"><value>Solo DualShock 4 / DualSense Edge: se attivo, il colore LED deciso dal gioco sostituisce quello scelto per gli stick della Legion Go. Off mantiene il colore salvato.</value></data>
-  <data name="S_MirrorEmulatedLightbarToStick.Header" xml:space="preserve"><value>Rispecchia la lightbar emulata sulle luci degli stick</value></data>
+  <data name="S_MirrorEmulatedLightbarToStick.Header" xml:space="preserve"><value>Lightbar emulata sugli stick</value></data>
   <data name="S_MixedLRAveraged.Content" xml:space="preserve"><value>Misto (media L+R)</value></data>
   <data name="S_Model.Text" xml:space="preserve"><value>Modello</value></data>
   <data name="S_ModernStyle.Description" xml:space="preserve"><value>Etichette e unità piccole, colori tenui, numeri stabili. Off = aspetto classico.</value></data>
@@ -407,15 +407,15 @@
   <data name="S_NativeEmulatedDeviceGuidePS.Content" xml:space="preserve"><value>Nativo (Guide/PS del dispositivo emulato)</value></data>
   <data name="S_Never.Content" xml:space="preserve"><value>Mai</value></data>
   <data name="S_Never0Above50C.Text" xml:space="preserve"><value>• Mai 0% sopra circa 50°C</value></data>
-  <data name="S_NintendoSubDevice.Text" xml:space="preserve"><value>Sotto-dispositivo Nintendo</value></data>
-  <data name="S_NintendoVirtualDevice.Content" xml:space="preserve"><value>Dispositivo virtuale Nintendo</value></data>
+  <data name="S_NintendoSubDevice.Text" xml:space="preserve"><value>Sotto-disp. Nintendo</value></data>
+  <data name="S_NintendoVirtualDevice.Content" xml:space="preserve"><value>Nintendo virtuale</value></data>
   <data name="S_None.Content" xml:space="preserve"><value>Nessuno</value></data>
   <data name="S_NowPlaying.Text" xml:space="preserve"><value>In gioco ora</value></data>
   <data name="S_OSDCustomization.Text" xml:space="preserve"><value>Personalizzazione OSD</value></data>
   <data name="S_OSDOpacity.Text" xml:space="preserve"><value>Opacità OSD</value></data>
-  <data name="S_OSDProvider.Description" xml:space="preserve"><value>Scegli la sorgente dell'overlay</value></data>
+  <data name="S_OSDProvider.Description" xml:space="preserve"><value>Sorgente dell'overlay</value></data>
   <data name="S_OSDProvider.Header" xml:space="preserve"><value>Provider OSD</value></data>
-  <data name="S_OSPowerMode.Text" xml:space="preserve"><value>Modalità alimentazione di Windows</value></data>
+  <data name="S_OSPowerMode.Text" xml:space="preserve"><value>Alimentazione Windows</value></data>
   <data name="S_OnBatteryDC.Text" xml:space="preserve"><value>A batteria (DC)</value></data>
   <data name="S_OpenApp.Content" xml:space="preserve"><value>Apri app</value></data>
   <data name="S_OpenGameBar.Content" xml:space="preserve"><value>Apri Game Bar</value></data>
@@ -428,9 +428,9 @@
   <data name="S_PREFERENCES.Text" xml:space="preserve"><value>PREFERENZE</value></data>
   <data name="S_Page.Text" xml:space="preserve"><value>Pagina</value></data>
   <data name="S_Page_2.Content" xml:space="preserve"><value>Pagina</value></data>
-  <data name="S_PauseWhenGameNotFocused.Text" xml:space="preserve"><value>Pausa quando il gioco non è in primo piano</value></data>
+  <data name="S_PauseWhenGameNotFocused.Text" xml:space="preserve"><value>Pausa se il gioco non è attivo</value></data>
   <data name="S_PerHalfGyro.Description" xml:space="preserve"><value>Ogni Joy-Con usa il movimento del proprio controller (off = entrambi usano la sorgente scelta)</value></data>
-  <data name="S_PerHalfGyro.Header" xml:space="preserve"><value>Giroscopio per metà</value></data>
+  <data name="S_PerHalfGyro.Header" xml:space="preserve"><value>Giroscopio separato</value></data>
   <data name="S_Performance.Content" xml:space="preserve"><value>Prestazioni</value></data>
   <data name="S_PerformanceOverlay.Description" xml:space="preserve"><value>FPS, CPU/GPU, RAM/VRAM, batteria, ora</value></data>
   <data name="S_PerformanceOverlay.Header" xml:space="preserve"><value>Overlay prestazioni</value></data>
@@ -440,20 +440,20 @@
   <data name="S_PlayerSpaceGravityAware.Content" xml:space="preserve"><value>Spazio giocatore (con gravità)</value></data>
   <data name="S_PluggedInAC.Text" xml:space="preserve"><value>Alimentato (AC)</value></data>
   <data name="S_PositionShift.Description" xml:space="preserve"><value>Sposta l'OSD ogni minuto per evitare il burn-in</value></data>
-  <data name="S_PositionShift.Header" xml:space="preserve"><value>Spostamento posizione</value></data>
+  <data name="S_PositionShift.Header" xml:space="preserve"><value>Sposta posizione</value></data>
   <data name="S_PowerButton.Text" xml:space="preserve"><value>Tasto di accensione</value></data>
-  <data name="S_PowerButtonBehaviorAndIdle.Text" xml:space="preserve"><value>Comportamento del tasto di accensione e timer di inattività</value></data>
-  <data name="S_PowerLight.Text" xml:space="preserve"><value>Luce di accensione</value></data>
-  <data name="S_PowerMode.Text" xml:space="preserve"><value>Modalità alimentazione</value></data>
-  <data name="S_PowerSleep.Text" xml:space="preserve"><value>Alimentazione e sospensione</value></data>
+  <data name="S_PowerButtonBehaviorAndIdle.Text" xml:space="preserve"><value>Tasto di accensione e timer</value></data>
+  <data name="S_PowerLight.Text" xml:space="preserve"><value>Luce accensione</value></data>
+  <data name="S_PowerMode.Text" xml:space="preserve"><value>Alimentazione</value></data>
+  <data name="S_PowerSleep.Text" xml:space="preserve"><value>Alimentazione</value></data>
   <data name="S_PowerSourceProfile.Description" xml:space="preserve"><value>Profili separati per corrente (AC) e batteria (DC)</value></data>
   <data name="S_PowerSourceProfile.Header" xml:space="preserve"><value>Profilo per alimentazione</value></data>
   <data name="S_PreferExecutable.Description" xml:space="preserve"><value>Usa il nome .exe, altrimenti il titolo della finestra</value></data>
-  <data name="S_PreferExecutable.Header" xml:space="preserve"><value>Preferisci l'eseguibile</value></data>
-  <data name="S_ProcessorPerformanceLimits.Text" xml:space="preserve"><value>Limiti di prestazioni del processore</value></data>
+  <data name="S_PreferExecutable.Header" xml:space="preserve"><value>Usa l'eseguibile</value></data>
+  <data name="S_ProcessorPerformanceLimits.Text" xml:space="preserve"><value>Limiti del processore</value></data>
   <data name="S_ProfileSettings.Text" xml:space="preserve"><value>Impostazioni profilo</value></data>
   <data name="S_PulseLength.Text" xml:space="preserve"><value>Durata impulso</value></data>
-  <data name="S_Quiet.Content" xml:space="preserve"><value>Silenzioso</value></data>
+  <data name="S_Quiet.Content" xml:space="preserve"><value>Silenz.</value></data>
   <data name="S_ROGAlly.Content" xml:space="preserve"><value>ROG Ally</value></data>
   <data name="S_RS.Text" xml:space="preserve"><value>RS</value></data>
   <data name="S_Radial.Content" xml:space="preserve"><value>Radiale</value></data>
@@ -494,10 +494,10 @@
   <data name="S_SensitivityCurve.Text" xml:space="preserve"><value>Curva di sensibilità</value></data>
   <data name="S_SensitivityX.Text" xml:space="preserve"><value>Sensibilità X</value></data>
   <data name="S_SensitivityY.Text" xml:space="preserve"><value>Sensibilità Y</value></data>
-  <data name="S_ShowBrightnessSlider.Description" xml:space="preserve"><value>Luminosità dello schermo integrato</value></data>
+  <data name="S_ShowBrightnessSlider.Description" xml:space="preserve"><value>Luminosità dello schermo</value></data>
   <data name="S_ShowBrightnessSlider.Header" xml:space="preserve"><value>Mostra cursore luminosità</value></data>
   <data name="S_ShowGoTweaksFirst.Description" xml:space="preserve"><value>Prende il posto di Legion Space a sinistra di Home. La Game Bar si chiude per applicare: riaprila.</value></data>
-  <data name="S_ShowGoTweaksFirst.Header" xml:space="preserve"><value>Mostra GoTweaks per primo</value></data>
+  <data name="S_ShowGoTweaksFirst.Header" xml:space="preserve"><value>GoTweaks per primo</value></data>
   <data name="S_ShowMetricsRow.Description" xml:space="preserve"><value>Scegli le metriche qui sotto</value></data>
   <data name="S_ShowMetricsRow.Header" xml:space="preserve"><value>Mostra riga metriche</value></data>
   <data name="S_ShutDown.Content" xml:space="preserve"><value>Arresta</value></data>
@@ -507,25 +507,25 @@
   <data name="S_Small.Content" xml:space="preserve"><value>Piccolo</value></data>
   <data name="S_Smooth.Content" xml:space="preserve"><value>Morbida</value></data>
   <data name="S_SmoothingJitterReduction.Text" xml:space="preserve"><value>Smussamento (riduzione tremolio)</value></data>
-  <data name="S_SnapAim.Content" xml:space="preserve"><value>Mira a scatto</value></data>
+  <data name="S_SnapAim.Content" xml:space="preserve"><value>A scatto</value></data>
   <data name="S_SoftwareGyroBias.Text" xml:space="preserve"><value>Bias giroscopio software</value></data>
-  <data name="S_SonySubDevice.Text" xml:space="preserve"><value>Sotto-dispositivo Sony</value></data>
-  <data name="S_SonyVirtualDevice.Content" xml:space="preserve"><value>Dispositivo virtuale Sony</value></data>
+  <data name="S_SonySubDevice.Text" xml:space="preserve"><value>Sotto-disp. Sony</value></data>
+  <data name="S_SonyVirtualDevice.Content" xml:space="preserve"><value>Sony virtuale</value></data>
   <data name="S_SpecialRemapping.Text" xml:space="preserve"><value>Rimappatura speciale</value></data>
   <data name="S_Speed.Text" xml:space="preserve"><value>Velocità</value></data>
   <data name="S_Start.Content" xml:space="preserve"><value>Start</value></data>
   <data name="S_Steam.Content" xml:space="preserve"><value>Steam</value></data>
   <data name="S_SteamControllerV1Gordon.Content" xml:space="preserve"><value>Steam Controller V1 (Gordon)</value></data>
   <data name="S_SteamDeck.Content" xml:space="preserve"><value>Steam Deck</value></data>
-  <data name="S_SteamSubDevice.Text" xml:space="preserve"><value>Sotto-dispositivo Steam</value></data>
+  <data name="S_SteamSubDevice.Text" xml:space="preserve"><value>Sotto-disp. Steam</value></data>
   <data name="S_Stick.Text" xml:space="preserve"><value>Stick</value></data>
   <data name="S_StickButtons.Text" xml:space="preserve"><value>Tasti degli stick</value></data>
   <data name="S_StickDeadzones.Text" xml:space="preserve"><value>Deadzone degli stick</value></data>
   <data name="S_StickLight.Text" xml:space="preserve"><value>Luce degli stick</value></data>
   <data name="S_StickTouchDeactivation.Description" xml:space="preserve"><value>Sospende il giroscopio mentre muovi lo stick fisico. Utile negli sparatutto: stick per le grandi rotazioni, giroscopio per la mira fine.</value></data>
-  <data name="S_StickTouchDeactivation.Header" xml:space="preserve"><value>Disattivazione al tocco dello stick</value></data>
+  <data name="S_StickTouchDeactivation.Header" xml:space="preserve"><value>Pausa al tocco stick</value></data>
   <data name="S_SticksTriggers.Text" xml:space="preserve"><value>Stick e grilletti</value></data>
-  <data name="S_SwapRumbleMotors.Text" xml:space="preserve"><value>Scambia i motori di vibrazione</value></data>
+  <data name="S_SwapRumbleMotors.Text" xml:space="preserve"><value>Scambia motori vibrazione</value></data>
   <data name="S_SwitchPro.Content" xml:space="preserve"><value>Switch Pro</value></data>
   <data name="S_SwitchPro2.Content" xml:space="preserve"><value>Switch Pro 2</value></data>
   <data name="S_SynthesizesAStickContributionFrom.Text" xml:space="preserve"><value>Genera un contributo sullo stick dal movimento del giroscopio per i dispositivi emulati senza dati di movimento nativi (Xbox 360, Xbox Elite 2, Switch Pro).</value></data>
@@ -533,7 +533,7 @@
   <data name="S_TDPHighLow.Content" xml:space="preserve"><value>TDP (dal più alto)</value></data>
   <data name="S_TDPMode.Text" xml:space="preserve"><value>Modalità TDP</value></data>
   <data name="S_TapTileToSelectTap.Text" xml:space="preserve"><value>Tocca un riquadro per selezionarlo, poi un altro per scambiarli. Tocca di nuovo lo stesso per mostrarlo o nasconderlo.</value></data>
-  <data name="S_TapToViewOnThe.Text" xml:space="preserve"><value>Tocca per vederli nella scheda Legion</value></data>
+  <data name="S_TapToViewOnThe.Text" xml:space="preserve"><value>Tocca per aprire Legion</value></data>
   <data name="S_Target.Text" xml:space="preserve"><value>Destinazione</value></data>
   <data name="S_TargetFPS.Text" xml:space="preserve"><value>FPS obiettivo</value></data>
   <data name="S_TaskManager.Content" xml:space="preserve"><value>Gestione attività</value></data>
@@ -542,11 +542,11 @@
   <data name="S_TheAMDOverlayIsControlled.Text" xml:space="preserve"><value>L'overlay AMD si controlla dal software Adrenaline. Usa Ctrl+Shift+O per attivarlo e Ctrl+Shift+X per cambiare livello.</value></data>
   <data name="S_ThisCurveIsAppliedThrough.Text" xml:space="preserve"><value>• Questa curva è applicata tramite Lenovo WMI quando la modalità TDP è Personalizzato, con minimi imposti dal firmware&#x0a;• Silenzioso, Bilanciato e Prestazioni usano le curve del firmware&#x0a;• Le etichette degli assi (10°C–100°C) sono il formato di salvataggio; il firmware potrebbe mappare le temperature in modo diverso</value></data>
   <data name="S_ThisGestureWasMeantTo.Text" xml:space="preserve"><value>Il gesto doveva funzionare come su SteamOS: tenere premuto Legion R e inclinare lo stick sinistro. Su Windows, tenere premuto Legion L o R per più di circa 5 secondi è gestito direttamente dal firmware del controller, che scollega e ricollega quell'impugnatura (una vera funzione di Legion Space): né GoTweaks né altre app possono cambiarlo. Nessuna delle opzioni qui sotto ha questo limite.</value></data>
-  <data name="S_TightenGainAtFullRamp.Text" xml:space="preserve"><value>Guadagno di stringimento (× a rampa piena)</value></data>
+  <data name="S_TightenGainAtFullRamp.Text" xml:space="preserve"><value>Guadagno (× a rampa piena)</value></data>
   <data name="S_TightenThresholdS0Off.Text" xml:space="preserve"><value>Soglia di stringimento (°/s, 0 = off)</value></data>
-  <data name="S_Toggle.Content" xml:space="preserve"><value>Attiva/disattiva</value></data>
-  <data name="S_ToggleOSD.Content" xml:space="preserve"><value>Attiva/disattiva OSD</value></data>
-  <data name="S_ToggleScaling.Content" xml:space="preserve"><value>Attiva/disattiva scaling</value></data>
+  <data name="S_Toggle.Content" xml:space="preserve"><value>Interruttore</value></data>
+  <data name="S_ToggleOSD.Content" xml:space="preserve"><value>Mostra/nascondi OSD</value></data>
+  <data name="S_ToggleScaling.Content" xml:space="preserve"><value>Scaling on/off</value></data>
   <data name="S_TouchThresholdStick.Text" xml:space="preserve"><value>Soglia di tocco (% stick)</value></data>
   <data name="S_Touchpad.Text" xml:space="preserve"><value>Touchpad</value></data>
   <data name="S_TouchpadAndHapticFeedbackSettings.Text" xml:space="preserve"><value>Impostazioni di touchpad e feedback aptico</value></data>
@@ -554,13 +554,13 @@
   <data name="S_TouchpadHaptics.Text" xml:space="preserve"><value>Aptica touchpad</value></data>
   <data name="S_TouchpadVibration.Text" xml:space="preserve"><value>Touchpad e vibrazione</value></data>
   <data name="S_Trigger.Text" xml:space="preserve"><value>Tasto</value></data>
-  <data name="S_TriggerTravel.Text" xml:space="preserve"><value>Corsa dei grilletti</value></data>
+  <data name="S_TriggerTravel.Text" xml:space="preserve"><value>Corsa grilletti</value></data>
   <data name="S_TriggersLTRT.Text" xml:space="preserve"><value>Grilletti (LT / RT)</value></data>
-  <data name="S_TroubleshootingAndDiagnosticTools.Text" xml:space="preserve"><value>Strumenti di diagnostica e risoluzione problemi</value></data>
+  <data name="S_TroubleshootingAndDiagnosticTools.Text" xml:space="preserve"><value>Diagnostica e risoluzione problemi</value></data>
   <data name="S_TurnOffScreenAfter.Text" xml:space="preserve"><value>Spegni lo schermo dopo</value></data>
   <data name="S_Up.Text" xml:space="preserve"><value>Su</value></data>
-  <data name="S_UseAJoystickToControl.Text" xml:space="preserve"><value>Usa un joystick per controllare il cursore del mouse</value></data>
-  <data name="S_UseHibernateInsteadOfSleep.Text" xml:space="preserve"><value>⚠ Usa l'ibernazione invece della sospensione</value></data>
+  <data name="S_UseAJoystickToControl.Text" xml:space="preserve"><value>Usa uno stick come mouse</value></data>
+  <data name="S_UseHibernateInsteadOfSleep.Text" xml:space="preserve"><value>⚠ Meglio l'ibernazione della sospensione</value></data>
   <data name="S_UsePerGameProfile.Text" xml:space="preserve"><value>Usa profilo per gioco</value></data>
   <data name="S_VIIPERDeviceConfiguration.Text" xml:space="preserve"><value>Configurazione dispositivo VIIPER</value></data>
   <data name="S_Version.Text" xml:space="preserve"><value>Versione</value></data>
@@ -577,20 +577,20 @@
   <data name="S_WhyNotLegionRLeft.Text" xml:space="preserve"><value>Perché non Legion R + stick sinistro, come su SteamOS?</value></data>
   <data name="S_WindowsDefaultSleepModernStandby.Text" xml:space="preserve"><value>La sospensione predefinita di Windows (Modern Standby) a volte scarica la batteria per i risvegli in background o non riprende correttamente. L'ibernazione salva la sessione su disco e spegne completamente, più simile alla sospensione di SteamOS e in genere più affidabile, al costo di una ripresa un po' più lenta. Il consiglio è impostare su Iberna il tasto di accensione e il timer di ibernazione qui sopra (e disattivare il timer di sospensione di Windows).</value></data>
   <data name="S_WindowsOwnSleepTimerCan.Text" xml:space="preserve"><value>Il timer di sospensione di Windows può comunque scattare prima</value></data>
-  <data name="S_WindowsPowerSliderSetting.Text" xml:space="preserve"><value>Impostazione del cursore di alimentazione di Windows</value></data>
+  <data name="S_WindowsPowerSliderSetting.Text" xml:space="preserve"><value>Cursore di alimentazione di Windows</value></data>
   <data name="S_WorldSpace.Content" xml:space="preserve"><value>Spazio mondo</value></data>
   <data name="S_WorldSpaceGravityAware.Content" xml:space="preserve"><value>Spazio mondo (con gravità)</value></data>
-  <data name="S_XInputAnyController.Content" xml:space="preserve"><value>XInput (qualsiasi controller)</value></data>
+  <data name="S_XInputAnyController.Content" xml:space="preserve"><value>XInput (qualsiasi)</value></data>
   <data name="S_XLarge.Content" xml:space="preserve"><value>Molto grande</value></data>
   <data name="S_XXLarge.Content" xml:space="preserve"><value>Enorme</value></data>
   <data name="S_XXXLarge.Content" xml:space="preserve"><value>Gigante</value></data>
   <data name="S_Xbox360.Content" xml:space="preserve"><value>Xbox 360</value></data>
-  <data name="S_Y1BackLUpper.Content" xml:space="preserve"><value>Y1 (posteriore L alto)</value></data>
-  <data name="S_Y2BackLLower.Content" xml:space="preserve"><value>Y2 (posteriore L basso)</value></data>
-  <data name="S_Y3BackRUpper.Content" xml:space="preserve"><value>Y3 (posteriore R alto)</value></data>
-  <data name="S_YawLaserPointer.Content" xml:space="preserve"><value>Imbardata (puntatore laser)</value></data>
-  <data name="S_YawLaserPointerFromBack.Content" xml:space="preserve"><value>Imbardata (puntatore laser dal retro)</value></data>
-  <data name="S_YawRoll.Content" xml:space="preserve"><value>Imbardata + rollio</value></data>
+  <data name="S_Y1BackLUpper.Content" xml:space="preserve"><value>Y1 (post. L alto)</value></data>
+  <data name="S_Y2BackLLower.Content" xml:space="preserve"><value>Y2 (post. L basso)</value></data>
+  <data name="S_Y3BackRUpper.Content" xml:space="preserve"><value>Y3 (post. R alto)</value></data>
+  <data name="S_YawLaserPointer.Content" xml:space="preserve"><value>Imbardata (laser)</value></data>
+  <data name="S_YawLaserPointerFromBack.Content" xml:space="preserve"><value>Imbardata (laser)</value></data>
+  <data name="S_YawRoll.Content" xml:space="preserve"><value>Imbard. + rollio</value></data>
   <data name="S_ZotacZone.Content" xml:space="preserve"><value>Zotac Zone</value></data>
   <data name="SaveLosslessProfileButton.Content" xml:space="preserve"><value>Salva profilo</value></data>
   <data name="ScrollClickCommandApplyButton.Content" xml:space="preserve"><value>Applica</value></data>
@@ -608,15 +608,15 @@
   <data name="ViiperStickGyroCalibrateButton.Content" xml:space="preserve"><value>Calibra</value></data>
   <data name="ViiperStickGyroLiveReadingsText.Text" xml:space="preserve"><value>(nessun dato: verifica che CE sia attivo e il giroscopio sia in uso)</value></data>
   <data name="ViiperStickGyroResetButton.Content" xml:space="preserve"><value>Ripristina i valori consigliati</value></data>
-  <data name="ViiperStickGyroSectionHeader.Text" xml:space="preserve"><value>Giroscopio → stick destro</value></data>
+  <data name="ViiperStickGyroSectionHeader.Text" xml:space="preserve"><value>Giroscopio → stick dx</value></data>
   <data name="ViiperStickGyroStatusBadgeText.Text" xml:space="preserve"><value>OFF</value></data>
   <data name="ViiperStickGyroTouchHoldoffValueText.Text" xml:space="preserve"><value>250 ms</value></data>
-  <data name="ViiperStickTriggerResetButton.Content" xml:space="preserve"><value>Ripristina predefiniti</value></data>
+  <data name="ViiperStickTriggerResetButton.Content" xml:space="preserve"><value>Predefiniti</value></data>
   <data name="ViiperSuppressPhysicalToggle.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Nascondi l'HID nativo del controller alla prossima attivazione</value></data>
   <data name="TileState_On" xml:space="preserve"><value>On</value></data>
   <data name="TileState_Off" xml:space="preserve"><value>Off</value></data>
   <data name="TileState_Action" xml:space="preserve"><value>Azione</value></data>
-  <data name="Tile_TDPMode" xml:space="preserve"><value>Modalità TDP</value></data>
+  <data name="Tile_TDPMode" xml:space="preserve"><value>TDP</value></data>
   <data name="Tile_AutoTDP" xml:space="preserve"><value>AutoTDP</value></data>
   <data name="Tile_PowerMode" xml:space="preserve"><value>Alimentazione</value></data>
   <data name="Tile_CPUBoost" xml:space="preserve"><value>CPU Boost</value></data>
@@ -627,21 +627,21 @@
   <data name="Tile_Fullscreen" xml:space="preserve"><value>Schermo intero</value></data>
   <data name="Tile_LosslessScaling" xml:space="preserve"><value>Lossless</value></data>
   <data name="Tile_Overlay" xml:space="preserve"><value>Overlay</value></data>
-  <data name="Tile_ScreenSaver" xml:space="preserve"><value>Schermo off inattivo</value></data>
+  <data name="Tile_ScreenSaver" xml:space="preserve"><value>Schermo off</value></data>
   <data name="Tile_Keyboard" xml:space="preserve"><value>Tastiera</value></data>
   <data name="Tile_LegionTouchpad" xml:space="preserve"><value>Touchpad</value></data>
   <data name="Tile_Touchscreen" xml:space="preserve"><value>Touchscreen</value></data>
   <data name="Tile_LegionDesktopControls" xml:space="preserve"><value>Desktop</value></data>
-  <data name="Tile_LegionControllerMode" xml:space="preserve"><value>Modalità input</value></data>
+  <data name="Tile_LegionControllerMode" xml:space="preserve"><value>Input</value></data>
   <data name="Tile_LegionLightMode" xml:space="preserve"><value>Modalità luce</value></data>
   <data name="Tile_LegionVibration" xml:space="preserve"><value>Vibrazione</value></data>
   <data name="Tile_LegionVibrationMode" xml:space="preserve"><value>Modo vibr.</value></data>
-  <data name="Tile_LegionPowerLight" xml:space="preserve"><value>Luce accensione</value></data>
+  <data name="Tile_LegionPowerLight" xml:space="preserve"><value>Luce acc.</value></data>
   <data name="Tile_LegionChargeLimit" xml:space="preserve"><value>Limite carica</value></data>
   <data name="Tile_LegionFanFullSpeed" xml:space="preserve"><value>Ventola max</value></data>
   <data name="Tile_Battery" xml:space="preserve"><value>Batteria</value></data>
-  <data name="Tile_ActionTaskManager" xml:space="preserve"><value>Gest. attività</value></data>
-  <data name="Tile_ActionExplorer" xml:space="preserve"><value>Esplora file</value></data>
+  <data name="Tile_ActionTaskManager" xml:space="preserve"><value>Attività</value></data>
+  <data name="Tile_ActionExplorer" xml:space="preserve"><value>Esplora</value></data>
   <data name="Tile_ActionEndTask" xml:space="preserve"><value>Termina</value></data>
   <data name="Tile_ActionHibernate" xml:space="preserve"><value>Iberna</value></data>
   <data name="Metric_Battery" xml:space="preserve"><value>Batteria</value></data>
@@ -651,7 +651,7 @@
   <data name="Code_ACProfilePluggedIn" xml:space="preserve"><value>Profilo AC (alimentato)</value></data>
   <data name="Code_AutoStartBlockedLegionSpaceCan" xml:space="preserve"><value>Avvio automatico bloccato. Legion Space può comunque avviare il servizio quando serve.</value></data>
   <data name="Code_AutoStartEnabledBlockingStopsThe" xml:space="preserve"><value>Avvio automatico attivo. Bloccarlo ferma il servizio se è in esecuzione.</value></data>
-  <data name="Code_BlockAutoStart" xml:space="preserve"><value>Blocca avvio automatico</value></data>
+  <data name="Code_BlockAutoStart" xml:space="preserve"><value>Blocca avvio</value></data>
   <data name="Code_BuiltInOnly" xml:space="preserve"><value>Solo integrato</value></data>
   <data name="Code_CPUTemp" xml:space="preserve"><value>Temp. CPU: </value></data>
   <data name="Code_Calibrating" xml:space="preserve"><value>Calibrazione…</value></data>
@@ -666,21 +666,21 @@
   <data name="Code_Connecting" xml:space="preserve"><value>Connessione...</value></data>
   <data name="Code_CouldNotOpenSteamLaunchLossless" xml:space="preserve"><value>Impossibile aprire Steam. Avvia Lossless Scaling manualmente.</value></data>
   <data name="Code_CouldNotReachTheHelperRefresh" xml:space="preserve"><value>Impossibile contattare l'helper. Premi Aggiorna per riprovare.</value></data>
-  <data name="Code_CustomModeCurveRunning" xml:space="preserve"><value>Curva modalità personalizzata (attiva)</value></data>
+  <data name="Code_CustomModeCurveRunning" xml:space="preserve"><value>Curva personalizzata (attiva)</value></data>
   <data name="Code_DAServiceIsNotInstalled" xml:space="preserve"><value>DAService non è installato.</value></data>
   <data name="Code_DCProfileBattery" xml:space="preserve"><value>Profilo DC (batteria)</value></data>
   <data name="Code_Disconnected" xml:space="preserve"><value>Disconnesso</value></data>
   <data name="Code_Done" xml:space="preserve"><value>Fatto!</value></data>
   <data name="Code_DownloadingGoTweaksUpdate" xml:space="preserve"><value>Download dell'aggiornamento di GoTweaks…</value></data>
   <data name="Code_Downloading" xml:space="preserve"><value>Download...</value></data>
-  <data name="Code_ExportAllData" xml:space="preserve"><value>Esporta tutti i dati</value></data>
-  <data name="Code_ExportFailed" xml:space="preserve"><value>Esportazione non riuscita</value></data>
+  <data name="Code_ExportAllData" xml:space="preserve"><value>Esporta dati</value></data>
+  <data name="Code_ExportFailed" xml:space="preserve"><value>Errore export</value></data>
   <data name="Code_ExportLogs" xml:space="preserve"><value>Esporta log</value></data>
   <data name="Code_Exported" xml:space="preserve"><value>Esportato!</value></data>
   <data name="Code_Exporting" xml:space="preserve"><value>Esportazione...</value></data>
-  <data name="Code_FailedSeeLog" xml:space="preserve"><value>Non riuscito, vedi log</value></data>
+  <data name="Code_FailedSeeLog" xml:space="preserve"><value>Errore, vedi log</value></data>
   <data name="Code_FailedToCommunicateWithHelper" xml:space="preserve"><value>Comunicazione con l'helper non riuscita</value></data>
-  <data name="Code_Failed" xml:space="preserve"><value>Non riuscito</value></data>
+  <data name="Code_Failed" xml:space="preserve"><value>Errore</value></data>
   <data name="Code_GlobalSettings" xml:space="preserve"><value>Impostazioni globali</value></data>
   <data name="Code_HelperNotConnectedCanTCheck" xml:space="preserve"><value>Helper non connesso: impossibile cercare aggiornamenti.</value></data>
   <data name="Code_HelperNotConnectedCanTInstall" xml:space="preserve"><value>Helper non connesso: impossibile installare.</value></data>
@@ -690,7 +690,7 @@
   <data name="Code_HelperReturnedAResponseTheWidget" xml:space="preserve"><value>L'helper ha restituito una risposta che il widget non riesce a leggere.</value></data>
   <data name="Code_HelperReturnedAnUnexpectedResponseShape" xml:space="preserve"><value>L'helper ha restituito una risposta inattesa.</value></data>
   <data name="Code_HoldTheControllersStill" xml:space="preserve"><value>Tieni fermi i controller…</value></data>
-  <data name="Code_ImportAllData" xml:space="preserve"><value>Importa tutti i dati</value></data>
+  <data name="Code_ImportAllData" xml:space="preserve"><value>Importa dati</value></data>
   <data name="Code_Imported" xml:space="preserve"><value>Importato!</value></data>
   <data name="Code_Importing" xml:space="preserve"><value>Importazione...</value></data>
   <data name="Code_InitialSetupInProgressPleaseWait" xml:space="preserve"><value>Configurazione iniziale in corso, attendi...</value></data>
@@ -717,13 +717,13 @@
   <data name="Code_Off_2" xml:space="preserve"><value>Off</value></data>
   <data name="Code_Open" xml:space="preserve"><value>Apri</value></data>
   <data name="Code_PickAtLeast2Buttons" xml:space="preserve"><value>Scegli almeno 2 tasti.</value></data>
-  <data name="Code_PrepareForUninstall" xml:space="preserve"><value>Prepara la disinstallazione</value></data>
+  <data name="Code_PrepareForUninstall" xml:space="preserve"><value>Prepara disinstallazione</value></data>
   <data name="Code_ReadingMachineInfoAndContactingLenovo" xml:space="preserve"><value>Lettura dei dati della macchina e contatto con Lenovo…</value></data>
   <data name="Code_Reconnecting" xml:space="preserve"><value>Riconnessione...</value></data>
   <data name="Code_Refresh" xml:space="preserve"><value>Aggiorna</value></data>
   <data name="Code_RestartHelper" xml:space="preserve"><value>Riavvia helper</value></data>
   <data name="Code_Restarting" xml:space="preserve"><value>Riavvio...</value></data>
-  <data name="Code_RestoreAutoStart" xml:space="preserve"><value>Ripristina avvio automatico</value></data>
+  <data name="Code_RestoreAutoStart" xml:space="preserve"><value>Ripristina avvio</value></data>
   <data name="Code_Restoring" xml:space="preserve"><value>Ripristino...</value></data>
   <data name="Code_ServiceIsStartingOrStoppingRefresh" xml:space="preserve"><value>Il servizio si sta avviando o fermando. Premi Aggiorna per ricontrollare.</value></data>
   <data name="Code_ServiceStatusUnavailableRefreshToTry" xml:space="preserve"><value>Stato del servizio non disponibile. Premi Aggiorna per riprovare.</value></data>
@@ -733,14 +733,14 @@
   <data name="Code_UpdateCheckFailedGitHubUnreachableOr" xml:space="preserve"><value>Controllo aggiornamenti non riuscito (GitHub non raggiungibile o limite di richieste): riprova più tardi.</value></data>
   <data name="Code_UpdateCheckFailedNoResponseFrom" xml:space="preserve"><value>Controllo aggiornamenti non riuscito (nessuna risposta dall'helper).</value></data>
   <data name="Code_Update" xml:space="preserve"><value>Aggiorna</value></data>
-  <data name="Code_Updating" xml:space="preserve"><value>Aggiornamento...</value></data>
-  <data name="Code_UpgradingHelper" xml:space="preserve"><value>Aggiornamento dell'helper...</value></data>
+  <data name="Code_Updating" xml:space="preserve"><value>Aggiorno...</value></data>
+  <data name="Code_UpgradingHelper" xml:space="preserve"><value>Aggiorno l'helper...</value></data>
   <data name="Code_WaitingForTheServiceToFinish" xml:space="preserve"><value>In attesa che il servizio finisca di avviarsi o fermarsi...</value></data>
   <data name="Code_WindowsSleepTimerDisabledACDC" xml:space="preserve"><value>Timer di sospensione di Windows disattivato (AC+DC)</value></data>
   <data name="DeleteProfile" xml:space="preserve"><value>Elimina profilo</value></data>
   <data name="CodeF_1" xml:space="preserve"><value>{0}: seleziona i tasti</value></data>
   <data name="CodeF_2" xml:space="preserve"><value>{0}: inserisci un comando</value></data>
-  <data name="CodeF_3" xml:space="preserve"><value>{0}: non riuscito - {1}</value></data>
+  <data name="CodeF_3" xml:space="preserve"><value>{0}: errore - {1}</value></data>
   <data name="CodeF_4" xml:space="preserve"><value>{0} (build {1})</value></data>
   <data name="CodeF_5" xml:space="preserve"><value>Sei aggiornato! ({0})</value></data>
   <data name="CodeF_6" xml:space="preserve"><value>Nuova versione disponibile: {0}
@@ -748,7 +748,7 @@ Attuale: {1}</value></data>
   <data name="CodeF_7" xml:space="preserve"><value>Controllo aggiornamenti non riuscito: {0}</value></data>
   <data name="CodeF_8" xml:space="preserve"><value>Installazione di {0}...</value></data>
   <data name="CodeF_9" xml:space="preserve"><value>Download di {0}...</value></data>
-  <data name="CodeF_10" xml:space="preserve"><value>Aggiornamento non riuscito: {0}</value></data>
+  <data name="CodeF_10" xml:space="preserve"><value>Errore aggiornamento: {0}</value></data>
   <data name="CodeF_11" xml:space="preserve"><value>Aggiornamento disponibile: {0}</value></data>
   <data name="CodeF_12" xml:space="preserve"><value>Giroscopio → stick {0}</value></data>
   <data name="CodeF_13" xml:space="preserve"><value>Tieni fermo su una superficie piana... {0}</value></data>
@@ -758,10 +758,10 @@ Attuale: {1}</value></data>
   <data name="CodeF_17" xml:space="preserve"><value>Impossibile aprire il browser: {0}</value></data>
   <data name="CodeF_18" xml:space="preserve"><value>{0} driver controllati: {1} aggiornati, {2} da aggiornare, {3} non installati, {4} sconosciuti.</value></data>
   <data name="CodeF_19" xml:space="preserve"><value>Impossibile leggere la risposta: {0}</value></data>
-  <data name="CodeF_20" xml:space="preserve"><value>Aggiornamento di {0}…</value></data>
+  <data name="CodeF_20" xml:space="preserve"><value>Aggiorno {0}…</value></data>
   <data name="CodeF_21" xml:space="preserve"><value>Download di {0} installer…</value></data>
-  <data name="CodeF_22" xml:space="preserve"><value>Aggiornamento di tutti non riuscito: {0}</value></data>
-  <data name="CodeF_23" xml:space="preserve"><value>Installazione non riuscita: {0}</value></data>
+  <data name="CodeF_22" xml:space="preserve"><value>Errore aggiornamento: {0}</value></data>
+  <data name="CodeF_23" xml:space="preserve"><value>Errore installazione: {0}</value></data>
   <data name="CodeF_24" xml:space="preserve"><value>Modalità {0}</value></data>
   <data name="CodeF_25" xml:space="preserve"><value>GoTweaks Lite {0} disponibile</value></data>
   <data name="CodeF_26" xml:space="preserve"><value>Curva modalità personalizzata: si applica quando la modalità TDP è Personalizzato (attiva: {0})</value></data>
