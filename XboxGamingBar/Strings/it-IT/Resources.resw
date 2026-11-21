@@ -19,7 +19,7 @@
   <data name="CommandHintSections.Text" xml:space="preserve"><value>Sezione</value></data>
   <data name="CommandHintSelect.Text" xml:space="preserve"><value>Seleziona</value></data>
   <data name="CommandHintTabs.Text" xml:space="preserve"><value>Schede</value></data>
-  <data name="ConnectionStatusText.Text" xml:space="preserve"><value>Caricamento...</value></data>
+  <data name="ConnectionStatusBanner.Message" xml:space="preserve"><value>Caricamento...</value></data>
   <data name="ControllerEmulationEnabledToggle.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Emulazione controller (VIIPER)</value></data>
   <data name="ControllerEmulationStatusText.Text" xml:space="preserve"><value>In attesa dell'helper</value></data>
   <data name="CurrentTDPText.Text" xml:space="preserve"><value>Limiti:</value></data>
@@ -599,7 +599,7 @@
   <data name="ScrollCommandTextBox.PlaceholderText" xml:space="preserve"><value>es. C:\percorso\app.exe -arg1</value></data>
   <data name="SystemNavItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Sistema</value></data>
   <data name="ToggleDAServiceButton.Content" xml:space="preserve"><value>Aggiorna</value></data>
-  <data name="UpdateAvailableText.Text" xml:space="preserve"><value>Aggiornamento disponibile: v0.0.0</value></data>
+  <data name="UpdateAvailableBanner.Message" xml:space="preserve"><value>Aggiornamento disponibile: v0.0.0</value></data>
   <data name="UpdateBannerButton.Content" xml:space="preserve"><value>Aggiorna</value></data>
   <data name="UpdateButton.Content" xml:space="preserve"><value>Aggiorna</value></data>
   <data name="ViiperAlternateGyroConventionToggle.OffContent" xml:space="preserve"><value>Off</value></data>
@@ -618,7 +618,7 @@
   <data name="TileState_Action" xml:space="preserve"><value>Azione</value></data>
   <data name="Tile_TDPMode" xml:space="preserve"><value>TDP</value></data>
   <data name="Tile_AutoTDP" xml:space="preserve"><value>AutoTDP</value></data>
-  <data name="Tile_PowerMode" xml:space="preserve"><value>Alimentazione</value></data>
+  <data name="Tile_PowerMode" xml:space="preserve"><value>Energia</value></data>
   <data name="Tile_CPUBoost" xml:space="preserve"><value>CPU Boost</value></data>
   <data name="Tile_EPP" xml:space="preserve"><value>EPP</value></data>
   <data name="Tile_FPSLimit" xml:space="preserve"><value>Limite FPS</value></data>
@@ -783,4 +783,7 @@ Tocca un altro riquadro per scambiarli, o tocca di nuovo per mostrarlo o nascond
   <data name="S_MinCombo.Header" xml:space="preserve"><value>Min %</value></data>
   <data name="S_MaxCombo.Header" xml:space="preserve"><value>Max %</value></data>
   <data name="S_GPDFanCurveHeader.Text" xml:space="preserve"><value>Curva ventola</value></data>
+  <data name="S_UseHibernateInsteadOfSleep_Bar.Title" xml:space="preserve"><value>Meglio l'ibernazione della sospensione</value></data>
+  <data name="S_UseHibernateInsteadOfSleep_Bar.Message" xml:space="preserve"><value>La sospensione predefinita di Windows (Modern Standby) a volte scarica la batteria per i risvegli in background o non riprende correttamente. L'ibernazione salva la sessione su disco e spegne completamente, più simile alla sospensione di SteamOS e in genere più affidabile, al costo di una ripresa un po' più lenta. Il consiglio è impostare su Iberna il tasto di accensione e il timer di ibernazione qui sopra (e disattivare il timer di sospensione di Windows).</value></data>
+  <data name="S_SameSwitchAsLegionSpace_Bar.Message" xml:space="preserve"><value>Stesso interruttore di Legion Space. I controller si riconnettono per qualche secondo e in D-Input l'interfaccia Xbox / Game Bar potrebbe non rispondere: usa il touchscreen per tornare indietro.</value></data>
 </root>

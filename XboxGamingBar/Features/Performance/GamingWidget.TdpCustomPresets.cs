@@ -19,10 +19,10 @@ namespace XboxGamingBar
             int previousIndex = TDPModeComboBox.SelectedIndex;
 
             TDPModeComboBox.Items.Clear();
-            TDPModeComboBox.Items.Add(new CommunityToolkit.WinUI.Controls.SegmentedItem { Content = "Quiet", Tag = "1" });
-            TDPModeComboBox.Items.Add(new CommunityToolkit.WinUI.Controls.SegmentedItem { Content = "Balanced", Tag = "2" });
-            TDPModeComboBox.Items.Add(new CommunityToolkit.WinUI.Controls.SegmentedItem { Content = "Performance", Tag = "3" });
-            TDPModeComboBox.Items.Add(new CommunityToolkit.WinUI.Controls.SegmentedItem { Content = "Custom", Tag = "255" });
+            TDPModeComboBox.Items.Add(new CommunityToolkit.WinUI.Controls.SegmentedItem { Content = LocalizedString("S_Quiet/Content", "Quiet"), Tag = "1" });
+            TDPModeComboBox.Items.Add(new CommunityToolkit.WinUI.Controls.SegmentedItem { Content = LocalizedString("S_Balanced/Content", "Balanced"), Tag = "2" });
+            TDPModeComboBox.Items.Add(new CommunityToolkit.WinUI.Controls.SegmentedItem { Content = LocalizedString("S_Performance/Content", "Performance"), Tag = "3" });
+            TDPModeComboBox.Items.Add(new CommunityToolkit.WinUI.Controls.SegmentedItem { Content = LocalizedString("S_Custom/Content", "Custom"), Tag = "255" });
 
             // Restore previous selection if still valid, else default to Balanced (index 1).
             TDPModeComboBox.SelectedIndex = (previousIndex >= 0 && previousIndex < TDPModeComboBox.Items.Count)

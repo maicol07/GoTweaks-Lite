@@ -51,9 +51,9 @@ namespace XboxGamingBar
         private void ShowConnectionBanner(BannerState state)
         {
             Logger.Info($"[BANNER] ShowConnectionBanner called: state={state}");
-            if (ConnectionStatusBanner == null || ConnectionStatusText == null)
+            if (ConnectionStatusBanner == null)
             {
-                Logger.Warn($"[BANNER] ShowConnectionBanner: Banner controls are null! ConnectionStatusBanner={ConnectionStatusBanner != null}, ConnectionStatusText={ConnectionStatusText != null}");
+                Logger.Warn($"[BANNER] ShowConnectionBanner: Banner controls are null! ConnectionStatusBanner={ConnectionStatusBanner != null}");
                 return;
             }
 
@@ -61,31 +61,31 @@ namespace XboxGamingBar
             {
                 case BannerState.Disconnected:
                     ConnectionStatusBanner.Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error;
-                    ConnectionStatusText.Text = LocalizedString("Code_NotConnectedToHelper", "Not connected to helper");
+                    ConnectionStatusBanner.Message = LocalizedString("Code_NotConnectedToHelper", "Not connected to helper");
                     break;
                 case BannerState.Syncing:
                     ConnectionStatusBanner.Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Informational;
-                    ConnectionStatusText.Text = LocalizedString("Code_Syncing", "Syncing...");
+                    ConnectionStatusBanner.Message = LocalizedString("Code_Syncing", "Syncing...");
                     break;
                 case BannerState.Reconnecting:
                     ConnectionStatusBanner.Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Warning;
-                    ConnectionStatusText.Text = LocalizedString("Code_Reconnecting", "Reconnecting...");
+                    ConnectionStatusBanner.Message = LocalizedString("Code_Reconnecting", "Reconnecting...");
                     break;
                 case BannerState.Launching:
                     ConnectionStatusBanner.Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Informational;
-                    ConnectionStatusText.Text = LocalizedString("Code_LaunchingHelper", "Launching helper...");
+                    ConnectionStatusBanner.Message = LocalizedString("Code_LaunchingHelper", "Launching helper...");
                     break;
                 case BannerState.Loading:
                     ConnectionStatusBanner.Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Informational;
-                    ConnectionStatusText.Text = LocalizedString("Code_Loading", "Loading...");
+                    ConnectionStatusBanner.Message = LocalizedString("Code_Loading", "Loading...");
                     break;
                 case BannerState.InitialSetup:
                     ConnectionStatusBanner.Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Informational;
-                    ConnectionStatusText.Text = LocalizedString("Code_InitialSetupInProgressPleaseWait", "Initial setup in progress - please wait...");
+                    ConnectionStatusBanner.Message = LocalizedString("Code_InitialSetupInProgressPleaseWait", "Initial setup in progress - please wait...");
                     break;
                 case BannerState.Upgrading:
                     ConnectionStatusBanner.Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success;
-                    ConnectionStatusText.Text = LocalizedString("Code_UpgradingHelper", "Upgrading helper...");
+                    ConnectionStatusBanner.Message = LocalizedString("Code_UpgradingHelper", "Upgrading helper...");
                     break;
             }
             ConnectionStatusBanner.Visibility = Visibility.Visible;

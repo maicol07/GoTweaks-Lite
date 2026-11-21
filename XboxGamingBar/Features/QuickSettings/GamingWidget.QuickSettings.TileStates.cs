@@ -167,7 +167,8 @@ namespace XboxGamingBar
                 FontSize = 13,
                 FontWeight = Windows.UI.Text.FontWeights.SemiBold,
                 HorizontalAlignment = HorizontalAlignment.Left,
-                TextWrapping = TextWrapping.NoWrap,
+                TextWrapping = TextWrapping.Wrap,
+                MaxLines = 2,
                 TextTrimming = TextTrimming.CharacterEllipsis
             };
             Grid.SetRow(tile.NameText, 2);

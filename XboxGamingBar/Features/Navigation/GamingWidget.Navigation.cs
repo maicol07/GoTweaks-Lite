@@ -65,12 +65,15 @@ namespace XboxGamingBar
             }), handledEventsToo: true);
         }
 
-        /// <summary>Icon-only tabs, with the label (AutomationProperties.Name) on the selected one.</summary>
-        private static void UpdateSegmentLabels(ListViewBase segmented)
+        /// <summary>
+        /// Tabs are icon-only Segmented items: EqualPanel gives every item the widest item's width,
+        /// so labels would not fit. The localized name is the tooltip and the accessible name.
+        /// </summary>
+        private static void SetSegmentTooltips(ListViewBase segmented)
         {
             foreach (var item in segmented.Items.OfType<SegmentedItem>())
             {
-                item.Content = item.IsSelected ? Windows.UI.Xaml.Automation.AutomationProperties.GetName(item) : null;
+                ToolTipService.SetToolTip(item, Windows.UI.Xaml.Automation.AutomationProperties.GetName(item));
             }
         }
 
@@ -78,7 +81,6 @@ namespace XboxGamingBar
         {
             if (MainNavPanel.SelectedItem is SegmentedItem selectedItem)
             {
-                UpdateSegmentLabels(MainNavPanel);
                 string tag = selectedItem.Tag?.ToString() ?? "";
                 lastUserNavTag = tag;
 

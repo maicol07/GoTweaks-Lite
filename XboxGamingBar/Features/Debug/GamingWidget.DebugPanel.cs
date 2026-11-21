@@ -616,9 +616,9 @@ namespace XboxGamingBar
         /// </summary>
         private void ShowUpdateBanner(string newVersion)
         {
-            if (UpdateAvailableBanner != null && UpdateAvailableText != null)
+            if (UpdateAvailableBanner != null)
             {
-                UpdateAvailableText.Text = string.Format(LocalizedString("CodeF_11", "Update Available: {0}"), newVersion);
+                UpdateAvailableBanner.Message = string.Format(LocalizedString("CodeF_11", "Update Available: {0}"), newVersion);
                 UpdateAvailableBanner.Visibility = Visibility.Visible;
             }
         }
@@ -703,7 +703,7 @@ namespace XboxGamingBar
         /// <summary>
         /// Handles the dismiss button click on the update banner.
         /// </summary>
-        private void DismissUpdateBannerButton_Click(object sender, RoutedEventArgs e)
+        private void UpdateAvailableBanner_CloseButtonClick(Microsoft.UI.Xaml.Controls.InfoBar sender, object args)
         {
             HideUpdateBanner();
         }

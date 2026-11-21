@@ -403,9 +403,15 @@
             <Setter Property="Margin" Value="2,18,0,6"/>
         </Style>
 
+        <!-- SettingsCard keeps its control beside the header down to the widget width (toolkit default wraps below 476). -->
+        <x:Double x:Key="SettingsCardWrapThreshold">300</x:Double>
+        <x:Double x:Key="SettingsCardWrapNoIconThreshold">240</x:Double>
+
         <!-- Segmented items at touch size -->
         <Style TargetType="ctk:SegmentedItem">
-            <Setter Property="MinHeight" Value="40"/>
+            <Setter Property="MinHeight" Value="44"/>
+            <Setter Property="MinWidth" Value="48"/>
+            <Setter Property="Padding" Value="12,6,12,6"/>
             <Setter Property="FontSize" Value="13"/>
         </Style>
 
@@ -544,6 +550,7 @@
         <Grid x:Name="MainNavContainer">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
@@ -624,8 +631,31 @@
                 </StackPanel>
             </Grid>
 
+            <!-- Helper connection and app update notices, between the tabs and the content. -->
+            <StackPanel Grid.Row="1" Margin="12,2,12,4" Spacing="4">
+                <muxc:InfoBar x:Name="ConnectionStatusBanner"
+                              x:Uid="ConnectionStatusBanner"
+                              IsOpen="True"
+                              IsClosable="False"
+                              Severity="Informational"
+                              Message="Loading..."
+                              Visibility="Visible"/>
+                <muxc:InfoBar x:Name="UpdateAvailableBanner"
+                              x:Uid="UpdateAvailableBanner"
+                              IsOpen="True"
+                              IsClosable="True"
+                              CloseButtonClick="UpdateAvailableBanner_CloseButtonClick"
+                              Severity="Success"
+                              Message="Update Available: v0.0.0"
+                              Visibility="Collapsed">
+                    <muxc:InfoBar.ActionButton>
+                        <Button x:Uid="UpdateBannerButton" x:Name="UpdateBannerButton" Content="Update" Click="UpdateBannerButton_Click"/>
+                    </muxc:InfoBar.ActionButton>
+                </muxc:InfoBar>
+            </StackPanel>
+
             <!-- Content Area -->
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="2">
             <!-- QUICK SETTINGS TAB -->
             <Grid>
                 <ScrollViewer x:Name="QuickSettingsScrollViewer" VerticalScrollBarVisibility="Auto" Visibility="Visible"
@@ -770,7 +800,7 @@
                                            TextWrapping="Wrap" />
                             </ctk:SettingsExpander.Description>
                             <ctk:SettingsExpander.Items>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Grid Margin="0,0,0,12">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
@@ -813,7 +843,7 @@
                                     OnContent=""
                                     Toggled="PanelBrightnessToggle_Toggled"/>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Border x:Name="MetricsSelectionPanel"
                                         Background="#1A1A2E"
                                         CornerRadius="4"
@@ -877,10 +907,10 @@
                                     </StackPanel>
                                 </Border>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <StackPanel x:Name="TileSortableGrid"/>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Border x:Name="SelectedTileIndicator"
                                         Visibility="Collapsed"
                                         Background="#1A2530"
@@ -913,17 +943,17 @@
                                     </Grid>
                                 </Border>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <TextBlock x:Uid="S_AddCustomShortcut" Text="Add Custom Shortcut"
                                            Style="{StaticResource CardTitleStyle}"
                                            Margin="0,16,0,8" />
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <TextBox x:Uid="CustomShortcutNameBox" x:Name="CustomShortcutNameBox"
                                          PlaceholderText="Tile Name"
                                          Margin="0,0,0,8" />
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <StackPanel Orientation="Horizontal">
                                     <ItemsControl x:Name="CustomShortcutKeyTags">
                                         <ItemsControl.ItemsPanel>
@@ -936,7 +966,7 @@
                                     </ComboBox>
                                 </StackPanel>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Button x:Uid="AddCustomShortcutButton" x:Name="AddCustomShortcutButton"
                                         Content="Add Shortcut Tile"
                                         HorizontalAlignment="Stretch"
@@ -944,7 +974,7 @@
                                         Style="{StaticResource StandaloneButtonStyle}"
                                         Click="AddCustomShortcut_Click" />
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Button x:Uid="S_Done" Content="Done"
                                         HorizontalAlignment="Stretch"
                                         Margin="0,16,0,0"
@@ -971,7 +1001,7 @@
                             </ctk:SettingsCard.Header>
                             <ctk:SettingsCard.Description>
                                 <!-- Long names marquee-scroll (UpdateMarqueeScrollAnimation). -->
-                                <Canvas x:Name="ActiveProfileTextCanvas" Height="22" Width="300">
+                                <Canvas x:Name="ActiveProfileTextCanvas" Height="22" Width="300" HorizontalAlignment="Left">
                                     <Canvas.Clip>
                                         <RectangleGeometry Rect="0,0,300,22"/>
                                     </Canvas.Clip>
@@ -1075,7 +1105,7 @@
                                               IsEnabled="False" Width="52"/>
                             </StackPanel>
                             <ctk:SettingsExpander.Items>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Slider x:Name="FPSLimitSlider"
                                             Style="{StaticResource ModernSliderStyle}"
                                             Minimum="15" Maximum="144"
@@ -1402,7 +1432,7 @@
                                 <TextBlock x:Uid="S_ChooseWhichSettingsAreSaved" Text="Choose which settings are saved in profiles" TextWrapping="Wrap" />
                             </ctk:SettingsExpander.Description>
                             <ctk:SettingsExpander.Items>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <CheckBox x:Uid="ProfileSaveTDPCheckBox" x:Name="ProfileSaveTDPCheckBox"
                                               Content="TDP Power Limit"
                                               IsChecked="True"
@@ -1412,14 +1442,14 @@
                                               Checked="ProfileSettingsCheckBox_Changed"
                                               Unchecked="ProfileSettingsCheckBox_Changed" />
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <TextBlock x:Uid="S_IncludesTDPBoostOnOff" Text="Includes TDP Boost (on/off, Fast +W, Peak +W)"
                                                FontSize="12"
                                                Foreground="#B9C0CC"
                                                Margin="28,2,0,0"
                                                TextWrapping="Wrap" />
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <CheckBox x:Uid="ProfileSaveCPUBoostCheckBox" x:Name="ProfileSaveCPUBoostCheckBox"
                                               Content="CPU Boost"
                                               IsChecked="True"
@@ -1429,7 +1459,7 @@
                                               Checked="ProfileSettingsCheckBox_Changed"
                                               Unchecked="ProfileSettingsCheckBox_Changed" />
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <CheckBox x:Uid="ProfileSaveCPUEPPCheckBox" x:Name="ProfileSaveCPUEPPCheckBox"
                                               Content="CPU EPP"
                                               IsChecked="True"
@@ -1439,7 +1469,7 @@
                                               Checked="ProfileSettingsCheckBox_Changed"
                                               Unchecked="ProfileSettingsCheckBox_Changed" />
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <CheckBox x:Uid="ProfileSaveCPUStateCheckBox" x:Name="ProfileSaveCPUStateCheckBox"
                                               Content="CPU State"
                                               IsChecked="True"
@@ -1449,7 +1479,7 @@
                                               Checked="ProfileSettingsCheckBox_Changed"
                                               Unchecked="ProfileSettingsCheckBox_Changed" />
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <CheckBox x:Uid="ProfileSaveFPSLimitCheckBox" x:Name="ProfileSaveFPSLimitCheckBox"
                                               Content="FPS Limit"
                                               IsChecked="True"
@@ -1459,7 +1489,7 @@
                                               Checked="ProfileSettingsCheckBox_Changed"
                                               Unchecked="ProfileSettingsCheckBox_Changed" />
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <CheckBox x:Uid="ProfileSaveOSPowerModeCheckBox" x:Name="ProfileSaveOSPowerModeCheckBox"
                                               Content="OS Power Mode"
                                               IsChecked="True"
@@ -1469,7 +1499,7 @@
                                               Checked="ProfileSettingsCheckBox_Changed"
                                               Unchecked="ProfileSettingsCheckBox_Changed" />
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <CheckBox x:Uid="ProfileSaveOverlayLevelCheckBox" x:Name="ProfileSaveOverlayLevelCheckBox"
                                               Content="Overlay Level"
                                               IsChecked="False"
@@ -1486,7 +1516,7 @@
                         <TextBlock x:Uid="S_GlobalProfile" Text="Global Profile" Style="{StaticResource SettingsSectionTitleStyle}" />
 
                         <!-- Global Profile Card -->
-                        <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                        <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                             <StackPanel>
                                 <!-- Settings table — Win11-style info table, matching the Legion tab's
                                      Controller Information table (boxed on PageBackgroundBrush, thin
@@ -1608,7 +1638,7 @@
                                              is what clipped the label text; a fixed width guarantees it. -->
                                         <Grid Margin="0,8,0,0">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="84"/>
+                                                <ColumnDefinition Width="112"/>
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
@@ -1622,7 +1652,7 @@
                                         <StackPanel x:Name="ACDCProfileTDPModeRow" Visibility="Collapsed">
                                             <Grid Margin="0,8,0,0">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="84"/>
+                                                    <ColumnDefinition Width="112"/>
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
@@ -1637,7 +1667,7 @@
                                         <StackPanel x:Name="ACDCProfileTDPRow" Visibility="Collapsed">
                                             <Grid Margin="0,8,0,0">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="84"/>
+                                                    <ColumnDefinition Width="112"/>
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
@@ -1652,7 +1682,7 @@
                                         <StackPanel x:Name="ACDCProfileCPUBoostRow" Visibility="Collapsed">
                                             <Grid Margin="0,8,0,0">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="84"/>
+                                                    <ColumnDefinition Width="112"/>
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
@@ -1667,7 +1697,7 @@
                                         <StackPanel x:Name="ACDCProfileCPUEPPRow" Visibility="Collapsed">
                                             <Grid Margin="0,8,0,0">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="84"/>
+                                                    <ColumnDefinition Width="112"/>
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
@@ -1682,7 +1712,7 @@
                                         <StackPanel x:Name="ACDCProfileCPUStateRow" Visibility="Collapsed">
                                             <Grid Margin="0,8,0,0">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="84"/>
+                                                    <ColumnDefinition Width="112"/>
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
@@ -1697,7 +1727,7 @@
                                         <StackPanel x:Name="ACDCProfileFPSLimitRow" Visibility="Collapsed">
                                             <Grid Margin="0,8,0,0">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="84"/>
+                                                    <ColumnDefinition Width="112"/>
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
@@ -1712,7 +1742,7 @@
                                         <StackPanel x:Name="ACDCProfilePowerModeRow" Visibility="Collapsed">
                                             <Grid Margin="0,8,0,0">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="84"/>
+                                                    <ColumnDefinition Width="112"/>
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
@@ -1727,7 +1757,7 @@
                                         <StackPanel x:Name="ACDCProfileOverlayLevelRow" Visibility="Collapsed">
                                             <Grid Margin="0,8,0,0">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="84"/>
+                                                    <ColumnDefinition Width="112"/>
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
@@ -1743,7 +1773,7 @@
                         </ctk:SettingsCard>
 
                         <!-- Game Profile Card (shown when game is detected) -->
-                        <ctk:SettingsCard x:Name="GameProfileCard" Visibility="Collapsed" Margin="0,8,0,0" ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                        <ctk:SettingsCard x:Name="GameProfileCard" Visibility="Collapsed" Margin="0,8,0,0" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                             <StackPanel>
                                 <!-- Game Profile with Power Source -->
                                 <StackPanel x:Name="GameProfileWithPowerSource" Visibility="Collapsed">
@@ -1801,7 +1831,7 @@
                                         <StackPanel>
                                             <Grid Margin="0,8,0,0">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="84"/>
+                                                    <ColumnDefinition Width="112"/>
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
@@ -1815,7 +1845,7 @@
                                             <StackPanel x:Name="GameACDCProfileTDPModeRow" Visibility="Collapsed">
                                                 <Grid Margin="0,8,0,0">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="84"/>
+                                                        <ColumnDefinition Width="112"/>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
@@ -1830,7 +1860,7 @@
                                             <StackPanel x:Name="GameACDCProfileTDPRow" Visibility="Collapsed">
                                                 <Grid Margin="0,8,0,0">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="84"/>
+                                                        <ColumnDefinition Width="112"/>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
@@ -1845,7 +1875,7 @@
                                             <StackPanel x:Name="GameACDCProfileCPUBoostRow" Visibility="Collapsed">
                                                 <Grid Margin="0,8,0,0">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="84"/>
+                                                        <ColumnDefinition Width="112"/>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
@@ -1860,7 +1890,7 @@
                                             <StackPanel x:Name="GameACDCProfileCPUEPPRow" Visibility="Collapsed">
                                                 <Grid Margin="0,8,0,0">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="84"/>
+                                                        <ColumnDefinition Width="112"/>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
@@ -1875,7 +1905,7 @@
                                             <StackPanel x:Name="GameACDCProfileCPUStateRow" Visibility="Collapsed">
                                                 <Grid Margin="0,8,0,0">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="84"/>
+                                                        <ColumnDefinition Width="112"/>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
@@ -1890,7 +1920,7 @@
                                             <StackPanel x:Name="GameACDCProfileFPSLimitRow" Visibility="Collapsed">
                                                 <Grid Margin="0,8,0,0">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="84"/>
+                                                        <ColumnDefinition Width="112"/>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
@@ -1905,7 +1935,7 @@
                                             <StackPanel x:Name="GameACDCProfilePowerModeRow" Visibility="Collapsed">
                                                 <Grid Margin="0,8,0,0">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="84"/>
+                                                        <ColumnDefinition Width="112"/>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
@@ -1920,7 +1950,7 @@
                                             <StackPanel x:Name="GameACDCProfileOverlayLevelRow" Visibility="Collapsed">
                                                 <Grid Margin="0,8,0,0">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="84"/>
+                                                        <ColumnDefinition Width="112"/>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
@@ -2152,7 +2182,7 @@
                                         <ComboBoxItem Content="AMD" Tag="1"/>
                                         </ComboBox>
                                     </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <StackPanel x:Name="RTSSOptionsPanel">
                                         <!-- Layout Settings Section -->
                                     <Border Height="1" Background="#33FFFFFF" Margin="0,4,0,12"/>
@@ -2256,7 +2286,7 @@
                                                         BorderThickness="1"
                                                         Margin="0,0,8,0"/></StackPanel>
                                             <ctk:SettingsExpander.Items>
-                                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                                     <muxc:ColorPicker x:Name="OSDTextColorPicker"
                                                      Margin="0,12,0,0"
                                                      Color="White"
@@ -2296,7 +2326,7 @@
                                                         BorderThickness="1"
                                                         Margin="0,0,8,0"/></StackPanel>
                                             <ctk:SettingsExpander.Items>
-                                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                                     <muxc:ColorPicker x:Name="OSDLabelColorPicker"
                                                      Margin="0,12,0,0"
                                                      Color="#00FFFF"
@@ -2425,7 +2455,7 @@
                                                  TextChanged="OSDCustomTagsTextBox_TextChanged" />
                                     </StackPanel>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <StackPanel x:Name="AMDOptionsPanel" Visibility="Collapsed">
                                         <TextBlock x:Uid="S_AMDAdrenalineOverlay" Text="AMD Adrenaline Overlay"
                                                    FontSize="14" FontWeight="SemiBold" Foreground="#B9C0CC"
@@ -2449,7 +2479,7 @@
                                 <TextBlock x:Uid="HotkeysSummary" x:Name="HotkeysSummary" Text="Map controller combos to keyboard shortcuts" TextWrapping="Wrap" />
                             </ctk:SettingsExpander.Description>
                             <ctk:SettingsExpander.Items>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <StackPanel Margin="0,0,0,8">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -2486,7 +2516,7 @@
                                         </StackPanel>
                                     </StackPanel>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <StackPanel Margin="0,0,0,8">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -2523,7 +2553,7 @@
                                         </StackPanel>
                                     </StackPanel>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <StackPanel Margin="0,0,0,8">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -2560,7 +2590,7 @@
                                         </StackPanel>
                                     </StackPanel>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <StackPanel Margin="0,0,0,8">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -2597,7 +2627,7 @@
                                         </StackPanel>
                                     </StackPanel>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <StackPanel Margin="0,0,0,8">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -2634,7 +2664,7 @@
                                         </StackPanel>
                                     </StackPanel>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <StackPanel Margin="0,0,0,8">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -2671,7 +2701,7 @@
                                         </StackPanel>
                                     </StackPanel>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <StackPanel Margin="0,0,0,8">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -2708,7 +2738,7 @@
                                         </StackPanel>
                                     </StackPanel>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <StackPanel Margin="0,0,0,8">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -2745,7 +2775,7 @@
                                         </StackPanel>
                                     </StackPanel>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <TextBlock x:Uid="S_HotkeysWorkWhenTheWidget" Text="Hotkeys work when the widget is running, even when not visible."
                                                FontSize="12"
                                                Foreground="#B9C0CC"
@@ -2769,10 +2799,10 @@
                                 <TextBlock x:Uid="S_PowerButtonBehaviorAndIdle" Text="Power button behavior and idle timers" TextWrapping="Wrap" />
                             </ctk:SettingsExpander.Description>
                             <ctk:SettingsExpander.Items>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <TextBlock x:Uid="S_PowerButton" Text="Power button" FontSize="14" FontWeight="SemiBold" Foreground="#B9C0CC" />
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Grid Margin="0,8,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -2790,7 +2820,7 @@
                                         </ComboBox>
                                     </Grid>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Grid Margin="0,8,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -2808,13 +2838,13 @@
                                         </ComboBox>
                                     </Grid>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Border Margin="0,14,0,0" Height="1" Background="#22FFFFFF"/>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <TextBlock x:Uid="S_TurnOffScreenAfter" Text="Turn off screen after" FontSize="14" FontWeight="SemiBold" Foreground="#B9C0CC" Margin="0,12,0,0" />
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Grid Margin="0,8,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -2839,7 +2869,7 @@
                                         </ComboBox>
                                     </Grid>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Grid Margin="0,8,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -2864,17 +2894,17 @@
                                         </ComboBox>
                                     </Grid>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Border Margin="0,14,0,0" Height="1" Background="#22FFFFFF"/>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <TextBlock x:Uid="S_HibernateAfter" Text="Hibernate after" FontSize="14" FontWeight="SemiBold" Foreground="#B9C0CC" Margin="0,12,0,0" />
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <TextBlock x:Uid="S_GoTweaksFeatureNotAWindows" Text="GoTweaks feature - not a Windows setting, since Windows has no built-in idle-to-hibernate timer"
                                                FontSize="12" Foreground="#B9C0CC" TextWrapping="Wrap" Margin="0,2,0,0" />
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Grid Margin="0,8,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -2896,7 +2926,7 @@
                                         </ComboBox>
                                     </Grid>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Grid Margin="0,8,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -2928,21 +2958,12 @@
                                         </ctk:SettingsCard.Description>
                                         <Button x:Uid="DisableSleepTimersButton" x:Name="DisableSleepTimersButton" Content="Disable Sleep Timer (AC+DC)" Style="{StaticResource ModernButtonStyle}" Click="DisableSleepTimersButton_Click" VerticalAlignment="Center" />
                                     </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <muxc:InfoBar x:Name="PowerButtonInfoExpander"
                                                   Margin="0,14,0,0"
                                                   IsOpen="True"
                                                   IsClosable="False"
-                                                  Severity="Warning">
-                                        <muxc:InfoBar.Content>
-                                            <StackPanel Margin="0,0,0,12">
-                                                <TextBlock x:Uid="S_UseHibernateInsteadOfSleep" FontWeight="SemiBold" FontSize="13" TextWrapping="Wrap"
-                                                           Text="⚠ Use Hibernate instead of Sleep" />
-                                                <TextBlock x:Uid="S_WindowsDefaultSleepModernStandby" FontSize="12" Foreground="#B9C0CC" TextWrapping="Wrap" Margin="0,4,0,0"
-                                                           Text="Windows' default Sleep (Modern Standby) sometimes drains the battery from background wake-ups or fails to resume cleanly. Hibernate saves the session to disk and fully powers off, which is closer to how SteamOS suspends and tends to be more reliable - at the cost of a slightly slower resume. Setting the Power Button and Hibernate Timeout options above to Hibernate (and disabling Windows' Sleep timer) is the recommended change." />
-                                            </StackPanel>
-                                        </muxc:InfoBar.Content>
-                                    </muxc:InfoBar>
+                                                  Severity="Warning" x:Uid="S_UseHibernateInsteadOfSleep_Bar" Title="Use Hibernate instead of Sleep" Message="Windows' default Sleep (Modern Standby) sometimes drains the battery from background wake-ups or fails to resume cleanly. Hibernate saves the session to disk and fully powers off, which is closer to how SteamOS suspends and tends to be more reliable - at the cost of a slightly slower resume. Setting the Power Button and Hibernate Timeout options above to Hibernate (and disabling Windows' Sleep timer) is the recommended change."/>
                                 </ctk:SettingsCard>
                             </ctk:SettingsExpander.Items>
                         </ctk:SettingsExpander>
@@ -2957,7 +2978,7 @@
                                 <TextBlock x:Uid="S_TroubleshootingAndDiagnosticTools" Text="Troubleshooting and diagnostic tools" TextWrapping="Wrap" />
                             </ctk:SettingsExpander.Description>
                             <ctk:SettingsExpander.Items>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -2978,7 +2999,7 @@
                                                 Click="KillGoTweaksButton_Click" />
                                     </Grid>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Button x:Uid="ExportLogsButton" x:Name="ExportLogsButton"
                                             Content="Export Logs"
                                             HorizontalAlignment="Stretch"
@@ -2986,7 +3007,7 @@
                                             Style="{StaticResource StandaloneButtonStyle}"
                                             Click="ExportLogsButton_Click" />
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Grid Margin="0,8,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -3007,7 +3028,7 @@
                                                 Click="ImportAllDataButton_Click" />
                                     </Grid>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Button x:Uid="PrepareForUninstallButton" x:Name="PrepareForUninstallButton"
                                             Content="Prepare for Uninstall"
                                             HorizontalAlignment="Stretch"
@@ -3028,14 +3049,14 @@
                                 <TextBlock x:Uid="S_VersionAndCredits" Text="Version and credits" TextWrapping="Wrap" />
                             </ctk:SettingsExpander.Description>
                             <ctk:SettingsExpander.Items>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Button x:Uid="CheckForUpdateButton" x:Name="CheckForUpdateButton"
                                             Content="Check for Update"
                                             HorizontalAlignment="Stretch"
                                             Style="{StaticResource StandaloneButtonStyle}"
                                             Click="CheckForUpdateButton_Click" />
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <TextBlock x:Name="UpdateStatusText"
                                                Text=""
                                                FontSize="13"
@@ -3044,7 +3065,7 @@
                                                Margin="0,8,0,0"
                                                Visibility="Collapsed"/>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Button x:Uid="UpdateButton" x:Name="UpdateButton"
                                             Content="Update"
                                             HorizontalAlignment="Stretch"
@@ -3054,7 +3075,7 @@
                                             Click="UpdateButton_Click"
                                             Visibility="Collapsed" />
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Grid Margin="0,20,0,8">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -3073,7 +3094,7 @@
                                                       Toggled="GoTweaksUpdateOnStartCheckbox_Changed"/>
                                     </Grid>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -3092,10 +3113,10 @@
                                                       Toggled="GoTweaksHideBannerCheckbox_Changed"/>
                                     </Grid>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Border Height="1" Background="#33FFFFFF" Margin="0,16,0,16"/>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Grid Margin="0,0,0,8">
                                         <TextBlock x:Uid="S_Version" Text="Version"
                                                    FontSize="14"
@@ -3109,7 +3130,7 @@
                                                    HorizontalAlignment="Right"/>
                                     </Grid>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Grid Margin="0,0,0,8">
                                         <TextBlock x:Uid="S_ForkAuthor" Text="Fork Author"
                                                    FontSize="14"
@@ -3122,7 +3143,7 @@
                                                    HorizontalAlignment="Right" />
                                     </Grid>
                                 </ctk:SettingsCard>
-                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                     <Grid Margin="0,0,0,0">
                                         <TextBlock x:Uid="S_OriginalAuthor" Text="Original Author"
                                                    FontSize="14"
@@ -3147,7 +3168,7 @@
                     <StackPanel Padding="16,8,16,16">
 
                         <!-- Controller Status Card -->
-                        <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                        <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                             <StackPanel>
                                 <!-- Left Controller / Device Glyph / Right Controller, flanking row.
                                      All three panels share the same 132px height (the glyph box is
@@ -3166,7 +3187,7 @@
                                             Background="{StaticResource PageBackgroundBrush}"
                                             CornerRadius="14" Padding="12,10" Margin="0,0,8,0">
                                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock x:Uid="S_LeftController" Text="Left Controller" FontSize="13" Foreground="#B9C0CC" Margin="0,0,0,4" HorizontalAlignment="Center" />
+                                            <TextBlock x:Uid="S_LeftController" Text="Left Controller" FontSize="13" Foreground="#B9C0CC" Margin="0,0,0,4" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" />
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <FontIcon Glyph="&#xE83F;" FontSize="14" Foreground="#B9C0CC" Margin="0,0,6,0"/>
                                                 <TextBlock x:Name="LeftControllerBatteryText"
@@ -3210,7 +3231,7 @@
                                             Background="{StaticResource PageBackgroundBrush}"
                                             CornerRadius="14" Padding="12,10" Margin="8,0,0,0">
                                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock x:Uid="S_RightController" Text="Right Controller" FontSize="13" Foreground="#B9C0CC" Margin="0,0,0,4" HorizontalAlignment="Center" />
+                                            <TextBlock x:Uid="S_RightController" Text="Right Controller" FontSize="13" Foreground="#B9C0CC" Margin="0,0,0,4" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" />
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <FontIcon Glyph="&#xE83F;" FontSize="14" Foreground="#B9C0CC" Margin="0,0,6,0"/>
                                                 <TextBlock x:Name="RightControllerBatteryText"
@@ -3391,11 +3412,7 @@
                                         </ctk:SettingsCard.Description>
                                         <ToggleSwitch x:Name="LegionControllerModeToggle" Style="{StaticResource ModernToggleStyle}" IsOn="False" IsEnabled="False" XYFocusUp="{x:Bind LegionNavItem}" Toggled="LegionControllerModeToggle_Toggled"/>
                                     </ctk:SettingsCard>
-                                <muxc:InfoBar IsOpen="True" IsClosable="False" Severity="Warning" Margin="0,10,0,0">
-                                        <muxc:InfoBar.Content>
-                                            <TextBlock x:Uid="S_SameSwitchAsLegionSpace" Text="Same switch as Legion Space. The controllers reconnect for a few seconds, and in D-Input the Xbox / Game Bar interface may stop responding to them - use the touchscreen to switch back." FontSize="12" TextWrapping="Wrap" Margin="0,0,0,12" />
-                                        </muxc:InfoBar.Content>
-                                    </muxc:InfoBar>
+                                <muxc:InfoBar IsOpen="True" IsClosable="False" Severity="Warning" Margin="0,10,0,0" x:Uid="S_SameSwitchAsLegionSpace_Bar" Message="Same switch as Legion Space. The controllers reconnect for a few seconds, and in D-Input the Xbox / Game Bar interface may stop responding to them - use the touchscreen to switch back."/>
                             </StackPanel>
 
                             <!-- Touchpad & Vibration Card (hidden on devices without HID touchpad support) -->
@@ -3409,7 +3426,7 @@
                                         <TextBlock x:Uid="S_TouchpadAndHapticFeedbackSettings" Text="Touchpad and haptic feedback settings" />
                                     </ctk:SettingsExpander.Description>
                                     <ctk:SettingsExpander.Items>
-                                        <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                        <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                             <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
@@ -3424,7 +3441,7 @@
                                                           XYFocusDown="{x:Bind LegionVibrationComboBox}"/>
                                         </Grid>
                                         </ctk:SettingsCard>
-                                        <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                        <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                             <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
@@ -3443,7 +3460,7 @@
                                             </ComboBox>
                                         </Grid>
                                         </ctk:SettingsCard>
-                                        <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                        <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                             <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
@@ -3463,7 +3480,7 @@
                                             </ComboBox>
                                         </Grid>
                                         </ctk:SettingsCard>
-                                        <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                        <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                             <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
@@ -3482,7 +3499,7 @@
                                             </ComboBox>
                                         </Grid>
                                         </ctk:SettingsCard>
-                                        <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                        <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                             <Border Height="1" Background="#22FFFFFF" Margin="0,4,0,4"/>
                                         </ctk:SettingsCard>
                                         <ctk:SettingsCard x:Uid="S_GoTweaksHaptics" Header="GoTweaks Haptics" Description="Tactile click on inputs, system-wide via the controller motors" Tapped="ToggleRow_Tapped">
@@ -3492,7 +3509,7 @@
                                             IsOn="False"
                                             Toggled="GoTweaksHaptics_Changed"/>
                                         </ctk:SettingsCard>
-                                        <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                        <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                             <StackPanel x:Name="GoTweaksHapticsGroupsPanel" Spacing="10" Margin="0,4,0,0" Visibility="Collapsed">
                                             <!-- Pulse length (tap duration) -->
                                             <StackPanel>
@@ -3576,7 +3593,7 @@
 
                         </StackPanel>
                         <StackPanel x:Name="LegionViiperSection" Visibility="Collapsed">
-                            <ctk:SettingsCard x:Name="ControllerEmulationCard" ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                            <ctk:SettingsCard x:Name="ControllerEmulationCard" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                 <StackPanel>
                                     <ctk:SettingsCard Tapped="ToggleRow_Tapped">
                                         <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE7F4;"/></ctk:SettingsCard.HeaderIcon>
@@ -3915,7 +3932,7 @@
                                                                        Foreground="#B9C0CC" />
                                                         </Border></StackPanel>
                                                     <ctk:SettingsExpander.Items>
-                                                        <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                                        <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                                             <StackPanel x:Name="ViiperStickGyroContent">
                                                 <TextBlock x:Uid="S_SynthesizesAStickContributionFrom" Text="Synthesizes a stick contribution from gyro motion for emulated targets without a native motion field (Xbox 360, Xbox Elite 2, Switch Pro)."
                                                            FontSize="12" Foreground="#B9C0CC" TextWrapping="Wrap" Margin="0,2,0,8" />
@@ -4291,7 +4308,7 @@
                                                         <TextBlock x:Uid="S_SticksTriggers" Text="Sticks &amp; Triggers" />
                                                     </ctk:SettingsExpander.Header>
                                                     <ctk:SettingsExpander.Items>
-                                                        <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                                        <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                                             <TextBlock x:Uid="S_DeadzoneShapeAntiDeadzoneSensitivity" Text="Deadzone shape, anti-deadzone, sensitivity curves per stick/trigger."
                                                            FontSize="12" Foreground="#B9C0CC" TextWrapping="Wrap" Margin="0,2,0,0" />
                                                         </ctk:SettingsCard>
@@ -4371,7 +4388,7 @@
                                                             <TextBlock x:Uid="S_LeftStick" Text="Left Stick" FontWeight="SemiBold" Foreground="#FFD000" />
                                                         </ctk:SettingsExpander.Header>
                                                         <ctk:SettingsExpander.Items>
-                                                            <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                                            <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                                                 <StackPanel x:Name="ViiperLSContent">
 
                                                     <TextBlock x:Uid="S_DeadzoneShape" Text="Deadzone shape" FontSize="13" Foreground="#B9C0CC" Margin="0,4,0,2" />
@@ -4440,7 +4457,7 @@
                                                             <TextBlock x:Uid="S_RightStick" Text="Right Stick" FontWeight="SemiBold" Foreground="#FFD000" />
                                                         </ctk:SettingsExpander.Header>
                                                         <ctk:SettingsExpander.Items>
-                                                            <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                                            <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                                                 <StackPanel x:Name="ViiperRSContent">
 
                                                     <TextBlock x:Uid="S_DeadzoneShape" Text="Deadzone shape" FontSize="13" Foreground="#B9C0CC" Margin="0,4,0,2" />
@@ -4509,7 +4526,7 @@
                                                             <TextBlock x:Uid="S_LeftTrigger_2" Text="Left Trigger" FontWeight="SemiBold" Foreground="#FFD000" />
                                                         </ctk:SettingsExpander.Header>
                                                         <ctk:SettingsExpander.Items>
-                                                            <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                                            <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                                                 <StackPanel x:Name="ViiperLTContent">
 
                                                     <Grid Margin="0,4,0,0">
@@ -4554,7 +4571,7 @@
                                                             <TextBlock x:Uid="S_RightTrigger_2" Text="Right Trigger" FontWeight="SemiBold" Foreground="#FFD000" />
                                                         </ctk:SettingsExpander.Header>
                                                         <ctk:SettingsExpander.Items>
-                                                            <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                                            <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                                                 <StackPanel x:Name="ViiperRTContent">
 
                                                     <Grid Margin="0,4,0,0">
@@ -4626,10 +4643,10 @@
                                     <TextBlock x:Uid="S_MapButtonsToGamepadKeyboard" Text="Map buttons to gamepad, keyboard, or mouse" />
                                 </ctk:SettingsExpander.Description>
                                 <ctk:SettingsExpander.Items>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <TextBlock x:Uid="S_BackButtons" Text="Back Buttons" FontSize="13" Foreground="#B9C0CC" Margin="0,0,0,8" />
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel Margin="0,0,0,12">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -4674,7 +4691,7 @@
                                         </StackPanel>
                                     </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel Margin="0,0,0,12">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -4711,7 +4728,7 @@
                                         </StackPanel>
                                     </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel Margin="0,0,0,12">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -4748,7 +4765,7 @@
                                         </StackPanel>
                                     </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel Margin="0,0,0,12">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -4785,7 +4802,7 @@
                                         </StackPanel>
                                     </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel Margin="0,0,0,12">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -4822,7 +4839,7 @@
                                         </StackPanel>
                                     </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -4859,10 +4876,10 @@
                                         </StackPanel>
                                     </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <TextBlock x:Uid="S_FrontButtons" Text="Front Buttons" FontSize="13" Foreground="#B9C0CC" Margin="0,12,0,8" />
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel Margin="0,0,0,12">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -4899,7 +4916,7 @@
                                         </StackPanel>
                                     </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -4956,10 +4973,10 @@
                                     <TextBlock x:Uid="S_Deadzones" Text="Deadzones" />
                                 </ctk:SettingsExpander.Header>
                                 <ctk:SettingsExpander.Items>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <TextBlock x:Uid="S_StickDeadzones" Text="Stick Deadzones" FontSize="13" Foreground="#B9C0CC" Margin="0,0,0,4" />
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel>
                                             <Grid>
                                                 <TextBlock x:Uid="S_LeftStick" Text="Left Stick" FontSize="14" Foreground="#B9C0CC" />
@@ -4974,7 +4991,7 @@
                                                     StepFrequency="1"/>
                                         </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel>
                                             <Grid>
                                                 <TextBlock x:Uid="S_RightStick" Text="Right Stick" FontSize="14" Foreground="#B9C0CC" />
@@ -4989,10 +5006,10 @@
                                                     StepFrequency="1"/>
                                         </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <TextBlock x:Uid="S_TriggerTravel" Text="Trigger Travel" FontSize="13" Foreground="#B9C0CC" Margin="0,16,0,4" />
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid Margin="0,0,0,8">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
@@ -5002,7 +5019,7 @@
                                             <ToggleSwitch x:Name="LegionHairTriggersToggle" Grid.Column="1" OnContent="" OffContent="" Margin="0,0,-8,0"/>
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel x:Name="LeftTriggerPanel">
                                             <TextBlock x:Uid="S_LeftTrigger_2" Text="Left Trigger" FontSize="13" Foreground="#B9C0CC" Margin="0,0,0,4" />
                                             <StackPanel>
@@ -5033,7 +5050,7 @@
                                             </StackPanel>
                                         </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel x:Name="RightTriggerPanel">
                                             <TextBlock x:Uid="S_RightTrigger_2" Text="Right Trigger" FontSize="13" Foreground="#B9C0CC" Margin="0,0,0,4" />
                                             <StackPanel>
@@ -5076,7 +5093,7 @@
                                     <TextBlock x:Uid="S_GyroSettings" Text="Gyro Settings" />
                                 </ctk:SettingsExpander.Header>
                                 <ctk:SettingsExpander.Items>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="100"/>
@@ -5095,7 +5112,7 @@
                                         </ComboBox>
                                     </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel>
                                         <Grid>
                                             <TextBlock x:Uid="S_SensitivityX" Text="Sensitivity X" FontSize="14" Foreground="#B9C0CC" />
@@ -5110,7 +5127,7 @@
                                                 StepFrequency="1"/>
                                     </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel>
                                         <Grid>
                                             <TextBlock x:Uid="S_SensitivityY" Text="Sensitivity Y" FontSize="14" Foreground="#B9C0CC" />
@@ -5125,7 +5142,7 @@
                                                 StepFrequency="1"/>
                                     </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel>
                                         <Grid>
                                             <TextBlock x:Uid="S_Deadzone" Text="Deadzone" FontSize="14" Foreground="#B9C0CC" />
@@ -5140,7 +5157,7 @@
                                                 StepFrequency="1"/>
                                     </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -5160,7 +5177,7 @@
                                         </StackPanel>
                                     </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="100"/>
@@ -5177,7 +5194,7 @@
                                         </ComboBox>
                                     </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="100"/>
@@ -5194,7 +5211,7 @@
                                         </ComboBox>
                                     </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="100"/>
@@ -5218,7 +5235,7 @@
                                         </ComboBox>
                                     </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel Margin="0,4,0,0">
                                         <Button x:Uid="LegionCalibrateGyroButton" x:Name="LegionCalibrateGyroButton"
                                                 Content="Calibrate gyro"
@@ -5248,7 +5265,7 @@
                                     <TextBlock x:Uid="S_UseAJoystickToControl" Text="Use a joystick to control mouse cursor" />
                                 </ctk:SettingsExpander.Description>
                                 <ctk:SettingsExpander.Items>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="100"/>
@@ -5264,7 +5281,7 @@
                                         </ComboBox>
                                     </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid x:Name="LegionJoystickMouseSensGrid" Visibility="Collapsed">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="100"/>
@@ -5297,10 +5314,10 @@
                                     <TextBlock x:Uid="S_MapLegionLRButtons" Text="Map Legion L/R buttons and scroll wheel to custom actions" />
                                 </ctk:SettingsExpander.Description>
                                 <ctk:SettingsExpander.Items>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <TextBlock x:Uid="S_LEGIONBUTTONS" Text="LEGION BUTTONS" FontSize="12" FontWeight="SemiBold" Foreground="#B9C0CC" Margin="0,0,0,8" />
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="85"/>
@@ -5322,7 +5339,7 @@
                                             </ComboBox>
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel x:Name="LegionLShortcutPanel" Margin="85,8,0,0" Visibility="Collapsed" Orientation="Horizontal">
                                             <ItemsControl x:Name="LegionLKeyTags">
                                                 <ItemsControl.ItemsPanel>
@@ -5337,7 +5354,7 @@
                                             </ComboBox>
                                         </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid x:Name="LegionLCommandGrid" Margin="85,8,0,0" Visibility="Collapsed">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
@@ -5354,7 +5371,7 @@
                                                     Click="LegionLCommandApplyButton_Click" />
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid Margin="0,12,0,0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="85"/>
@@ -5376,7 +5393,7 @@
                                             </ComboBox>
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel x:Name="LegionRShortcutPanel" Margin="85,8,0,0" Visibility="Collapsed" Orientation="Horizontal">
                                             <ItemsControl x:Name="LegionRKeyTags">
                                                 <ItemsControl.ItemsPanel>
@@ -5391,7 +5408,7 @@
                                             </ComboBox>
                                         </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid x:Name="LegionRCommandGrid" Margin="85,8,0,0" Visibility="Collapsed">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
@@ -5408,14 +5425,14 @@
                                                     Click="LegionRCommandApplyButton_Click" />
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <TextBlock x:Name="LegionRemapStatusText"
                                                    Text=""
                                                    FontSize="13"
                                                    Foreground="#B9C0CC"
                                                    Margin="0,8,0,0"/>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel x:Name="ScrollWheelSection">
                                             <!-- Divider -->
                                             <Border Height="1" Background="#33FFFFFF" Margin="0,16,0,16"/>
@@ -5545,7 +5562,7 @@
                             </ctk:SettingsExpander>
 
                             <!-- Brightness Gesture Card -->
-                            <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                            <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                 <StackPanel Spacing="12">
                                     <ctk:SettingsCard x:Uid="S_BrightnessGesture" Header="Brightness Gesture" Description="Hold the trigger button below and tilt the axis to fade display brightness. A quick tap of the trigger still behaves normally." Tapped="ToggleRow_Tapped">
                                         <ctk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE706;"/></ctk:SettingsCard.HeaderIcon>
@@ -5631,7 +5648,7 @@
                                     <TextBlock x:Uid="S_ControllerRGBAndPowerButton" Text="Controller RGB and power button lighting" />
                                 </ctk:SettingsExpander.Description>
                                 <ctk:SettingsExpander.Items>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel>
                                             <TextBlock x:Uid="S_LightMode" Text="Light Mode" FontSize="14" Foreground="#B9C0CC" Margin="0,0,0,4" />
                                             <ComboBox x:Name="LegionLightModeComboBox"
@@ -5647,7 +5664,7 @@
                                             </ComboBox>
                                         </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel x:Name="LegionColorCard">
                                             <ctk:SettingsExpander x:Name="LegionColorExpander">
                                                 <ctk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE790;"/></ctk:SettingsExpander.HeaderIcon>
@@ -5662,7 +5679,7 @@
                                                             BorderThickness="1"
                                                             Margin="0,0,8,0"/></StackPanel>
                                                 <ctk:SettingsExpander.Items>
-                                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                                         <muxc:ColorPicker x:Name="LegionColorPicker"
                                                          Margin="0,12,0,0"
                                                          Color="White"
@@ -5680,7 +5697,7 @@
                                             </ctk:SettingsExpander>
                                         </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel x:Name="LegionBrightnessCard">
                                             <Grid>
                                                 <TextBlock x:Uid="S_Brightness" Text="Brightness" FontSize="14" Foreground="#B9C0CC" />
@@ -5695,7 +5712,7 @@
                                                     ValueChanged="LegionBrightnessSlider_ValueChanged"/>
                                         </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel x:Name="LegionSpeedCard" Visibility="Collapsed">
                                             <Grid>
                                                 <TextBlock x:Uid="S_Speed" Text="Speed" FontSize="14" Foreground="#B9C0CC" />
@@ -5710,7 +5727,7 @@
                                                     ValueChanged="LegionSpeedSlider_ValueChanged"/>
                                         </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
@@ -5768,7 +5785,7 @@
                                                        TextWrapping="Wrap" Visibility="Collapsed"/></StackPanel>
                                         </ctk:SettingsExpander.Description>
                                         <ctk:SettingsExpander.Items>
-                                            <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                            <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                                 <muxc:Expander x:Name="FanCurveInfoExpander"
                                                    Margin="0,8,0,0"
                                                    HorizontalAlignment="Stretch"
@@ -5798,7 +5815,7 @@
                                         </StackPanel>
                                     </muxc:Expander>
                                             </ctk:SettingsCard>
-                                            <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                            <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                                 <StackPanel x:Name="FanCurveContent" Margin="0,12,0,0">
                                         <!-- Y-axis label -->
                                         <TextBlock x:Uid="S_Fan_2" Text="Fan %" FontSize="12" Foreground="#B9C0CC" Margin="0,0,0,4" />
@@ -5962,7 +5979,7 @@
                                     <TextBlock x:Uid="S_CheckLenovoSDriverPage" Text="Check Lenovo's driver page for this machine type" />
                                 </ctk:SettingsExpander.Description>
                                 <ctk:SettingsExpander.Items>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="130"/>
@@ -5981,7 +5998,7 @@
                                             <TextBlock Grid.Row="2" Grid.Column="1" x:Name="DriverUpdatesBios" Text="—" FontSize="14" Foreground="#FFFFFF" Margin="0,4,0,0"/>
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel Orientation="Horizontal" Spacing="8">
                                             <Button x:Uid="DriverUpdatesCheckButton" x:Name="DriverUpdatesCheckButton"
                                                     Content="Check for updates"
@@ -5998,20 +6015,20 @@
                                                     Click="DriverUpdatesOpenPageButton_Click" />
                                         </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <TextBlock x:Uid="DriverUpdatesStatusText" x:Name="DriverUpdatesStatusText"
                                                    Text="Click Check for updates to query Lenovo."
                                                    FontSize="12"
                                                    Foreground="#B9C0CC"
                                                    TextWrapping="Wrap" />
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Border Height="1" Background="#33FFFFFF" Margin="0,2,0,0"/>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <TextBlock x:Uid="S_PREFERENCES" Text="PREFERENCES" FontSize="12" FontWeight="SemiBold" Foreground="#B9C0CC" />
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <CheckBox x:Uid="DriverUpdatesShowUtilitiesCheckbox" x:Name="DriverUpdatesShowUtilitiesCheckbox"
                                                   Content="Show utilities and diagnostics"
                                                   IsChecked="False"
@@ -6020,7 +6037,7 @@
                                                   Checked="DriverUpdatesShowUtilitiesCheckbox_Changed"
                                                   Unchecked="DriverUpdatesShowUtilitiesCheckbox_Changed" />
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <CheckBox x:Uid="DriverUpdatesUpdateOnStartCheckbox" x:Name="DriverUpdatesUpdateOnStartCheckbox"
                                                   Content="Check for driver updates on start"
                                                   IsChecked="True"
@@ -6029,7 +6046,7 @@
                                                   Checked="DriverUpdatesUpdateOnStartCheckbox_Changed"
                                                   Unchecked="DriverUpdatesUpdateOnStartCheckbox_Changed" />
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <CheckBox x:Uid="DriverUpdatesHideBannerCheckbox" x:Name="DriverUpdatesHideBannerCheckbox"
                                                   Content="Hide driver-update banner on Quick tab"
                                                   IsChecked="False"
@@ -6038,7 +6055,7 @@
                                                   Checked="DriverUpdatesHideBannerCheckbox_Changed"
                                                   Unchecked="DriverUpdatesHideBannerCheckbox_Changed" />
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <ItemsControl x:Name="DriverUpdatesList" Visibility="Collapsed">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
@@ -6116,7 +6133,7 @@
                                     <TextBlock x:Uid="S_FanSettings" Text="Fan Settings" />
                                 </ctk:SettingsExpander.Header>
                                 <ctk:SettingsExpander.Items>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel Orientation="Horizontal">
                                         <TextBlock x:Uid="S_Fan_3" Text="Fan: " Style="{StaticResource CardCaptionStyle}" />
                                         <TextBlock x:Uid="GPDFanRPMText" x:Name="GPDFanRPMText" Text="-- RPM" Style="{StaticResource CardCaptionStyle}" />
@@ -6130,7 +6147,7 @@
                                         Toggled="GPDFanCurveToggle_Toggled"
                                         XYFocusUp="{x:Bind GPDNavItem}"/>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel x:Name="GPDManualFanContent">
                                         <!-- Fan Mode Toggle -->
                                         <ctk:SettingsCard Tapped="ToggleRow_Tapped">
@@ -6168,7 +6185,7 @@
                                         </StackPanel>
                                     </StackPanel>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <StackPanel x:Name="GPDFanCurveContent" Visibility="Collapsed">
                                         <!-- Preset + Expand toggle row -->
                                         <ctk:SettingsExpander x:Name="GPDFanCurveExpander" Expanded="GPDFanCurveExpander_Toggled" Collapsed="GPDFanCurveExpander_Toggled">
@@ -6187,7 +6204,7 @@
                                                 <ComboBoxItem x:Uid="S_Custom" Content="Custom" Tag="Custom" IsSelected="True" />
                                             </ComboBox>
                                             <ctk:SettingsExpander.Items>
-                                                <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                                <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                                     <StackPanel x:Name="GPDFanCurveGraphContent" Margin="0,12,0,0">
                                             <!-- Y-axis label -->
                                             <TextBlock x:Uid="S_Fan_2" Text="Fan %" FontSize="12" Foreground="#B9C0CC" Margin="0,0,0,4" />
@@ -6285,10 +6302,10 @@
                                     <TextBlock x:Uid="S_RemapControllerButtonsToKeyboard" Text="Remap controller buttons to keyboard or mouse" />
                                 </ctk:SettingsExpander.Description>
                                 <ctk:SettingsExpander.Items>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <TextBlock x:Uid="S_FaceButtons" Text="Face Buttons" Foreground="#FFFFFF" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,4" />
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="80"/>
@@ -6309,7 +6326,7 @@
                                             </ComboBox>
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="80"/>
@@ -6330,7 +6347,7 @@
                                             </ComboBox>
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="80"/>
@@ -6351,7 +6368,7 @@
                                             </ComboBox>
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="80"/>
@@ -6372,10 +6389,10 @@
                                             </ComboBox>
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <TextBlock x:Uid="S_DPad" Text="D-Pad" Foreground="#FFFFFF" FontSize="14" FontWeight="SemiBold" Margin="0,8,0,4" />
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="80"/>
@@ -6396,7 +6413,7 @@
                                             </ComboBox>
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="80"/>
@@ -6417,7 +6434,7 @@
                                             </ComboBox>
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="80"/>
@@ -6438,7 +6455,7 @@
                                             </ComboBox>
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="80"/>
@@ -6459,10 +6476,10 @@
                                             </ComboBox>
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <TextBlock x:Uid="S_StickButtons" Text="Stick Buttons" Foreground="#FFFFFF" FontSize="14" FontWeight="SemiBold" Margin="0,8,0,4" />
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="80"/>
@@ -6483,7 +6500,7 @@
                                             </ComboBox>
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="80"/>
@@ -6504,10 +6521,10 @@
                                             </ComboBox>
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <TextBlock x:Uid="S_LeftStick" Text="Left Stick" Foreground="#FFFFFF" FontSize="14" FontWeight="SemiBold" Margin="0,8,0,4" />
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="80"/>
@@ -6528,7 +6545,7 @@
                                             </ComboBox>
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="80"/>
@@ -6549,10 +6566,10 @@
                                             </ComboBox>
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <TextBlock x:Uid="S_BackPaddles" Text="Back Paddles" Foreground="#FFFFFF" FontSize="14" FontWeight="SemiBold" Margin="0,8,0,4" />
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="80"/>
@@ -6576,7 +6593,7 @@
                                             </ComboBox>
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="80"/>
@@ -6600,7 +6617,7 @@
                                             </ComboBox>
                                         </Grid>
                                     </ctk:SettingsCard>
-                                    <ctk:SettingsCard ContentAlignment="Left" HorizontalContentAlignment="Stretch">
+                                    <ctk:SettingsCard ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                                         <Grid Margin="0,8,0,0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
@@ -6630,52 +6647,13 @@
                     </StackPanel>
                 </ScrollViewer>
 
-                <!-- Connection Status Banner - placed last for z-order (renders on top) -->
-                <!-- Visible by default with Loading... so user sees immediate feedback before code runs -->
-                <muxc:InfoBar x:Name="ConnectionStatusBanner"
-                              VerticalAlignment="Top"
-                              Margin="12,4,12,0"
-                              IsOpen="True"
-                              IsClosable="False"
-                              Severity="Informational"
-                              Visibility="Visible">
-                    <muxc:InfoBar.Content>
-                        <TextBlock x:Uid="ConnectionStatusText" x:Name="ConnectionStatusText" Text="Loading..." FontSize="13" Margin="0,0,0,12" TextWrapping="Wrap"/>
-                    </muxc:InfoBar.Content>
-                </muxc:InfoBar>
-
-                <!-- Update Available Banner - appears below connection banner when update is found -->
-                <muxc:InfoBar x:Name="UpdateAvailableBanner"
-                              VerticalAlignment="Top"
-                              Margin="12,64,12,0"
-                              IsOpen="True"
-                              IsClosable="False"
-                              Severity="Success"
-                              Visibility="Collapsed">
-                    <muxc:InfoBar.Content>
-                        <Grid Margin="0,0,0,10" ColumnSpacing="8">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock x:Uid="UpdateAvailableText" x:Name="UpdateAvailableText" Text="Update Available: v0.0.0" FontSize="13" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                            <Button x:Uid="UpdateBannerButton" x:Name="UpdateBannerButton" Grid.Column="1" Content="Update" MinHeight="40"
-                                    Style="{ThemeResource AccentButtonStyle}" Click="UpdateBannerButton_Click"/>
-                            <Button x:Name="DismissUpdateBannerButton" Grid.Column="2" MinWidth="40" MinHeight="40" Background="Transparent" BorderThickness="0"
-                                    AutomationProperties.Name="Dismiss" Click="DismissUpdateBannerButton_Click">
-                                <FontIcon Glyph="&#xE711;" FontSize="12"/>
-                            </Button>
-                        </Grid>
-                    </muxc:InfoBar.Content>
-                </muxc:InfoBar>
 
             </Grid>
             </Grid> <!-- End Content Area Grid.Row="1" -->
 
             <!-- Gamepad command bar: static key hints for the whole widget -->
             <Border x:Name="GamepadCommandBar"
-                    Grid.Row="2"
+                    Grid.Row="3"
                     Background="#1A1C1F"
                     BorderBrush="#14FFFFFF"
                     BorderThickness="0,1,0,0"

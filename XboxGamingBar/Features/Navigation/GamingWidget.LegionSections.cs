@@ -14,7 +14,6 @@ namespace XboxGamingBar
 
         private void LegionSectionTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            UpdateSegmentLabels(LegionSectionTabs);
             // Fires once from InitializeComponent (IsSelected="True") before the containers exist.
             if (LegionDeviceSection == null) return;
             int index = LegionSectionTabs.SelectedIndex;
