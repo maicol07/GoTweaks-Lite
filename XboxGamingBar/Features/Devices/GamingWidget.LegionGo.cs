@@ -182,15 +182,6 @@ namespace XboxGamingBar
 
         // ---- Driver Updates (Lenovo) --------------------------------------------------
 
-        private void DriverUpdatesExpandToggle_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            if (DriverUpdatesContent == null || DriverUpdatesExpandIcon == null) return;
-            bool expand = DriverUpdatesExpandToggle?.IsChecked == true;
-            DriverUpdatesContent.Visibility = expand ? Visibility.Visible : Visibility.Collapsed;
-            // \uE70E = chevron down (collapsed), \uE70D = chevron up (expanded)
-            DriverUpdatesExpandIcon.Glyph = expand ? "\uE70E" : "\uE70D";
-        }
-
         private async void DriverUpdatesCheckButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             if (DriverUpdatesCheckButton == null) return;
@@ -705,6 +696,7 @@ namespace XboxGamingBar
                 }
                 // Driver Updates lives in the Legion "Device" sub-section.
                 ShowLegionSection(LegionDeviceSection);
+                DriverUpdatesCard.IsExpanded = true;
 
                 // If we haven't yet populated the driver list in this session
                 // (widget was re-opened since the helper pushed the count),
@@ -1083,31 +1075,6 @@ namespace XboxGamingBar
             {
                 LegionFanCurveCard.IsHitTestVisible = true;
                 LegionFanCurveCard.Opacity = 1.0;
-            }
-        }
-
-        /// <summary>
-        /// Toggles the ColorPicker visibility
-        /// </summary>
-        private void LegionColorExpandButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (LegionColorPicker != null)
-                {
-                    bool isExpanded = LegionColorPicker.Visibility == Visibility.Visible;
-                    LegionColorPicker.Visibility = isExpanded ? Visibility.Collapsed : Visibility.Visible;
-
-                    // Update button icon (chevron down/up)
-                    if (LegionColorExpandButton != null)
-                    {
-                        LegionColorExpandButton.Content = isExpanded ? "\uE70D" : "\uE70E";
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Error($"Error in LegionColorExpandButton_Click: {ex.Message}");
             }
         }
 

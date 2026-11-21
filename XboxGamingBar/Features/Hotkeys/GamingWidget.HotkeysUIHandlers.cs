@@ -43,26 +43,7 @@ namespace XboxGamingBar
 {
     public sealed partial class GamingWidget
     {
-        private void HotkeysExpandButton_Click(object sender, RoutedEventArgs e)
-        {
-            isHotkeysExpanded = !isHotkeysExpanded;
-
-            if (HotkeysContent != null)
-            {
-                HotkeysContent.Visibility = isHotkeysExpanded ? Visibility.Visible : Visibility.Collapsed;
-            }
-
-            if (HotkeysExpandIcon != null)
-            {
-                HotkeysExpandIcon.Glyph = isHotkeysExpanded ? "\uE70E" : "\uE70D";
-            }
-
-            // Load settings when expanding for the first time
-            if (isHotkeysExpanded)
-            {
-                LoadHotkeySettings();
-            }
-        }
+        private void HotkeysExpander_Expanded(object sender, EventArgs e) => LoadHotkeySettings();
 
         private void LoadHotkeySettings()
         {

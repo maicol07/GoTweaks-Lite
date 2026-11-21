@@ -88,16 +88,6 @@ namespace XboxGamingBar
                 Logger.Info($"GPD fan speed set to: {speed}%");
             }
         }
-        private void GPDButtonRemapExpandToggle_Click(object sender, RoutedEventArgs e)
-        {
-            if (GPDButtonRemapExpandToggle != null && GPDButtonRemapContent != null && GPDButtonRemapExpandIcon != null)
-            {
-                bool isExpanded = GPDButtonRemapExpandToggle.IsChecked == true;
-                GPDButtonRemapContent.Visibility = isExpanded ? Visibility.Visible : Visibility.Collapsed;
-                GPDButtonRemapExpandIcon.Glyph = isExpanded ? "\uE70E" : "\uE70D"; // Down or Right chevron
-            }
-        }
-
         private void GPDL4PaddleComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (isApplyingGpdRestoreDefaults) return;

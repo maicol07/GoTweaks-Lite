@@ -43,55 +43,25 @@ namespace XboxGamingBar
 {
     public sealed partial class GamingWidget
     {
-        private void DebugExpandButton_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// About expander: friendly release number with the MSIX build in parentheses
+        /// (pinpoints the exact build between two releases).
+        /// </summary>
+        private void AboutExpander_Expanded(object sender, EventArgs e)
         {
-            isDebugExpanded = !isDebugExpanded;
-
-            if (DebugContent != null)
+            if (AboutVersionText == null) return;
+            try
             {
-                DebugContent.Visibility = isDebugExpanded ? Visibility.Visible : Visibility.Collapsed;
+                var version = Windows.ApplicationModel.Package.Current.Id.Version;
+                string build = $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+                AboutVersionText.Text = string.Format(LocalizedString("CodeF_4", "{0} (build {1})"), Shared.Constants.UpdateConstants.FriendlyVersion, build);
             }
-
-            if (DebugExpandIcon != null)
+            catch
             {
-                DebugExpandIcon.Glyph = isDebugExpanded ? "\uE70E" : "\uE70D";
+                // Keep default version text
             }
         }
 
-        private bool isAboutExpanded = false;
-
-        private void AboutExpandButton_Click(object sender, RoutedEventArgs e)
-        {
-            isAboutExpanded = !isAboutExpanded;
-
-            if (AboutContent != null)
-            {
-                AboutContent.Visibility = isAboutExpanded ? Visibility.Visible : Visibility.Collapsed;
-            }
-
-            if (AboutExpandIcon != null)
-            {
-                AboutExpandIcon.Glyph = isAboutExpanded ? "\uE70E" : "\uE70D";
-            }
-
-            // Update version text dynamically. Friendly release number (bumped by hand once
-            // per release, matches the GitHub tag / releases.md) is the headline; the raw
-            // auto-incrementing MSIX build number stays visible in parentheses for support/
-            // debugging (pinpoints the exact build between two releases).
-            if (isAboutExpanded && AboutVersionText != null)
-            {
-                try
-                {
-                    var version = Windows.ApplicationModel.Package.Current.Id.Version;
-                    string build = $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
-                    AboutVersionText.Text = string.Format(LocalizedString("CodeF_4", "{0} (build {1})"), Shared.Constants.UpdateConstants.FriendlyVersion, build);
-                }
-                catch
-                {
-                    // Keep default version text
-                }
-            }
-        }
 
         private async void RestartHelperButton_Click(object sender, RoutedEventArgs e)
         {

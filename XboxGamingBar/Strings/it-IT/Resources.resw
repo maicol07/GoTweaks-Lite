@@ -776,4 +776,11 @@ Tocca un altro riquadro per scambiarli, o tocca di nuovo per mostrarlo o nascond
   <data name="S_SectionOverlay.Text" xml:space="preserve"><value>Overlay</value></data>
   <data name="S_SectionPower.Text" xml:space="preserve"><value>Potenza</value></data>
   <data name="S_SectionProcessor.Text" xml:space="preserve"><value>Processore</value></data>
+  <data name="S_PowerSourceProfile_Title.Text" xml:space="preserve"><value>Profilo per alimentazione</value></data>
+  <data name="S_PowerSourceProfile_Desc.Text" xml:space="preserve"><value>Profili separati per corrente (AC) e batteria (DC)</value></data>
+  <data name="S_AutoTDP_Title.Text" xml:space="preserve"><value>AutoTDP</value></data>
+  <data name="S_AutoTDP_Desc.Text" xml:space="preserve"><value>Regola il TDP per raggiungere gli FPS obiettivo</value></data>
+  <data name="S_MinCombo.Header" xml:space="preserve"><value>Min %</value></data>
+  <data name="S_MaxCombo.Header" xml:space="preserve"><value>Max %</value></data>
+  <data name="S_GPDFanCurveHeader.Text" xml:space="preserve"><value>Curva ventola</value></data>
 </root>

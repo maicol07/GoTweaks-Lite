@@ -133,8 +133,6 @@ namespace XboxGamingBar
             ProfileSaveCPUStateCheckBox.GotFocus += StandaloneControl_GotFocus;
 
             // System tab - Power & Sleep card
-            PowerAndSleepExpandButton.GotFocus += Control_GotFocus;
-            PowerAndSleepExpandButton.LostFocus += Control_LostFocus;
             PowerButtonActionACComboBox.GotFocus += Control_GotFocus;
             PowerButtonActionACComboBox.LostFocus += Control_LostFocus;
             PowerButtonActionDCComboBox.GotFocus += Control_GotFocus;
@@ -149,8 +147,6 @@ namespace XboxGamingBar
             HibernateTimeoutDCComboBox.LostFocus += Control_LostFocus;
 
             // System tab - OSD Customization card
-            OSDCustomizeExpandButton.GotFocus += Control_GotFocus;
-            OSDCustomizeExpandButton.LostFocus += Control_LostFocus;
 
             // Legion tab - Touchpad card
             LegionTouchpadToggle.GotFocus += Control_GotFocus;
@@ -165,8 +161,6 @@ namespace XboxGamingBar
             LegionLightModeComboBox.LostFocus += Control_LostFocus;
 
             // Legion tab - Light Color card (ColorPicker)
-            LegionColorExpandButton.GotFocus += Control_GotFocus;
-            LegionColorExpandButton.LostFocus += Control_LostFocus;
             LegionColorPicker.GotFocus += Control_GotFocus;
             LegionColorPicker.LostFocus += Control_LostFocus;
 

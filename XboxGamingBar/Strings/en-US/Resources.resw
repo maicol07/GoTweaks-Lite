@@ -776,4 +776,11 @@ Tap another tile to swap, or tap again to toggle visibility</value></data>
   <data name="S_SectionOverlay.Text" xml:space="preserve"><value>Overlay</value></data>
   <data name="S_SectionPower.Text" xml:space="preserve"><value>Power</value></data>
   <data name="S_SectionProcessor.Text" xml:space="preserve"><value>Processor</value></data>
+  <data name="S_PowerSourceProfile_Title.Text" xml:space="preserve"><value>Power Source Profile</value></data>
+  <data name="S_PowerSourceProfile_Desc.Text" xml:space="preserve"><value>Separate profiles for AC (plugged in) and DC (battery)</value></data>
+  <data name="S_AutoTDP_Title.Text" xml:space="preserve"><value>AutoTDP</value></data>
+  <data name="S_AutoTDP_Desc.Text" xml:space="preserve"><value>Adjusts TDP live to hit a target FPS</value></data>
+  <data name="S_MinCombo.Header" xml:space="preserve"><value>Min %</value></data>
+  <data name="S_MaxCombo.Header" xml:space="preserve"><value>Max %</value></data>
+  <data name="S_GPDFanCurveHeader.Text" xml:space="preserve"><value>Fan Curve</value></data>
 </root>

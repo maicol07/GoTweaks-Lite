@@ -103,17 +103,6 @@ namespace XboxGamingBar
                 }
                 LegionControllerModeToggle.IsEnabled = switchable && !switching;
 
-                // Keep D-pad focus navigation valid: the Touchpad card's header sits below this
-                // switch, so only route "up" through it while the switch can actually take focus.
-                if (TouchpadVibrationExpandToggle != null && LegionNavItem != null)
-                {
-                    bool switchFocusable = LegionControllerModeCard.Visibility == Visibility.Visible
-                                           && LegionControllerModeToggle.IsEnabled;
-                    TouchpadVibrationExpandToggle.XYFocusUp = switchFocusable
-                        ? (DependencyObject)LegionControllerModeToggle
-                        : LegionNavItem;
-                }
-
                 string status;
                 if (switching)
                 {

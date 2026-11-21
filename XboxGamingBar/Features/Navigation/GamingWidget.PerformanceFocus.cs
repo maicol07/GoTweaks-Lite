@@ -40,7 +40,6 @@ namespace XboxGamingBar
             yield return AutoTDPPauseWhenUnfocusedToggle;
             yield return AutoTDPFastResponseToggle;
             yield return SegmentFocusTarget(OSPowerModeComboBox);
-            yield return CPUExtrasExpandToggle;
         }
 
         /// <summary>

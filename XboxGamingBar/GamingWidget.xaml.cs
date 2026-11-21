@@ -515,7 +515,6 @@ namespace XboxGamingBar
         private XboxGameBarHotkeyWatcher hotkeyMenuDpadLeft = null;
         private XboxGameBarHotkeyWatcher hotkeyMenuDpadRight = null;
         private bool isLoadingHotkeys = false;
-        private bool isHotkeysExpanded = false;
         private readonly Dictionary<string, DateTime> hotkeyLastExecuted = new Dictionary<string, DateTime>();
         private const int HotkeyDebounceMs = 300; // Minimum ms between hotkey executions
         private int lastNonZeroOsdLevel = 1; // Track last OSD level for toggle (default to Basic)
@@ -1054,9 +1053,11 @@ namespace XboxGamingBar
             this.Loaded += (s, args) => SchedulePerformanceFocusChainRebuild();
 
 
-            // The game icon can have transparent areas: hide the placeholder tile behind it.
+            // Current game card: the game icon is the header icon once loaded, a gamepad glyph until then.
+            var currentGamePlaceholderIcon = new FontIcon { Glyph = "" };
+            CurrentGameCard.HeaderIcon = currentGamePlaceholderIcon;
             CurrentGameIcon.RegisterPropertyChangedCallback(UIElement.VisibilityProperty, (s, dp) =>
-                CurrentGameIconPlaceholder.Visibility = CurrentGameIcon.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible);
+                CurrentGameCard.HeaderIcon = CurrentGameIcon.Visibility == Visibility.Visible ? (IconElement)CurrentGameIcon : currentGamePlaceholderIcon);
 
             var propertiesTimer = Stopwatch.StartNew();
             // Headless: the master TDP slider was removed (Legion-only build). The property stays

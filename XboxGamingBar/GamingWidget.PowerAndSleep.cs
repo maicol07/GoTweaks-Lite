@@ -12,29 +12,6 @@ namespace XboxGamingBar
     /// </summary>
     public sealed partial class GamingWidget
     {
-        private bool isPowerAndSleepExpanded = false;
-
-        // Segoe Fluent Icons: ChevronDown / ChevronUp. Built via char-cast rather than a
-        // \uXXXX string literal - private-use-area glyph literals have silently corrupted
-        // via file-write tooling in this repo before.
-        private static readonly string ChevronDownGlyph = ((char)0xE70D).ToString();
-        private static readonly string ChevronUpGlyph = ((char)0xE70E).ToString();
-
-        private void PowerAndSleepExpandButton_Click(object sender, RoutedEventArgs e)
-        {
-            isPowerAndSleepExpanded = !isPowerAndSleepExpanded;
-
-            if (PowerAndSleepContent != null)
-            {
-                PowerAndSleepContent.Visibility = isPowerAndSleepExpanded ? Visibility.Visible : Visibility.Collapsed;
-            }
-
-            if (PowerAndSleepExpandIcon != null)
-            {
-                PowerAndSleepExpandIcon.Glyph = isPowerAndSleepExpanded ? ChevronUpGlyph : ChevronDownGlyph;
-            }
-        }
-
         /// <summary>
         /// Zeroes Windows' own "Sleep after" idle timeout for both AC and DC via the
         /// helper, so it doesn't put the system to Sleep before the GoTweaks Hibernate

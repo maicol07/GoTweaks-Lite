@@ -14,6 +14,13 @@ namespace XboxGamingBar
     /// </summary>
     public sealed partial class GamingWidget
     {
+        /// <summary>The live stick/trigger preview only runs while its section is open.</summary>
+        private void ViiperStickTriggerExpander_Toggled(object sender, EventArgs e)
+        {
+            try { viiperStickTriggerPreviewEnabled?.SetValue(ViiperStickTriggerExpander.IsExpanded); }
+            catch (Exception ex) { Logger.Warn($"toggle stick/trigger preview threw: {ex.Message}"); }
+        }
+
         // While we apply persisted values during init, suppress the change
         // handlers so they don't re-serialize-and-push on every control we
         // touch (or worse, push the partial state mid-init).
@@ -229,33 +236,6 @@ namespace XboxGamingBar
             if (cb.Items.Count > 0 && cb.SelectedIndex < 0) cb.SelectedIndex = 0;
         }
 
-        private void ViiperStickTriggerExpandButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (ViiperStickTriggerContent == null) return;
-            bool collapsed = ViiperStickTriggerContent.Visibility == Visibility.Collapsed;
-            ViiperStickTriggerContent.Visibility = collapsed ? Visibility.Visible : Visibility.Collapsed;
-            // Tell the helper to start/stop the live-sample stream — kept off
-            // by default so the input hot path doesn't push samples we'll just
-            // throw away when the section is hidden.
-            try { viiperStickTriggerPreviewEnabled?.SetValue(collapsed); }
-            catch (Exception ex) { Logger.Warn($"toggle stick/trigger preview threw: {ex.Message}"); }
-
-            if (ViiperStickTriggerExpandIcon != null)
-            {
-                // E70D when collapsed, E70E when expanded.
-                ViiperStickTriggerExpandIcon.Glyph = collapsed ? "" : "";
-            }
-        }
-
-        private void ViiperLSExpandButton_Click(object sender, RoutedEventArgs e)
-            => ToggleSubSection(ViiperLSContent, ViiperLSExpandIcon);
-        private void ViiperRSExpandButton_Click(object sender, RoutedEventArgs e)
-            => ToggleSubSection(ViiperRSContent, ViiperRSExpandIcon);
-        private void ViiperLTExpandButton_Click(object sender, RoutedEventArgs e)
-            => ToggleSubSection(ViiperLTContent, ViiperLTExpandIcon);
-        private void ViiperRTExpandButton_Click(object sender, RoutedEventArgs e)
-            => ToggleSubSection(ViiperRTContent, ViiperRTExpandIcon);
-
         /// <summary>
         /// True while the Sticks &amp; Triggers panel is expanded. Used by
         /// the Page-level PreviewKeyDown handler to swallow LT/RT presses
@@ -263,18 +243,7 @@ namespace XboxGamingBar
         /// verify their shaping curve without being kicked off the tab.
         /// </summary>
         internal bool IsStickTriggerPreviewOpen
-            => ViiperStickTriggerContent != null && ViiperStickTriggerContent.Visibility == Visibility.Visible;
-
-        private static void ToggleSubSection(Windows.UI.Xaml.UIElement content, FontIcon icon)
-        {
-            if (content == null) return;
-            bool collapsed = content.Visibility == Visibility.Collapsed;
-            content.Visibility = collapsed ? Visibility.Visible : Visibility.Collapsed;
-            if (icon != null) icon.Glyph = collapsed ? "" : "";
-        }
-
-        private void ViiperStickGyroExpandButton_Click(object sender, RoutedEventArgs e)
-            => ToggleSubSection(ViiperStickGyroContent, ViiperStickGyroExpandIcon);
+            => ViiperStickTriggerExpander != null && ViiperStickTriggerExpander.IsExpanded;
 
         private void ViiperStickTriggerResetButton_Click(object sender, RoutedEventArgs e)
         {

@@ -43,6 +43,22 @@ namespace XboxGamingBar
 {
     public sealed partial class GamingWidget
     {
+        private void LegionFanCurveExpander_Toggled(object sender, EventArgs e)
+        {
+            isFanCurveExpanded = LegionFanCurveExpander.IsExpanded;
+            if (isFanCurveExpanded && !fanCurveGraphInitialized)
+            {
+                InitializeFanCurveGraph();
+            }
+            legionFanCurveVisible?.SetVisible(isFanCurveExpanded);
+            if (isFanCurveExpanded)
+            {
+                UpdateActiveModeLabel();
+            }
+        }
+
+        private void ButtonRemappingExpander_Expanded(object sender, EventArgs e) => RefreshLegionEnhancedRemapUi();
+
         // OSD configuration for the single overlay layout - which items are enabled.
         // Default: FPS, CPU, GPU, RAM, VRAM, SoC temperature, TDP, Battery, Time (24h). Everything
         // else stays available below but off until the user turns it on.
@@ -112,15 +128,6 @@ namespace XboxGamingBar
         private string osdLabelColor = "DEFAULT";  // DEFAULT = use item-specific colors, or hex color code
         private int osdProvider = 0;  // 0=RTSS, 1=AMD
         private int amdOverlayLevel = 0;  // Track AMD overlay level: 0=Off, 1-4=Level 1-4 (can't query from AMD)
-        private bool isOSDCustomizeExpanded = false;
-        private bool isProfileDetectionExpanded = false;
-        private bool isProfileSettingsExpanded = false;
-        private bool isButtonRemappingExpanded = false;
-        private bool isGyroSettingsExpanded = false;
-        private bool isSpecialRemappingExpanded = false;
-        private bool isStickDeadzonesExpanded = false;
-        private bool isTouchpadVibrationExpanded = false;
-        private bool isLightingExpanded = false;
         private bool isFanCurveExpanded = false;
         private bool fanCurveGraphInitialized = false;
 
@@ -156,8 +163,6 @@ namespace XboxGamingBar
             { "Performance", new int[] { 30, 35, 40, 45, 50, 60, 70, 80, 90, 100 } }, // Performance
             { "MaxCooling", new int[] { 40, 45, 50, 55, 60, 70, 80, 90, 100, 100 } }  // Max Cooling
         };
-        private bool isCPUExtrasExpanded = false;
-        private bool isDebugExpanded = false;
         private int deviceTDPMin = 4;
         private int deviceTDPMax = 35;
 
@@ -698,22 +703,6 @@ namespace XboxGamingBar
             }
         }
 
-        private void OSDCustomizeExpandButton_Click(object sender, RoutedEventArgs e)
-        {
-            isOSDCustomizeExpanded = !isOSDCustomizeExpanded;
-
-            if (OSDCustomizeContent != null)
-            {
-                OSDCustomizeContent.Visibility = isOSDCustomizeExpanded ? Visibility.Visible : Visibility.Collapsed;
-            }
-
-            if (OSDCustomizeExpandIcon != null)
-            {
-                // E70D = ChevronDown, E70E = ChevronUp
-                OSDCustomizeExpandIcon.Glyph = isOSDCustomizeExpanded ? "\uE70E" : "\uE70D";
-            }
-        }
-
         private void OSDOpacitySlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             if (isLoadingOSDConfig) return;
@@ -723,188 +712,6 @@ namespace XboxGamingBar
             SaveOSDConfigToStorage();
             SendOSDConfigToHelper();
         }
-        private void ProfileSettingsExpandToggle_Click(object sender, RoutedEventArgs e)
-        {
-            isProfileSettingsExpanded = !isProfileSettingsExpanded;
-
-            if (ProfileSettingsContent != null)
-            {
-                ProfileSettingsContent.Visibility = isProfileSettingsExpanded ? Visibility.Visible : Visibility.Collapsed;
-            }
-
-            if (ProfileSettingsExpandIcon != null)
-            {
-                // E70D = ChevronDown, E70E = ChevronUp
-                ProfileSettingsExpandIcon.Glyph = isProfileSettingsExpanded ? "\uE70E" : "\uE70D";
-            }
-        }
-
-        private void ProfileDetectionExpandToggle_Click(object sender, RoutedEventArgs e)
-        {
-            isProfileDetectionExpanded = !isProfileDetectionExpanded;
-
-            if (ProfileDetectionContent != null)
-            {
-                ProfileDetectionContent.Visibility = isProfileDetectionExpanded ? Visibility.Visible : Visibility.Collapsed;
-            }
-
-            if (ProfileDetectionExpandIcon != null)
-            {
-                // E70D = ChevronDown, E70E = ChevronUp
-                ProfileDetectionExpandIcon.Glyph = isProfileDetectionExpanded ? "\uE70E" : "\uE70D";
-            }
-        }
-
-        private void ButtonRemappingExpandToggle_Click(object sender, RoutedEventArgs e)
-        {
-            isButtonRemappingExpanded = !isButtonRemappingExpanded;
-
-            if (ButtonRemappingContent != null)
-            {
-                ButtonRemappingContent.Visibility = isButtonRemappingExpanded ? Visibility.Visible : Visibility.Collapsed;
-            }
-
-            if (ButtonRemappingExpandIcon != null)
-            {
-                // E70D = ChevronDown, E70E = ChevronUp
-                ButtonRemappingExpandIcon.Glyph = isButtonRemappingExpanded ? "\uE70E" : "\uE70D";
-            }
-
-            if (isButtonRemappingExpanded)
-            {
-                RefreshLegionEnhancedRemapUi();
-            }
-        }
-
-        private void GyroSettingsExpandToggle_Click(object sender, RoutedEventArgs e)
-        {
-            isGyroSettingsExpanded = !isGyroSettingsExpanded;
-
-            if (GyroSettingsContent != null)
-            {
-                GyroSettingsContent.Visibility = isGyroSettingsExpanded ? Visibility.Visible : Visibility.Collapsed;
-            }
-
-            if (GyroSettingsExpandIcon != null)
-            {
-                // E70D = ChevronDown, E70E = ChevronUp
-                GyroSettingsExpandIcon.Glyph = isGyroSettingsExpanded ? "\uE70E" : "\uE70D";
-            }
-        }
-
-        private void StickDeadzonesExpandToggle_Click(object sender, RoutedEventArgs e)
-        {
-            isStickDeadzonesExpanded = !isStickDeadzonesExpanded;
-
-            if (StickDeadzonesContent != null)
-            {
-                StickDeadzonesContent.Visibility = isStickDeadzonesExpanded ? Visibility.Visible : Visibility.Collapsed;
-            }
-
-            if (StickDeadzonesExpandIcon != null)
-            {
-                // E70D = ChevronDown, E70E = ChevronUp
-                StickDeadzonesExpandIcon.Glyph = isStickDeadzonesExpanded ? "\uE70E" : "\uE70D";
-            }
-        }
-
-        private void TouchpadVibrationExpandToggle_Click(object sender, RoutedEventArgs e)
-        {
-            isTouchpadVibrationExpanded = !isTouchpadVibrationExpanded;
-
-            if (TouchpadVibrationContent != null)
-            {
-                TouchpadVibrationContent.Visibility = isTouchpadVibrationExpanded ? Visibility.Visible : Visibility.Collapsed;
-            }
-
-            if (TouchpadVibrationExpandIcon != null)
-            {
-                // E70D = ChevronDown, E70E = ChevronUp
-                TouchpadVibrationExpandIcon.Glyph = isTouchpadVibrationExpanded ? "\uE70E" : "\uE70D";
-            }
-        }
-        private void LightingExpandToggle_Click(object sender, RoutedEventArgs e)
-        {
-            isLightingExpanded = !isLightingExpanded;
-
-            if (LightingContent != null)
-            {
-                LightingContent.Visibility = isLightingExpanded ? Visibility.Visible : Visibility.Collapsed;
-            }
-
-            if (LightingExpandIcon != null)
-            {
-                // E70D = ChevronDown, E70E = ChevronUp
-                LightingExpandIcon.Glyph = isLightingExpanded ? "\uE70E" : "\uE70D";
-            }
-        }
-
-        private void FanCurveExpandToggle_Click(object sender, RoutedEventArgs e)
-        {
-            isFanCurveExpanded = !isFanCurveExpanded;
-
-            if (FanCurveContent != null)
-            {
-                FanCurveContent.Visibility = isFanCurveExpanded ? Visibility.Visible : Visibility.Collapsed;
-            }
-
-            if (FanCurveExpandIcon != null)
-            {
-                // E70D = ChevronDown, E70E = ChevronUp
-                FanCurveExpandIcon.Glyph = isFanCurveExpanded ? "\uE70E" : "\uE70D";
-            }
-
-            // Initialize graph on first expand
-            if (isFanCurveExpanded && !fanCurveGraphInitialized)
-            {
-                InitializeFanCurveGraph();
-            }
-
-            // Tell helper whether to push the fan-control sensor temp (0x01) used by the
-            // fan-curve graph's own info panel, and to speed up its refresh cadence. RPM and
-            // the header CPU temp stream continuously regardless of this flag (see
-            // LegionManager.RefreshFanSpeed), so the header never needs clearing here.
-            legionFanCurveVisible?.SetVisible(isFanCurveExpanded);
-
-            if (isFanCurveExpanded)
-            {
-                UpdateActiveModeLabel();
-            }
-        }
-        private void CPUExtrasExpandToggle_Click(object sender, RoutedEventArgs e)
-        {
-            isCPUExtrasExpanded = !isCPUExtrasExpanded;
-
-            if (CPUExtrasContent != null)
-            {
-                CPUExtrasContent.Visibility = isCPUExtrasExpanded ? Visibility.Visible : Visibility.Collapsed;
-            }
-
-            if (CPUExtrasExpandIcon != null)
-            {
-                // E70D = ChevronDown, E70E = ChevronUp
-                CPUExtrasExpandIcon.Glyph = isCPUExtrasExpanded ? "\uE70E" : "\uE70D";
-            }
-        }
-
-        private void SpecialRemappingExpandButton_Click(object sender, RoutedEventArgs e)
-        {
-            isSpecialRemappingExpanded = !isSpecialRemappingExpanded;
-
-            if (SpecialRemappingContent != null)
-            {
-                SpecialRemappingContent.Visibility = isSpecialRemappingExpanded ? Visibility.Visible : Visibility.Collapsed;
-            }
-
-            if (SpecialRemappingExpandIcon != null)
-            {
-                // E70D = ChevronDown, E70E = ChevronUp
-                SpecialRemappingExpandIcon.Glyph = isSpecialRemappingExpanded ? "\uE70E" : "\uE70D";
-            }
-        }
-
-
-
         private void ApplyTDPLimits()
         {
             // Master TDP slider removed — the Custom power-limit sliders use fixed ranges
@@ -1016,27 +823,6 @@ namespace XboxGamingBar
             SendOSDConfigToHelper();
         }
 
-        private void OSDTextColorExpandButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (OSDTextColorPicker != null)
-                {
-                    bool isExpanded = OSDTextColorPicker.Visibility == Visibility.Visible;
-                    OSDTextColorPicker.Visibility = isExpanded ? Visibility.Collapsed : Visibility.Visible;
-
-                    if (OSDTextColorExpandButton != null)
-                    {
-                        OSDTextColorExpandButton.Content = isExpanded ? "\uE70D" : "\uE70E";
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Error($"Error in OSDTextColorExpandButton_Click: {ex.Message}");
-            }
-        }
-
         private void OSDTextColorPicker_ColorChanged(Microsoft.UI.Xaml.Controls.ColorPicker sender, Microsoft.UI.Xaml.Controls.ColorChangedEventArgs args)
         {
             if (isLoadingOSDConfig) return;
@@ -1090,27 +876,6 @@ namespace XboxGamingBar
 
             SaveOSDConfigToStorage();
             SendOSDConfigToHelper();
-        }
-
-        private void OSDLabelColorExpandButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (OSDLabelColorPicker != null)
-                {
-                    bool isExpanded = OSDLabelColorPicker.Visibility == Visibility.Visible;
-                    OSDLabelColorPicker.Visibility = isExpanded ? Visibility.Collapsed : Visibility.Visible;
-
-                    if (OSDLabelColorExpandButton != null)
-                    {
-                        OSDLabelColorExpandButton.Content = isExpanded ? "\uE70D" : "\uE70E";
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Error($"Error in OSDLabelColorExpandButton_Click: {ex.Message}");
-            }
         }
 
         private void OSDLabelColorPicker_ColorChanged(Microsoft.UI.Xaml.Controls.ColorPicker sender, Microsoft.UI.Xaml.Controls.ColorChangedEventArgs args)

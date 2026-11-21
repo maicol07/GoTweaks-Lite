@@ -43,6 +43,16 @@ namespace XboxGamingBar
 {
     public sealed partial class GamingWidget
     {
+        private void GPDFanCurveExpander_Toggled(object sender, EventArgs e)
+        {
+            isGPDFanCurveExpanded = GPDFanCurveExpander.IsExpanded;
+            if (isGPDFanCurveExpanded && !gpdFanCurveGraphInitialized)
+            {
+                InitializeGPDFanCurveGraph();
+            }
+            gpdFanCurveVisible?.SetVisible(isGPDFanCurveExpanded);
+        }
+
         private void GPDFanCurveToggle_Toggled(object sender, RoutedEventArgs e)
         {
             if (GPDFanCurveToggle == null) return;
@@ -70,30 +80,6 @@ namespace XboxGamingBar
                 settings.Values["GPDFanCurveEnabled"] = enabled;
             }
             catch { }
-        }
-
-        private void GPDFanCurveExpandToggle_Click(object sender, RoutedEventArgs e)
-        {
-            isGPDFanCurveExpanded = !isGPDFanCurveExpanded;
-
-            if (GPDFanCurveGraphContent != null)
-            {
-                GPDFanCurveGraphContent.Visibility = isGPDFanCurveExpanded ? Visibility.Visible : Visibility.Collapsed;
-            }
-
-            if (GPDFanCurveExpandIcon != null)
-            {
-                GPDFanCurveExpandIcon.Glyph = isGPDFanCurveExpanded ? "\uE70E" : "\uE70D";
-            }
-
-            // Initialize graph on first expand
-            if (isGPDFanCurveExpanded && !gpdFanCurveGraphInitialized)
-            {
-                InitializeGPDFanCurveGraph();
-            }
-
-            // Tell helper whether to push CPU temp updates
-            gpdFanCurveVisible?.SetVisible(isGPDFanCurveExpanded);
         }
 
         private void InitializeGPDFanCurveGraph()
