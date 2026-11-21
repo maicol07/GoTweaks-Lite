@@ -699,10 +699,9 @@ namespace XboxGamingBar
                 // Switch to Legion tab first (idempotent if already selected). This is
                 // user-driven (they tapped a Quick-tab shortcut), so pre-arm with the
                 // destination tag so the nav drift guard accepts the change.
-                if (LegionNavItem != null && LegionNavItem.IsChecked != true)
+                if (LegionNavItem != null && !LegionNavItem.IsSelected)
                 {
-                    ArmUserNavIntent(LegionNavItem.Tag as string);
-                    LegionNavItem.IsChecked = true;
+                    LegionNavItem.IsSelected = true;
                 }
                 // Driver Updates lives in the Legion "Device" sub-section.
                 ShowLegionSection(LegionDeviceSection);

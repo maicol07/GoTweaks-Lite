@@ -51,12 +51,9 @@ namespace XboxGamingBar
             cardFocusBorderBrush = (SolidColorBrush)Resources["CardFocusBorderBrush"];
 
             // Register focus handler on navigation items to clear card focus when tabs get focus
-            foreach (var item in MainNavPanel.Children)
+            foreach (var item in MainNavPanel.Items.OfType<CommunityToolkit.WinUI.Controls.SegmentedItem>())
             {
-                if (item is RadioButton radioButton)
-                {
-                    radioButton.GotFocus += NavItem_GotFocus;
-                }
+                item.GotFocus += NavItem_GotFocus;
             }
 
             // Quick tab - optional built-in brightness slider + its Customize toggle

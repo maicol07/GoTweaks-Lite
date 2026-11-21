@@ -54,94 +54,6 @@
 
         <!-- Navigation RadioButton Style - Optimized for Handheld XY Navigation -->
         <!-- Uses RadioButtons group which treats tabs as single navigable unit -->
-        <Style x:Key="NavRadioButtonStyle" TargetType="RadioButton">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#B9C0CC"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="MinWidth" Value="44"/>
-            <Setter Property="MinHeight" Value="40"/>
-            <Setter Property="Padding" Value="12,0,12,0"/>
-            <Setter Property="Margin" Value="1,0,1,0"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="UseSystemFocusVisuals" Value="False"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <!-- Segmented-style pill: Content is the tab icon, the label comes from
-                         AutomationProperties.Name and is shown only on the checked tab. -->
-                    <ControlTemplate TargetType="RadioButton">
-                        <Grid x:Name="RootGrid" Background="Transparent">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal"/>
-                                    <VisualState x:Name="PointerOver">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HoverOverlay" Storyboard.TargetProperty="Visibility">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Pressed">
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Opacity" To="0.7" Duration="0"/>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Disabled">
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Opacity" To="0.4" Duration="0"/>
-                                        </Storyboard>
-                                    </VisualState>
-                                </VisualStateGroup>
-                                <VisualStateGroup x:Name="CheckStates">
-                                    <VisualState x:Name="Checked">
-                                        <!-- The accent pill itself is a sliding sibling (PillTabIndicator). -->
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Icon" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#10161C"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Label" Storyboard.TargetProperty="Visibility">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Unchecked"/>
-                                    <VisualState x:Name="Indeterminate"/>
-                                </VisualStateGroup>
-                                <VisualStateGroup x:Name="FocusStates">
-                                    <VisualState x:Name="Focused">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusBorder" Storyboard.TargetProperty="Visibility">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Unfocused"/>
-                                    <VisualState x:Name="PointerFocused"/>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Border x:Name="Pill" Background="{TemplateBinding Background}" CornerRadius="20"/>
-                            <Border x:Name="HoverOverlay" Background="#14FFFFFF" CornerRadius="20" Visibility="Collapsed"/>
-                            <StackPanel Orientation="Horizontal" Spacing="6"
-                                        Padding="{TemplateBinding Padding}"
-                                        HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <ContentPresenter x:Name="Icon"
-                                                  Content="{TemplateBinding Content}"
-                                                  Foreground="{TemplateBinding Foreground}"
-                                                  VerticalAlignment="Center"
-                                                  AutomationProperties.AccessibilityView="Raw"/>
-                                <TextBlock x:Name="Label"
-                                           Text="{Binding Path=(AutomationProperties.Name), RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                           Foreground="#10161C"
-                                           VerticalAlignment="Center"
-                                           Visibility="Collapsed"
-                                           AutomationProperties.AccessibilityView="Raw"/>
-                            </StackPanel>
-                            <Border x:Name="FocusBorder" BorderBrush="White" BorderThickness="2" CornerRadius="20" Visibility="Collapsed"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
 
         <!-- Card Title Style - Win11 -->
         <Style x:Key="CardTitleStyle" TargetType="TextBlock">
@@ -721,23 +633,33 @@
 
                 <!-- Navigation Tabs - StackPanel for proper horizontal XY navigation -->
                 <!-- XYFocusKeyboardNavigation="Disabled" prevents vertical nav within, allows left/right -->
-                <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Border x:Name="MainNavPill" Background="{StaticResource SystemAccentBrush}" CornerRadius="20"
-                        Height="40" Width="0" HorizontalAlignment="Left" VerticalAlignment="Center">
-                    <Border.RenderTransform><TranslateTransform x:Name="MainNavPillTransform"/></Border.RenderTransform>
-                </Border>
-                <StackPanel x:Name="MainNavPanel"
-                            Orientation="Horizontal"
-                            VerticalAlignment="Center"
-                            XYFocusKeyboardNavigation="Disabled">
-                    <RadioButton x:Name="QuickNavItem" x:Uid="QuickNavItem" AutomationProperties.Name="Quick" Tag="Quick" Style="{StaticResource NavRadioButtonStyle}" GroupName="MainNav" Checked="NavRadioButton_Checked"><FontIcon Glyph="&#xE80A;" FontSize="18"/></RadioButton>
-                    <RadioButton x:Name="PerformanceNavItem" x:Uid="PerformanceNavItem" AutomationProperties.Name="Performance" Tag="Performance" Style="{StaticResource NavRadioButtonStyle}" GroupName="MainNav" Checked="NavRadioButton_Checked"><FontIcon Glyph="&#xEC4A;" FontSize="18"/></RadioButton>
-                    <RadioButton x:Name="ProfilesNavItem" x:Uid="ProfilesNavItem" AutomationProperties.Name="Profiles" Tag="Game" Style="{StaticResource NavRadioButtonStyle}" GroupName="MainNav" Checked="NavRadioButton_Checked"><FontIcon Glyph="&#xE7FC;" FontSize="18"/></RadioButton>
-                    <RadioButton x:Name="LegionNavItem" x:Uid="LegionNavItem" AutomationProperties.Name="Legion" Tag="Legion" Style="{StaticResource NavRadioButtonStyle}" GroupName="MainNav" Visibility="Collapsed" Checked="NavRadioButton_Checked"><FontIcon Glyph="&#xE772;" FontSize="18"/></RadioButton>
-                    <RadioButton x:Name="GPDNavItem" x:Uid="GPDNavItem" AutomationProperties.Name="GPD" Tag="GPD" Style="{StaticResource NavRadioButtonStyle}" GroupName="MainNav" Visibility="Collapsed" Checked="NavRadioButton_Checked"><FontIcon Glyph="&#xE7F8;" FontSize="18"/></RadioButton>
-                    <RadioButton x:Name="SystemNavItem" x:Uid="SystemNavItem" AutomationProperties.Name="System" Tag="System" Style="{StaticResource NavRadioButtonStyle}" GroupName="MainNav" Checked="NavRadioButton_Checked"><FontIcon Glyph="&#xE713;" FontSize="18"/></RadioButton>
-                </StackPanel>
-                </Grid>
+                <!-- Main tabs: Segmented with the selection pill animation; the label is shown on the
+                     selected tab only (UpdateMainNavLabels). The D-pad moves focus, A or a tap selects. -->
+                <ctk:Segmented x:Name="MainNavPanel"
+                               Grid.Column="1"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               SingleSelectionFollowsFocus="False"
+                               SelectionChanged="MainNav_SelectionChanged">
+                    <ctk:SegmentedItem x:Name="QuickNavItem" x:Uid="QuickNavItem" AutomationProperties.Name="Quick" Tag="Quick">
+                        <ctk:SegmentedItem.Icon><FontIcon Glyph="&#xE80A;"/></ctk:SegmentedItem.Icon>
+                    </ctk:SegmentedItem>
+                    <ctk:SegmentedItem x:Name="PerformanceNavItem" x:Uid="PerformanceNavItem" AutomationProperties.Name="Performance" Tag="Performance">
+                        <ctk:SegmentedItem.Icon><FontIcon Glyph="&#xEC4A;"/></ctk:SegmentedItem.Icon>
+                    </ctk:SegmentedItem>
+                    <ctk:SegmentedItem x:Name="ProfilesNavItem" x:Uid="ProfilesNavItem" AutomationProperties.Name="Profiles" Tag="Game">
+                        <ctk:SegmentedItem.Icon><FontIcon Glyph="&#xE7FC;"/></ctk:SegmentedItem.Icon>
+                    </ctk:SegmentedItem>
+                    <ctk:SegmentedItem x:Name="LegionNavItem" x:Uid="LegionNavItem" AutomationProperties.Name="Legion" Tag="Legion" Visibility="Collapsed">
+                        <ctk:SegmentedItem.Icon><FontIcon Glyph="&#xE772;"/></ctk:SegmentedItem.Icon>
+                    </ctk:SegmentedItem>
+                    <ctk:SegmentedItem x:Name="GPDNavItem" x:Uid="GPDNavItem" AutomationProperties.Name="GPD" Tag="GPD" Visibility="Collapsed">
+                        <ctk:SegmentedItem.Icon><FontIcon Glyph="&#xE7F8;"/></ctk:SegmentedItem.Icon>
+                    </ctk:SegmentedItem>
+                    <ctk:SegmentedItem x:Name="SystemNavItem" x:Uid="SystemNavItem" AutomationProperties.Name="System" Tag="System">
+                        <ctk:SegmentedItem.Icon><FontIcon Glyph="&#xE713;"/></ctk:SegmentedItem.Icon>
+                    </ctk:SegmentedItem>
+                </ctk:Segmented>
 
                 <!-- RT indicator and status dot -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Spacing="4">
@@ -3656,20 +3578,27 @@
                         </Border>
 
                         <!-- Legion sub-sections: one visible container at a time (LB/RB or tap). -->
-                        <!-- Same sliding-pill tabs as the main bar, on a subtle track. -->
-                        <Grid Margin="0,12,0,0" Background="#26292D" CornerRadius="22" Padding="2">
-                            <Border x:Name="LegionSectionPill" Background="{StaticResource SystemAccentBrush}" CornerRadius="20"
-                                    Height="40" Width="0" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <Border.RenderTransform><TranslateTransform x:Name="LegionSectionPillTransform"/></Border.RenderTransform>
-                            </Border>
-                            <StackPanel x:Name="LegionSectionTabs" Orientation="Horizontal" HorizontalAlignment="Left" XYFocusKeyboardNavigation="Disabled">
-                                <RadioButton x:Uid="LegionSectionController" AutomationProperties.Name="Controller" Style="{StaticResource NavRadioButtonStyle}" GroupName="LegionSection" IsChecked="True" Checked="LegionSectionTab_Checked"><FontIcon Glyph="&#xE7FC;" FontSize="16"/></RadioButton>
-                                <RadioButton x:Uid="LegionSectionVIIPER" AutomationProperties.Name="Emulation" Style="{StaticResource NavRadioButtonStyle}" GroupName="LegionSection" Checked="LegionSectionTab_Checked"><FontIcon Glyph="&#xE7F4;" FontSize="16"/></RadioButton>
-                                <RadioButton x:Uid="LegionSectionInput" AutomationProperties.Name="Input" Style="{StaticResource NavRadioButtonStyle}" GroupName="LegionSection" Checked="LegionSectionTab_Checked"><FontIcon Glyph="&#xE765;" FontSize="16"/></RadioButton>
-                                <RadioButton x:Uid="LegionSectionLighting" AutomationProperties.Name="Lighting" Style="{StaticResource NavRadioButtonStyle}" GroupName="LegionSection" Checked="LegionSectionTab_Checked"><FontIcon Glyph="&#xE781;" FontSize="16"/></RadioButton>
-                                <RadioButton x:Uid="LegionSectionDevice" AutomationProperties.Name="Device" Style="{StaticResource NavRadioButtonStyle}" GroupName="LegionSection" Checked="LegionSectionTab_Checked"><FontIcon Glyph="&#xE772;" FontSize="16"/></RadioButton>
-                            </StackPanel>
-                        </Grid>
+                        <!-- Legion sub-sections (tap or LB/RB); label on the selected one only. -->
+                        <ctk:Segmented x:Name="LegionSectionTabs"
+                                       Margin="0,12,0,0"
+                                       HorizontalAlignment="Stretch"
+                                       SelectionChanged="LegionSectionTab_SelectionChanged">
+                            <ctk:SegmentedItem x:Uid="LegionSectionController" AutomationProperties.Name="Controller" IsSelected="True">
+                                <ctk:SegmentedItem.Icon><FontIcon Glyph="&#xE7FC;"/></ctk:SegmentedItem.Icon>
+                            </ctk:SegmentedItem>
+                            <ctk:SegmentedItem x:Uid="LegionSectionVIIPER" AutomationProperties.Name="Emulation">
+                                <ctk:SegmentedItem.Icon><FontIcon Glyph="&#xE7F4;"/></ctk:SegmentedItem.Icon>
+                            </ctk:SegmentedItem>
+                            <ctk:SegmentedItem x:Uid="LegionSectionInput" AutomationProperties.Name="Input">
+                                <ctk:SegmentedItem.Icon><FontIcon Glyph="&#xE765;"/></ctk:SegmentedItem.Icon>
+                            </ctk:SegmentedItem>
+                            <ctk:SegmentedItem x:Uid="LegionSectionLighting" AutomationProperties.Name="Lighting">
+                                <ctk:SegmentedItem.Icon><FontIcon Glyph="&#xE781;"/></ctk:SegmentedItem.Icon>
+                            </ctk:SegmentedItem>
+                            <ctk:SegmentedItem x:Uid="LegionSectionDevice" AutomationProperties.Name="Device">
+                                <ctk:SegmentedItem.Icon><FontIcon Glyph="&#xE772;"/></ctk:SegmentedItem.Icon>
+                            </ctk:SegmentedItem>
+                        </ctk:Segmented>
                         <StackPanel x:Name="LegionControllerSection">
                             <!-- Controller Settings Section (Touchpad & Vibration + Lighting) -->
                             <TextBlock x:Uid="S_ControllerSettings" Text="Controller Settings" Style="{StaticResource SectionHeaderStyle}" />

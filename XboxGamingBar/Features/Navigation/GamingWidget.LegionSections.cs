@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -7,19 +6,18 @@ namespace XboxGamingBar
 {
     public sealed partial class GamingWidget
     {
-        /// <summary>Legion sub-section containers, in the same order as the LegionSectionTabs radio buttons.</summary>
+        /// <summary>Legion sub-section containers, in the same order as the LegionSectionTabs items.</summary>
         private UIElement[] LegionSections => new UIElement[]
         {
             LegionControllerSection, LegionViiperSection, LegionInputSection, LegionLightingSection, LegionDeviceSection,
         };
 
-        private RadioButton[] LegionSectionTabButtons => LegionSectionTabs.Children.OfType<RadioButton>().ToArray();
-
-        private void LegionSectionTab_Checked(object sender, RoutedEventArgs e)
+        private void LegionSectionTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Fires once from InitializeComponent (IsChecked="True") before the containers exist.
+            UpdateSegmentLabels(LegionSectionTabs);
+            // Fires once from InitializeComponent (IsSelected="True") before the containers exist.
             if (LegionDeviceSection == null) return;
-            int index = Array.IndexOf(LegionSectionTabButtons, sender);
+            int index = LegionSectionTabs.SelectedIndex;
             var sections = LegionSections;
             for (int i = 0; i < sections.Length; i++)
             {
@@ -32,15 +30,14 @@ namespace XboxGamingBar
         internal void ShowLegionSection(UIElement section)
         {
             int index = Array.IndexOf(LegionSections, section);
-            if (index >= 0) LegionSectionTabButtons[index].IsChecked = true;
+            if (index >= 0) LegionSectionTabs.SelectedIndex = index;
         }
 
         /// <summary>LB/RB: previous/next Legion sub-section, wrapping around.</summary>
         private void CycleLegionSection(int delta)
         {
-            var tabs = LegionSectionTabButtons;
-            int current = Array.FindIndex(tabs, t => t.IsChecked == true);
-            tabs[(current + delta + tabs.Length) % tabs.Length].IsChecked = true;
+            int count = LegionSectionTabs.Items.Count;
+            LegionSectionTabs.SelectedIndex = (LegionSectionTabs.SelectedIndex + delta + count) % count;
         }
     }
 }

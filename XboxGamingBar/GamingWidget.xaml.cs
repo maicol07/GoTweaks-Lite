@@ -1053,9 +1053,6 @@ namespace XboxGamingBar
             InitPerformanceTabFocusChain();
             this.Loaded += (s, args) => SchedulePerformanceFocusChainRebuild();
 
-            // Sliding accent pill behind the checked tab (main bar and Legion sub-sections).
-            new PillTabIndicator(MainNavPanel, MainNavPill, MainNavPillTransform);
-            new PillTabIndicator(LegionSectionTabs, LegionSectionPill, LegionSectionPillTransform);
 
             // The game icon can have transparent areas: hide the placeholder tile behind it.
             CurrentGameIcon.RegisterPropertyChangedCallback(UIElement.VisibilityProperty, (s, dp) =>
@@ -1548,15 +1545,8 @@ namespace XboxGamingBar
         {
             Logger.Info($"GamingWidget_Loaded called. Widget is null: {widget == null}, WidgetActivity is null: {widgetActivity == null}, Pipe connected: {App.IsConnected}");
 
-            // Set initial navigation selection (first RadioButton - Quick tab).
-            // Pre-arm the destination tag so the nav drift guard treats the initial
-            // Loaded selection as user-driven, not as focus drift.
-            ArmUserNavIntent("Quick");
-            QuickNavItem.IsChecked = true;
-
-            // Attach Pointer/Tap/KeyDown listeners on every nav RadioButton via
-            // AddHandler(handledEventsToo: true) so the drift guard gets pre-armed
-            // even when UWP's RadioButton marks the input event Handled internally.
+            // Initial tab: Quick. A on a focused tab also moves focus into its content.
+            QuickNavItem.IsSelected = true;
             AttachNavInteractionTracking();
 
             // Load profile customization settings

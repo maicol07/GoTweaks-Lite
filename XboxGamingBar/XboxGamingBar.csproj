@@ -226,7 +226,6 @@
     <Compile Include="Features\Navigation\GamingWidget.SettingsRows.cs" />
     <Compile Include="Features\Navigation\GamingWidget.LegionSections.cs" />
     <Compile Include="Features\Navigation\GamingWidget.Localization.cs" />
-    <Compile Include="Features\Navigation\PillTabIndicator.cs" />
     <Compile Include="Features\QuickSettings\GamingWidget.QuickSettings.MetricCells.cs" />
     <Compile Include="GamingWidget.ViiperStickTrigger.cs" />
     <Compile Include="GamingWidget.xaml.cs">
