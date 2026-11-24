@@ -96,12 +96,10 @@
   <data name="LosslessProfilesStatus.Text" xml:space="preserve"><value>Load profiles to edit scaling settings.</value></data>
   <data name="MetricCheck_BatteryDrain.Content" xml:space="preserve"><value>Battery Drain</value></data>
   <data name="MetricCheck_BatteryLevel.Content" xml:space="preserve"><value>Battery Level</value></data>
-  <data name="MetricCheck_CPUTemp.Content" xml:space="preserve"><value>CPU Temp</value></data>
+  <data name="MetricCheck_SoCTemp.Content" xml:space="preserve"><value>SoC Temp</value></data>
+  <data name="MetricCheck_TDP.Content" xml:space="preserve"><value>TDP</value></data>
   <data name="MetricCheck_CPUUsage.Content" xml:space="preserve"><value>CPU Usage</value></data>
-  <data name="MetricCheck_CPUWattage.Content" xml:space="preserve"><value>CPU Wattage</value></data>
-  <data name="MetricCheck_GPUTemp.Content" xml:space="preserve"><value>GPU Temp</value></data>
   <data name="MetricCheck_GPUUsage.Content" xml:space="preserve"><value>GPU Usage</value></data>
-  <data name="MetricCheck_GPUWattage.Content" xml:space="preserve"><value>GPU Wattage</value></data>
   <data name="MetricCheck_MemoryUsage.Content" xml:space="preserve"><value>Memory Usage</value></data>
   <data name="MetricCheck_TimeRemaining.Content" xml:space="preserve"><value>Time Remaining</value></data>
   <data name="MetricCheck_VRAMUsage.Content" xml:space="preserve"><value>VRAM Used</value></data>
@@ -473,7 +471,7 @@
   <data name="S_Screenshot.Content" xml:space="preserve"><value>Screenshot</value></data>
   <data name="S_Scroll.Text" xml:space="preserve"><value>Scroll:</value></data>
   <data name="S_ScrollClick.Text" xml:space="preserve"><value>Scroll Click:</value></data>
-  <data name="S_SelectMetricsGroupedIntoBattery.Text" xml:space="preserve"><value>Select Metrics (grouped into Battery, CPU, GPU and Memory cells)</value></data>
+  <data name="S_SelectMetricsGroupedIntoBattery.Text" xml:space="preserve"><value>Select Metrics (grouped into Battery, CPU, GPU, SoC and Memory cells)</value></data>
   <data name="S_SendToJoystick.Text" xml:space="preserve"><value>Send to Joystick</value></data>
   <data name="S_SendToJoystick_2.Description" xml:space="preserve"><value>Which emulated stick receives the gyro contribution.</value></data>
   <data name="S_SendToJoystick_2.Header" xml:space="preserve"><value>Send to joystick</value></data>
@@ -631,6 +629,10 @@
   <data name="Metric_CPU" xml:space="preserve"><value>CPU</value></data>
   <data name="Metric_GPU" xml:space="preserve"><value>GPU</value></data>
   <data name="Metric_Memory" xml:space="preserve"><value>Memory</value></data>
+  <data name="Metric_SoC" xml:space="preserve"><value>SoC</value></data>
+  <data name="Metric_TDP_Quiet" xml:space="preserve"><value>Quiet</value></data>
+  <data name="Metric_TDP_Balanced" xml:space="preserve"><value>Balanced</value></data>
+  <data name="Metric_TDP_Performance" xml:space="preserve"><value>Perf</value></data>
   <data name="Code_ACProfilePluggedIn" xml:space="preserve"><value>AC Profile (Plugged In)</value></data>
   <data name="Code_AutoStartBlockedLegionSpaceCan" xml:space="preserve"><value>Auto-start blocked. Legion Space can still start the service on demand.</value></data>
   <data name="Code_AutoStartEnabledBlockingStopsThe" xml:space="preserve"><value>Auto-start enabled. Blocking stops the service if it is running.</value></data>

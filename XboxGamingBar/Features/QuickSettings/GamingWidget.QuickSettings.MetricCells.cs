@@ -16,7 +16,7 @@ namespace XboxGamingBar
         // order, from the existing selection/reorder UI) decide which cells appear: the first
         // selected metric of a component is the cell's big value, the others go on the
         // secondary line.
-        private enum MetricGroup { Battery, CPU, GPU, Memory }
+        private enum MetricGroup { Battery, CPU, GPU, SoC, Memory }
 
         private static readonly Dictionary<MetricType, MetricGroup> metricGroups = new Dictionary<MetricType, MetricGroup>
         {
@@ -24,11 +24,9 @@ namespace XboxGamingBar
             { MetricType.BatteryDrain, MetricGroup.Battery },
             { MetricType.TimeRemaining, MetricGroup.Battery },
             { MetricType.CPUUsage, MetricGroup.CPU },
-            { MetricType.CPUTemp, MetricGroup.CPU },
-            { MetricType.CPUWattage, MetricGroup.CPU },
             { MetricType.GPUUsage, MetricGroup.GPU },
-            { MetricType.GPUTemp, MetricGroup.GPU },
-            { MetricType.GPUWattage, MetricGroup.GPU },
+            { MetricType.SoCTemp, MetricGroup.SoC },
+            { MetricType.TDP, MetricGroup.SoC },
             { MetricType.MemoryUsage, MetricGroup.Memory },
             { MetricType.VRAMUsage, MetricGroup.Memory },
         };
@@ -38,6 +36,7 @@ namespace XboxGamingBar
             { MetricGroup.Battery, ("Battery", "") },
             { MetricGroup.CPU, ("CPU", ((char)0xEEA1).ToString()) },
             { MetricGroup.GPU, ("GPU", ((char)0xE964).ToString()) },
+            { MetricGroup.SoC, ("SoC", "") },
             { MetricGroup.Memory, ("Memory", ((char)0xEEA0).ToString()) },
         };
 
@@ -144,16 +143,18 @@ namespace XboxGamingBar
                     return currentMetricsData.TryGetValue("batteryLevel", out v) && v >= 0 ? $"{v:F0}%" : "--%";
                 case MetricType.CPUUsage:
                     return currentMetricsData.TryGetValue("cpuUsage", out v) && v >= 0 ? $"{v:F0}%" : "--%";
-                case MetricType.CPUTemp:
-                    return currentMetricsData.TryGetValue("cpuTemp", out v) && v > 0 ? $"{v:F0}°C" : "--°C";
-                case MetricType.CPUWattage:
-                    return currentMetricsData.TryGetValue("cpuWattage", out v) && v >= 0 ? $"{v:F1} W" : "-- W";
                 case MetricType.GPUUsage:
                     return currentMetricsData.TryGetValue("gpuUsage", out v) && v >= 0 ? $"{v:F0}%" : "--%";
-                case MetricType.GPUTemp:
-                    return currentMetricsData.TryGetValue("gpuTemp", out v) && v > 0 ? $"{v:F0}°C" : "--°C";
-                case MetricType.GPUWattage:
-                    return currentMetricsData.TryGetValue("gpuWattage", out v) && v >= 0 ? $"{v:F1} W" : "-- W";
+                case MetricType.SoCTemp:
+                    return currentMetricsData.TryGetValue("socTemp", out v) && v > 0 ? $"{v:F0}°C" : "--°C";
+                case MetricType.TDP:
+                    // As on the overlay: the firmware mode name in Quiet / Balanced / Performance,
+                    // the SPL in Custom (255) or on non-Legion devices.
+                    currentMetricsData.TryGetValue("tdpMode", out v);
+                    if (v == 1) return LocalizedString("Metric_TDP_Quiet", "Quiet");
+                    if (v == 2) return LocalizedString("Metric_TDP_Balanced", "Balanced");
+                    if (v == 3) return LocalizedString("Metric_TDP_Performance", "Perf");
+                    return currentMetricsData.TryGetValue("tdp", out v) && v > 0 ? $"{v:F0} W" : "-- W";
                 case MetricType.MemoryUsage:
                     return currentMetricsData.TryGetValue("memoryUsage", out v) && v >= 0 ? $"RAM {v:F0}%" : "RAM --%";
                 case MetricType.VRAMUsage:
@@ -179,13 +180,12 @@ namespace XboxGamingBar
                 case MetricType.CPUUsage: key = "cpuUsage"; break;
                 case MetricType.GPUUsage: key = "gpuUsage"; break;
                 case MetricType.MemoryUsage: key = "memoryUsage"; break;
-                case MetricType.CPUTemp: key = "cpuTemp"; break;
-                case MetricType.GPUTemp: key = "gpuTemp"; break;
+                case MetricType.SoCTemp: key = "socTemp"; break;
                 default: return null;
             }
             if (!currentMetricsData.TryGetValue(key, out var v) || v < 0) return 0;
             // ponytail: temperatures map 40-95 °C onto the bar; tune if the device runs hotter or cooler.
-            bool isTemp = metricType == MetricType.CPUTemp || metricType == MetricType.GPUTemp;
+            bool isTemp = metricType == MetricType.SoCTemp;
             return isTemp ? Math.Max(0, Math.Min(100, (v - 40) / 55 * 100)) : Math.Min(100, v);
         }
 
@@ -199,9 +199,8 @@ namespace XboxGamingBar
                     if (currentMetricsIsCharging) return tileSeverityGreenBrush;
                     if (!currentMetricsData.TryGetValue("batteryLevel", out v) || v < 0) return null;
                     return v <= 20 ? tileSeverityRedBrush : v <= 50 ? tileSeverityOrangeBrush : tileSeverityGreenBrush;
-                case MetricType.CPUTemp:
-                case MetricType.GPUTemp:
-                    if (!currentMetricsData.TryGetValue(metricType == MetricType.CPUTemp ? "cpuTemp" : "gpuTemp", out v) || v <= 0) return null;
+                case MetricType.SoCTemp:
+                    if (!currentMetricsData.TryGetValue("socTemp", out v) || v <= 0) return null;
                     return v >= 90 ? tileSeverityRedBrush : v >= 75 ? tileSeverityOrangeBrush : tileSeverityGreenBrush;
                 default:
                     return null;

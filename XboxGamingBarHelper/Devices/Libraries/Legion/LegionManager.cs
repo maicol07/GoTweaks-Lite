@@ -2668,9 +2668,9 @@ namespace XboxGamingBarHelper.Devices.Libraries.Legion
                 // displays — NOT
                 // the EC fan-control sensor (0x01) below, which reads a chipset/board area
                 // and was being mistaken for the CPU temp.
-                if (performanceManager?.CPUTemperature != null && performanceManager.CPUTemperature.Value > 0)
+                if (performanceManager != null && performanceManager.SoCTemperature > 0)
                 {
-                    int cpuTemp = (int)performanceManager.CPUTemperature.Value;
+                    int cpuTemp = (int)performanceManager.SoCTemperature;
                     LegionCPUCurrentTemp.UpdateTemp(cpuTemp);
                 }
 
@@ -2711,9 +2711,9 @@ namespace XboxGamingBarHelper.Devices.Libraries.Legion
                 }
 
                 // Push the true CPU temperature (Tctl/Tdie) — see the polling path above.
-                if (performanceManager?.CPUTemperature != null && performanceManager.CPUTemperature.Value > 0)
+                if (performanceManager != null && performanceManager.SoCTemperature > 0)
                 {
-                    int cpuTemp = (int)performanceManager.CPUTemperature.Value;
+                    int cpuTemp = (int)performanceManager.SoCTemperature;
                     LegionCPUCurrentTemp.UpdateTemp(cpuTemp);
                 }
             }
